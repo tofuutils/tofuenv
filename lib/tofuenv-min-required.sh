@@ -2,8 +2,8 @@
 
 set -uo pipefail;
 
-function tfenv-min-required() {
-  local path="${1:-${TFENV_DIR:-.}}";
+function tofuenv-min-required() {
+  local path="${1:-${TOFUENV_DIR:-.}}";
 
   local versions="$( echo $(cat ${path}/{*.tf,*.tf.json} 2>/dev/null | grep -Eh '^\s*[^#]*\s*required_version') | grep -o '[~=!<>]\{0,2\}\s*\([0-9]\+\.\?\)\{2,3\}\(-[a-z]\+[0-9]\+\)\?')";
 
@@ -30,4 +30,4 @@ function tfenv-min-required() {
 
   log 'debug' 'Appropriate required_version not found, skipping min-required';
 };
-export -f tfenv-min-required;
+export -f tofuenv-min-required;

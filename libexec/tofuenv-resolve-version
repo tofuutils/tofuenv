@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Usage: tfenv resolve-version [<version>]
+# Usage: tofuenv resolve-version [<version>]
 # Summary: Resolve the version to action based on the environment and optional input token
 
 set -uo pipefail;
@@ -13,46 +13,46 @@ function early_death() {
   exit 1;
 };
 
-if [ -z "${TFENV_ROOT:-""}" ]; then
+if [ -z "${TOFUENV_ROOT:-""}" ]; then
   # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   readlink_f() {
     local target_file="${1}";
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TFENV_ROOT";
-      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TFENV_ROOT";
+      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
+      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
 
     echo "$(pwd -P)/${file_name}";
   };
 
-  TFENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
-  [ -n "${TFENV_ROOT}" ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TFENV_ROOT";
+  TOFUENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
+  [ -n "${TOFUENV_ROOT}" ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
 else
-  TFENV_ROOT="${TFENV_ROOT%/}";
+  TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
-export TFENV_ROOT;
+export TOFUENV_ROOT;
 
-if [ -n "${TFENV_HELPERS:-""}" ]; then
-  log 'debug' 'TFENV_HELPERS is set, not sourcing helpers again';
+if [ -n "${TOFUENV_HELPERS:-""}" ]; then
+  log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TFENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TFENV_ROOT}/lib/helpers.sh";
-  if source "${TFENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TFENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
   fi;
 fi;
 
 # Ensure libexec and bin are in $PATH
 for dir in libexec bin; do
   case ":${PATH}:" in
-    *:${TFENV_ROOT}/${dir}:*) log 'debug' "\$PATH already contains '${TFENV_ROOT}/${dir}', not adding it again";;
+    *:${TOFUENV_ROOT}/${dir}:*) log 'debug' "\$PATH already contains '${TOFUENV_ROOT}/${dir}', not adding it again";;
     *)
-      log 'debug' "\$PATH does not contain '${TFENV_ROOT}/${dir}', prepending and exporting it now";
-      export PATH="${TFENV_ROOT}/${dir}:${PATH}";
+      log 'debug' "\$PATH does not contain '${TOFUENV_ROOT}/${dir}', prepending and exporting it now";
+      export PATH="${TOFUENV_ROOT}/${dir}:${PATH}";
       ;;
   esac;
 done;
@@ -71,17 +71,17 @@ declare version_requested version regex min_required version_file;
 
 declare arg="${1:-""}";
 
-if [ -z "${arg}" -a -z "${TFENV_TERRAFORM_VERSION:-""}" ]; then
-  version_file="$(tfenv-version-file)";
+if [ -z "${arg}" -a -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+  version_file="$(tofuenv-version-file)";
   log 'debug' "Version File: ${version_file}";
 
-  if [ "${version_file}" != "${TFENV_CONFIG_DIR}/version" ]; then
-    log 'debug' "Version File (${version_file}) is not the default \${TFENV_CONFIG_DIR}/version (${TFENV_CONFIG_DIR}/version)";
+  if [ "${version_file}" != "${TOFUENV_CONFIG_DIR}/version" ]; then
+    log 'debug' "Version File (${version_file}) is not the default \${TOFUENV_CONFIG_DIR}/version (${TOFUENV_CONFIG_DIR}/version)";
     version_requested="$(cat "${version_file}")" \
       || log 'error' "Failed to open ${version_file}";
 
   elif [ -f "${version_file}" ]; then
-    log 'debug' "Version File is the default \${TFENV_CONFIG_DIR}/version (${TFENV_CONFIG_DIR}/version)";
+    log 'debug' "Version File is the default \${TOFUENV_CONFIG_DIR}/version (${TOFUENV_CONFIG_DIR}/version)";
     version_requested="$(cat "${version_file}")" \
       || log 'error' "Failed to open ${version_file}";
 
@@ -92,13 +92,13 @@ if [ -z "${arg}" -a -z "${TFENV_TERRAFORM_VERSION:-""}" ]; then
     fi;
 
   else 
-    log 'debug' "Version File is the default \${TFENV_CONFIG_DIR}/version (${TFENV_CONFIG_DIR}/version) but it doesn't exist";
+    log 'debug' "Version File is the default \${TOFUENV_CONFIG_DIR}/version (${TOFUENV_CONFIG_DIR}/version) but it doesn't exist";
     log 'debug' 'No version requested on the command line or in the version file search path. Installing "latest"';
     version_requested='latest';
   fi;
-elif [ -n "${TFENV_TERRAFORM_VERSION:-""}" ]; then
-  version_requested="${TFENV_TERRAFORM_VERSION}";
-  log 'debug' "TFENV_TERRAFORM_VERSION is set: ${TFENV_TERRAFORM_VERSION}";
+elif [ -n "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+  version_requested="${TOFUENV_TERRAFORM_VERSION}";
+  log 'debug' "TOFUENV_TERRAFORM_VERSION is set: ${TOFUENV_TERRAFORM_VERSION}";
 else
   version_requested="${arg}";
 fi;
@@ -115,8 +115,8 @@ fi;
 
 if [[ "${version_requested}" =~ ^min-required$ ]]; then
   log 'debug' 'Detecting minimum required version...';
-  min_required="$(tfenv-min-required)" \
-    || log 'error' 'tfenv-min-required failed';
+  min_required="$(tofuenv-min-required)" \
+    || log 'error' 'tofuenv-min-required failed';
 
   if [ -z "${min_required}" ]; then
     log 'debug' 'It was not possible to detect a minimum-required version. Do you have a required_version line present?';
@@ -129,7 +129,7 @@ fi;
 
 if [[ "${version_requested}" =~ ^latest-allowed$ ]]; then
   log 'debug' 'Detecting latest allowable version...';
-  version_spec="$(grep -h required_version "${TFENV_DIR:-$(pwd)}"/{*.tf,*.tf.json} 2>/dev/null | { IFS='"' read -r _ ver _; echo "${ver%%,*}"; })";
+  version_spec="$(grep -h required_version "${TOFUENV_DIR:-$(pwd)}"/{*.tf,*.tf.json} 2>/dev/null | { IFS='"' read -r _ ver _; echo "${ver%%,*}"; })";
   version_num="$(echo "${version_spec}" | sed -E 's/[^0-9.]+//')";
   log 'debug' "Using ${version_num} from version spec: ${version_spec}";
 
