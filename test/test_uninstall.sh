@@ -11,36 +11,36 @@ function early_death() {
   exit 1;
 };
 
-if [ -z "${TFENV_ROOT:-""}" ]; then
+if [ -z "${TOFUENV_ROOT:-""}" ]; then
   # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   readlink_f() {
     local target_file="${1}";
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TFENV_ROOT";
-      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TFENV_ROOT";
+      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
+      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
 
     echo "$(pwd -P)/${file_name}";
   };
 
-  TFENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
-  [ -n ${TFENV_ROOT} ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TFENV_ROOT";
+  TOFUENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
+  [ -n ${TOFUENV_ROOT} ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
 else
-  TFENV_ROOT="${TFENV_ROOT%/}";
+  TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
-export TFENV_ROOT;
+export TOFUENV_ROOT;
 
-if [ -n "${TFENV_HELPERS:-""}" ]; then
-  log 'debug' 'TFENV_HELPERS is set, not sourcing helpers again';
+if [ -n "${TOFUENV_HELPERS:-""}" ]; then
+  log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TFENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TFENV_ROOT}/lib/helpers.sh";
-  if source "${TFENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TFENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
   fi;
 fi;
 
@@ -53,8 +53,8 @@ declare -a errors=();
 function test_uninstall() {
   local k="${1}";
   local v="${2}";
-  tfenv install "${v}" || return 1;
-  tfenv uninstall "${v}" || return 1;
+  tofuenv install "${v}" || return 1;
+  tofuenv uninstall "${v}" || return 1;
   log 'info' 'Confirming uninstall success; an error indicates success:';
   check_active_version "${v}" && return 1 || return 0;
 };
@@ -73,8 +73,8 @@ tests__keywords=(
 tests__versions=(
   '0.9.1'
   '0.11.15-oci'
-  "$(tfenv list-remote | head -n1)"
-  "$(tfenv list-remote | grep -e "^0.8" | head -n1)"
+  "$(tofuenv list-remote | head -n1)"
+  "$(tofuenv list-remote | grep -e "^0.8" | head -n1)"
   '0.14.6'
 );
 
@@ -92,12 +92,12 @@ done;
 echo "### Uninstall removes versions directory"
 cleanup || error_and_die "Cleanup failed?!"
 (
-  tfenv install 0.12.1 || exit 1
-  tfenv install 0.12.2 || exit 1
+  tofuenv install 0.12.1 || exit 1
+  tofuenv install 0.12.2 || exit 1
   [ -d "./versions" ] || exit 1
-  tfenv uninstall 0.12.1 || exit 1
+  tofuenv uninstall 0.12.1 || exit 1
   [ -d "./versions" ] || exit 1
-  tfenv uninstall 0.12.2 || exit 1
+  tofuenv uninstall 0.12.2 || exit 1
   [ -d "./versions" ] && exit 1 || exit 0
 ) || error_and_proceed "Removing last version deletes versions directory"
 

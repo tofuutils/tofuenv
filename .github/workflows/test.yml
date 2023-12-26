@@ -39,12 +39,12 @@ jobs:
         with:
           context: .
           load: true
-          tags: "tfenv-terraform:${{ github.sha }}"
+          tags: "tofuenv-terraform:${{ github.sha }}"
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
           expect=1.2.3;
-          got="$(docker run -e "TFENV_TERRAFORM_VERSION=${expect}" "tfenv-terraform:${{ github.sha }}" version)";
+          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" "tofuenv-terraform:${{ github.sha }}" version)";
           echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'
 
   # When we push to master, test everything in order to guarantee releases
@@ -78,10 +78,10 @@ jobs:
         with:
           context: .
           load: true
-          tags: 'tfenv-terraform:latest'
+          tags: 'tofuenv-terraform:latest'
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
           expect=1.2.3;
-          got="$(docker run -e "TFENV_TERRAFORM_VERSION=${expect}" tfenv-terraform:latest version)";
+          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" tofuenv-terraform:latest version)";
           echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'

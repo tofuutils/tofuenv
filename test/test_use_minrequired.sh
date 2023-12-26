@@ -11,36 +11,36 @@ function early_death() {
   exit 1;
 };
 
-if [ -z "${TFENV_ROOT:-""}" ]; then
+if [ -z "${TOFUENV_ROOT:-""}" ]; then
   # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   readlink_f() {
     local target_file="${1}";
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TFENV_ROOT";
-      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TFENV_ROOT";
+      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
+      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
 
     echo "$(pwd -P)/${file_name}";
   };
 
-  TFENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
-  [ -n ${TFENV_ROOT} ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TFENV_ROOT";
+  TOFUENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
+  [ -n ${TOFUENV_ROOT} ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
 else
-  TFENV_ROOT="${TFENV_ROOT%/}";
+  TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
-export TFENV_ROOT;
+export TOFUENV_ROOT;
 
-if [ -n "${TFENV_HELPERS:-""}" ]; then
-  log 'debug' 'TFENV_HELPERS is set, not sourcing helpers again';
+if [ -n "${TOFUENV_HELPERS:-""}" ]; then
+  log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TFENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TFENV_ROOT}/lib/helpers.sh";
-  if source "${TFENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TFENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
   fi;
 fi;
 
@@ -62,8 +62,8 @@ echo "terraform {
 }" > min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required version does not match';
 
@@ -79,8 +79,8 @@ echo "terraform {
 }" > min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required tagged-version does not match';
 
@@ -96,15 +96,15 @@ echo "terraform {
 }" >> min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}.0";
 ) || error_and_proceed 'Min required incomplete-version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
 
 
-log 'info' '### Install min-required with TFENV_AUTO_INSTALL';
+log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL';
 
 minv='1.2.0';
 
@@ -114,14 +114,14 @@ echo "terraform {
 echo 'min-required' > .terraform-version;
 
 (
-  TFENV_AUTO_INSTALL=true terraform version;
+  TOFUENV_AUTO_INSTALL=true terraform version;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required auto-installed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
 
 
-log 'info' '### Install min-required with TFENV_AUTO_INSTALL & -chdir';
+log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL & -chdir';
 
 minv='1.1.0';
 
@@ -132,7 +132,7 @@ echo "terraform {
 echo 'min-required' > chdir-dir/.terraform-version
 
 (
-  TFENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
+  TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
   check_active_version "${minv}" chdir-dir;
 ) || error_and_proceed 'Min required version from -chdir does not match';
 
