@@ -17,7 +17,7 @@ RUN wget -O /tmp/tfenv.tar.gz "https://github.com/tfutils/tfenv/archive/refs/tag
     && mv "/tmp/tfenv-${TFENV_VERSION}/LICENSE" /usr/local/share/licenses/tfenv \
     && rm -rf /tmp/tfenv* \
     ;
-ENV TFENV_ROOT /usr/local/lib/tfenv
+ENV TOFUENV_ROOT /usr/local/lib/tfenv
 
 ENV TFENV_CONFIG_DIR /var/tfenv
 VOLUME /var/tfenv
