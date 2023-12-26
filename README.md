@@ -1,10 +1,10 @@
 # tofuenv
 
-[OpenTofu](https://opentofu.org/) version manager inspired by [tfenv](https://github.com/tfutils/tfenv)
+[OpenTofu](https://opentofu.org/) version manager inspired by [tofuenv](https://github.com/tfutils/tofuenv)
 
 ## Support
 
-Currently tfenv supports the following OSes
+Currently tofuenv supports the following OSes
 
 - macOS
   - 64bit
@@ -21,51 +21,51 @@ Currently tfenv supports the following OSes
 Install via Homebrew
 
 ```console
-brew install tfenv
+brew install tofuenv
 ```
 
 Install via Arch User Repository (AUR)
    
 ```console
-yay --sync tfenv
+yay --sync tofuenv
 ```
 
 Install via puppet
 
-Using puppet module [sergk-tfenv](https://github.com/SergK/puppet-tfenv)
+Using puppet module [sergk-tofuenv](https://github.com/SergK/puppet-tofuenv)
 
 ```puppet
-include ::tfenv
+include ::tofuenv
 ```
 
 ### Manual
 
-1. Check out tfenv into any path (here is `${HOME}/.tfenv`)
+1. Check out tofuenv into any path (here is `${HOME}/.tofuenv`)
 
 ```console
-git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+git clone --depth=1 https://github.com/tfutils/tofuenv.git ~/.tofuenv
 ```
 
-2. Add `~/.tfenv/bin` to your `$PATH` any way you like
+2. Add `~/.tofuenv/bin` to your `$PATH` any way you like
 
 bash:
 ```console
-echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
+echo 'export PATH="$HOME/.tofuenv/bin:$PATH"' >> ~/.bash_profile
 ```
 zsh:
 ```console
-$ echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.zprofile
+$ echo 'export PATH="$HOME/.tofuenv/bin:$PATH"' >> ~/.zprofile
 ```
 
 For WSL users:
 ```bash
-echo 'export PATH=$PATH:$HOME/.tfenv/bin' >> ~/.bashrc
+echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 ```
 
-  OR you can make symlinks for `tfenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
+  OR you can make symlinks for `tofuenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
 ```console
-ln -s ~/.tfenv/bin/* /usr/local/bin
+ln -s ~/.tofuenv/bin/* /usr/local/bin
 ```
 
   On Ubuntu/Debian touching `/usr/local/bin` might require sudo access, but you can create `${HOME}/bin` or `${HOME}/.local/bin` and on next login it will get added to the session `$PATH`
@@ -74,17 +74,17 @@ ln -s ~/.tfenv/bin/* /usr/local/bin
 ```console
 mkdir -p ~/.local/bin/
 . ~/.profile
-ln -s ~/.tfenv/bin/* ~/.local/bin
-which tfenv
+ln -s ~/.tofuenv/bin/* ~/.local/bin
+which tofuenv
 ```
 
 ## Usage
 
-### tfenv install [version]
+### tofuenv install [version]
 
 Install a specific version of Terraform.
 
-If no parameter is passed, the version to use is resolved automatically via [TFENV\_TERRAFORM\_VERSION environment variable](#tfenv_terraform_version) or [.terraform-version files](#terraform-version-file), in that order of precedence, i.e. TFENV\_TERRAFORM\_VERSION, then .terraform-version. The default is 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) or [.terraform-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .terraform-version. The default is 'latest' if none are found.
 
 If a parameter is passed, available options:
 
@@ -97,36 +97,36 @@ If a parameter is passed, available options:
 See [required_version](https://developer.hashicorp.com/terraform/language/settings) docs. Also [see min-required & latest-allowed](#min-required) section below.
 
 ```console
-$ tfenv install
-$ tfenv install 0.7.0
-$ tfenv install latest
-$ tfenv install latest:^0.8
-$ tfenv install latest-allowed
-$ tfenv install min-required
+$ tofuenv install
+$ tofuenv install 0.7.0
+$ tofuenv install latest
+$ tofuenv install latest:^0.8
+$ tofuenv install latest-allowed
+$ tofuenv install min-required
 ```
 
-If `shasum` is present in the path, tfenv will verify the download against Hashicorp's published sha256 hash.
+If `shasum` is present in the path, tofuenv will verify the download against Hashicorp's published sha256 hash.
 If [keybase](https://keybase.io/) is available in the path it will also verify the signature for those published hashes using Hashicorp's published public key.
 
 You can opt-in to using GnuPG tools for PGP signature verification if keybase is not available:
 
-Where `TFENV_INSTALL_DIR` is for example, `~/.tfenv` or `/usr/local/Cellar/tfenv/<version>`
+Where `tofuenv_INSTALL_DIR` is for example, `~/.tofuenv` or `/usr/local/Cellar/tofuenv/<version>`
 
 ```console
-echo 'trust-tfenv: yes' > ${TFENV_INSTALL_DIR}/use-gpgv
-tfenv install
+echo 'trust-tofuenv: yes' > ${tofuenv_INSTALL_DIR}/use-gpgv
+tofuenv install
 ```
 
-The `trust-tfenv` directive means that verification uses a copy of the
-Hashicorp OpenPGP key found in the tfenv repository.  Skipping that directive
+The `trust-tofuenv` directive means that verification uses a copy of the
+Hashicorp OpenPGP key found in the tofuenv repository.  Skipping that directive
 means that the Hashicorp key must be in the existing default trusted keys.
-Use the file `${TFENV_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
+Use the file `${tofuenv_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
 see web-of-trust status; beware that a lack of trust path will not cause a
 validation failure.
 
 #### .terraform-version
 
-If you use a [.terraform-version](#terraform-version-file) file, `tfenv install` (no argument) will install the version written in it.
+If you use a [.terraform-version](#terraform-version-file) file, `tofuenv install` (no argument) will install the version written in it.
 
 <a name="min-required"></a>
 #### min-required & latest-allowed
@@ -149,35 +149,35 @@ terraform {
 
 ### Environment Variables
 
-#### TFENV
+#### tofuenv
 
-##### `TFENV_ARCH`
+##### `tofuenv_ARCH`
 
 String (Default: `amd64`)
 
-Specify architecture. Architecture other than the default amd64 can be specified with the `TFENV_ARCH` environment variable
+Specify architecture. Architecture other than the default amd64 can be specified with the `tofuenv_ARCH` environment variable
 
 Note: Default changes to `arm64` for versions that have arm64 builds available when `$(uname -m)` matches `aarch64* | arm64*`
 
 ```console
-TFENV_ARCH=arm64 tfenv install 0.7.9
+tofuenv_ARCH=arm64 tofuenv install 0.7.9
 ```
 
-##### `TFENV_AUTO_INSTALL`
+##### `tofuenv_AUTO_INSTALL`
 
 String (Default: true)
 
-Should tfenv automatically install terraform if the version specified by defaults or a .terraform-version file is not currently installed.
+Should tofuenv automatically install terraform if the version specified by defaults or a .terraform-version file is not currently installed.
 
 ```console
-TFENV_AUTO_INSTALL=false terraform plan
+tofuenv_AUTO_INSTALL=false terraform plan
 ```
 
 ```console
 terraform use <version that is not yet installed>
 ```
 
-##### `TFENV_CURL_OUTPUT`
+##### `tofuenv_CURL_OUTPUT`
 
 Integer (Default: 2)
 
@@ -187,28 +187,28 @@ Set the mechanism used for displaying download progress when downloading terrafo
 * 1: Use curl default
 * 0: Pass `-s` to curl
 
-##### `TFENV_DEBUG`
+##### `tofuenv_DEBUG`
 
 Integer (Default: 0)
 
-Set the debug level for TFENV.
+Set the debug level for tofuenv.
 
 * 0: No debug output
 * 1: Simple debug output
 * 2: Extended debug output, with source file names and interactive debug shells on error
 * 3: Debug level 2 + Bash execution tracing
 
-##### `TFENV_REMOTE`
+##### `tofuenv_REMOTE`
 
 String (Default: https://releases.hashicorp.com)
 
 To install from a remote other than the default
 
 ```console
-TFENV_REMOTE=https://example.jfrog.io/artifactory/hashicorp
+tofuenv_REMOTE=https://example.jfrog.io/artifactory/hashicorp
 ```
 
-##### `TFENV_REVERSE_REMOTE`
+##### `tofuenv_REVERSE_REMOTE`
 
 Integer (Default: 0)
 
@@ -216,47 +216,47 @@ When using a custom remote, such as Artifactory, instead of the Hashicorp server
 the list of terraform versions returned by the curl of the remote directory may be inverted.
 In this case the `latest` functionality will not work as expected because it expects the
 versions to be listed in order of release date from newest to oldest. If your remote
-is instead providing a list that is oldes-first, set `TFENV_REVERSE_REMOTE=1` and
+is instead providing a list that is oldes-first, set `tofuenv_REVERSE_REMOTE=1` and
 functionality will be restored.
 
 ```console
-TFENV_REVERSE_REMOTE=1 tfenv list-remote
+tofuenv_REVERSE_REMOTE=1 tofuenv list-remote
 ```
 
-##### `TFENV_CONFIG_DIR`
+##### `tofuenv_CONFIG_DIR`
 
-Path (Default: `$TFENV_ROOT`)
+Path (Default: `$tofuenv_ROOT`)
 
 The path to a directory where the local terraform versions and configuration files exist.
 
 ```console
-TFENV_CONFIG_DIR="$XDG_CONFIG_HOME/tfenv"
+tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 ```
 
-##### `TFENV_TERRAFORM_VERSION`
+##### `tofuenv_TERRAFORM_VERSION`
 
 String (Default: "")
 
 If not empty string, this variable overrides Terraform version, specified in [.terraform-version files](#terraform-version-file).
 `latest` and `latest:<regex>` syntax are also supported.
-[`tfenv install`](#tfenv-install-version) and [`tfenv use`](#tfenv-use-version) command also respects this variable.
+[`tofuenv install`](#tofuenv-install-version) and [`tofuenv use`](#tofuenv-use-version) command also respects this variable.
 
 e.g.
 
 ```console
-TFENV_TERRAFORM_VERSION=latest:^0.11. terraform --version
+tofuenv_TERRAFORM_VERSION=latest:^0.11. terraform --version
 ```
 
-##### `TFENV_NETRC_PATH`
+##### `tofuenv_NETRC_PATH`
 
 String (Default: "")
 
-If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in conjunction with TFENV_REMOTE).
+If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in conjunction with tofuenv_REMOTE).
 
 e.g.
 
 ```console
-TFENV_NETRC_PATH="$PWD/.netrc.tfenv"
+tofuenv_NETRC_PATH="$PWD/.netrc.tofuenv"
 ```
 
 #### Bashlog Logging Library
@@ -281,7 +281,7 @@ The display format for the date as passed to the `date` binary to generate a dat
 
 Integer (Default: 0)
 
-By default, console output from tfenv does not print a date stamp or log severity.
+By default, console output from tofuenv does not print a date stamp or log severity.
 
 To enable this functionality, making normal output equivalent to FILE log output, set to 1.
 
@@ -297,10 +297,10 @@ Each executable logs to its own file.
 e.g.
 
 ```console
-BASHLOG_FILE=1 tfenv use latest
+BASHLOG_FILE=1 tofuenv use latest
 ```
 
-will log to `/tmp/tfenv-use.log`
+will log to `/tmp/tofuenv-use.log`
 
 ##### `BASHLOG_FILE_PATH`
 
@@ -335,10 +335,10 @@ Each executable logs to its own file.
 e.g.
 
 ```console
-BASHLOG_JSON=1 tfenv use latest
+BASHLOG_JSON=1 tofuenv use latest
 ```
 
-will log in JSON format to `/tmp/tfenv-use.log.json`
+will log in JSON format to `/tmp/tofuenv-use.log.json`
 
 JSON log content:
 
@@ -381,47 +381,47 @@ Defaults to the PID of the calling process.
 
 
 
-### tfenv use [version]
+### tofuenv use [version]
 
 Switch a version to use
 
-If no parameter is passed, the version to use is resolved automatically via [.terraform-version files](#terraform-version-file) or [TFENV\_TERRAFORM\_VERSION environment variable](#tfenv_terraform_version) (TFENV\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [.terraform-version files](#terraform-version-file) or [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed version
 
 `latest:<regex>` is a syntax to use latest installed version matching regex (used by grep -e)
 
-`min-required` will switch to the version minimally required by your terraform sources (see above `tfenv install`)
+`min-required` will switch to the version minimally required by your terraform sources (see above `tofuenv install`)
 
 ```console
-$ tfenv use
-$ tfenv use min-required
-$ tfenv use 0.7.0
-$ tfenv use latest
-$ tfenv use latest:^0.8
+$ tofuenv use
+$ tofuenv use min-required
+$ tofuenv use 0.7.0
+$ tofuenv use latest
+$ tofuenv use latest:^0.8
 ```
 
-Note: `tfenv use latest` or `tfenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TFENV_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
+Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and tofuenv_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
 
-### tfenv uninstall &lt;version>
+### tofuenv uninstall &lt;version>
 
 Uninstall a specific version of Terraform
 `latest` is a syntax to uninstall latest version
 `latest:<regex>` is a syntax to uninstall latest version matching regex (used by grep -e)
 
 ```console
-$ tfenv uninstall 0.7.0
-$ tfenv uninstall latest
-$ tfenv uninstall latest:^0.8
+$ tofuenv uninstall 0.7.0
+$ tofuenv uninstall latest
+$ tofuenv uninstall latest:^0.8
 ```
 
-### tfenv list
+### tofuenv list
 
 List installed versions
 
 ```console
-$ tfenv list
-* 0.10.7 (set by /opt/tfenv/version)
+$ tofuenv list
+* 0.10.7 (set by /opt/tofuenv/version)
   0.9.0-beta2
   0.8.8
   0.8.4
@@ -432,12 +432,12 @@ $ tfenv list
   0.6.1
 ```
 
-### tfenv list-remote
+### tofuenv list-remote
 
 List installable versions
 
 ```console
-$ tfenv list-remote
+$ tofuenv list-remote
 0.9.0-beta2
 0.9.0-beta1
 0.8.8
@@ -461,9 +461,9 @@ $ tfenv list-remote
 
 ## .terraform-version file
 
-If you put a `.terraform-version` file on your project root, or in your home directory, tfenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
+If you put a `.terraform-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
 
-Note, that [TFENV\_TERRAFORM\_VERSION environment variable](#tfenv_terraform_version) can be used to override version, specified by `.terraform-version` file.
+Note, that [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) can be used to override version, specified by `.terraform-version` file.
 
 ```console
 $ cat .terraform-version
@@ -485,24 +485,24 @@ $ echo latest:^0.8 > .terraform-version
 $ terraform version
 Terraform v0.8.8
 
-$ TFENV_TERRAFORM_VERSION=0.7.3 terraform --version
+$ tofuenv_TERRAFORM_VERSION=0.7.3 terraform --version
 Terraform v0.7.3
 ```
 
 ## Upgrading
 
 ```console
-git --git-dir=~/.tfenv/.git pull
+git --git-dir=~/.tofuenv/.git pull
 ```
 
 ## Uninstalling
 
 ```console
-rm -rf /some/path/to/tfenv
+rm -rf /some/path/to/tofuenv
 ```
 
 ## LICENSE
 
-- [tfenv itself](https://github.com/tfutils/tfenv/blob/master/LICENSE)
+- [tofuenv itself](https://github.com/tfutils/tofuenv/blob/master/LICENSE)
 - [rbenv](https://github.com/rbenv/rbenv/blob/master/LICENSE)
-  - tfenv partially uses rbenv's source code
+  - tofuenv partially uses rbenv's source code
