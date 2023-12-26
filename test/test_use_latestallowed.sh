@@ -98,7 +98,7 @@ echo "terraform {
 cleanup || log 'error' 'Cleanup failed?!';
 
 
-log 'info' '### Install latest-allowed with TFENV_AUTO_INSTALL';
+log 'info' '### Install latest-allowed with TOFUENV_AUTO_INSTALL';
 
 echo "terraform {
   required_version = \"~> 1.0.0\"
@@ -106,14 +106,14 @@ echo "terraform {
 echo 'latest-allowed' > .terraform-version;
 
 (
-  TFENV_AUTO_INSTALL=true terraform version;
+  TOFUENV_AUTO_INSTALL=true terraform version;
   check_active_version 1.0.11;
 ) || error_and_proceed 'Latest allowed auto-installed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
 
 
-log 'info' '### Install latest-allowed with TFENV_AUTO_INSTALL & -chdir';
+log 'info' '### Install latest-allowed with TOFUENV_AUTO_INSTALL & -chdir';
 
 mkdir -p chdir-dir
 echo "terraform {
@@ -122,7 +122,7 @@ echo "terraform {
 echo 'latest-allowed' > chdir-dir/.terraform-version
 
 (
-  TFENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
+  TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
   check_active_version 0.14.11 chdir-dir;
 ) || error_and_proceed 'Latest allowed version from -chdir does not match';
 
