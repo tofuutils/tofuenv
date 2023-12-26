@@ -32,8 +32,8 @@ else
 fi;
 export TOFUENV_ROOT;
 
-if [ -n "${TFENV_HELPERS:-""}" ]; then
-  log 'debug' 'TFENV_HELPERS is set, not sourcing helpers again';
+if [ -n "${TOFUENV_HELPERS:-""}" ]; then
+  log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
   [ "${TFENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
   if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
