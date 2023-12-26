@@ -62,8 +62,8 @@ echo "terraform {
 }" > min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required version does not match';
 
@@ -79,8 +79,8 @@ echo "terraform {
 }" > min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required tagged-version does not match';
 
@@ -96,8 +96,8 @@ echo "terraform {
 }" >> min_required.tf;
 
 (
-  tfenv install min-required;
-  tfenv use min-required;
+  tofuenv install min-required;
+  tofuenv use min-required;
   check_active_version "${minv}.0";
 ) || error_and_proceed 'Min required incomplete-version does not match';
 

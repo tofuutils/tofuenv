@@ -52,7 +52,7 @@ declare -a errors=();
 
 log 'info' '### Testing symlink functionality';
 
-TOFUENV_BIN_DIR='/tmp/tfenv-test';
+TOFUENV_BIN_DIR='/tmp/tofuenv-test';
 log 'info' "## Creating/clearing ${TOFUENV_BIN_DIR}"
 rm -rf "${TOFUENV_BIN_DIR}" && mkdir "${TOFUENV_BIN_DIR}";
 log 'info' "## Symlinking ${PWD}/bin/* into ${TOFUENV_BIN_DIR}";
@@ -61,10 +61,10 @@ ln -s "${PWD}"/bin/* "${TOFUENV_BIN_DIR}";
 cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '## Installing 1.6.1';
-${TOFUENV_BIN_DIR}/tfenv install 1.6.1 || error_and_proceed 'Install failed';
+${TOFUENV_BIN_DIR}/tofuenv install 1.6.1 || error_and_proceed 'Install failed';
 
 log 'info' '## Using 1.6.1';
-${TOFUENV_BIN_DIR}/tfenv use 1.6.1 || error_and_proceed 'Use failed';
+${TOFUENV_BIN_DIR}/tofuenv use 1.6.1 || error_and_proceed 'Use failed';
 
 log 'info' '## Check-Version for 1.6.1';
 check_active_version 1.6.1 || error_and_proceed 'Version check failed';

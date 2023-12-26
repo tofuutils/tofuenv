@@ -60,8 +60,8 @@ echo "terraform {
 }" > latest_allowed.tf;
 
 (
-  tfenv install latest-allowed;
-  tfenv use latest-allowed;
+  tofuenv install latest-allowed;
+  tofuenv use latest-allowed;
   check_active_version 1.1.9;
 ) || error_and_proceed 'Latest allowed version does not match';
 
@@ -75,8 +75,8 @@ echo "terraform {
 }" > latest_allowed.tf;
 
 (
-  tfenv install latest-allowed;
-  tfenv use latest-allowed;
+  tofuenv install latest-allowed;
+  tofuenv use latest-allowed;
   check_active_version 0.13.0-rc1;
 ) || error_and_proceed 'Latest allowed tagged-version does not match';
 
@@ -90,8 +90,8 @@ echo "terraform {
 }" >> latest_allowed.tf;
 
 (
-  tfenv install latest-allowed;
-  tfenv use latest-allowed;
+  tofuenv install latest-allowed;
+  tofuenv use latest-allowed;
   check_active_version 0.15.5;
 ) || error_and_proceed 'Latest allowed incomplete-version does not match';
 

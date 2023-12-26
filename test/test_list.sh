@@ -55,22 +55,22 @@ cleanup || log 'error' "Cleanup failed?!";
 
 for v in 0.7.2 0.7.13 0.9.1 0.9.2 v0.9.11 0.14.6; do
   log 'info' "## Installing version ${v} to construct list";
-  tfenv install "${v}" \
+  tofuenv install "${v}" \
     && log 'debug' "Install of version ${v} succeeded" \
     || error_and_proceed "Install of version ${v} failed";
 done;
 
-log 'info' '## Ensuring tfenv list success with no default set';
-tfenv list \
+log 'info' '## Ensuring tofuenv list success with no default set';
+tofuenv list \
   && log 'debug' "List succeeded with no default set" \
   || error_and_proceed "List failed with no default set";
 
-tfenv use 0.14.6;
+tofuenv use 0.14.6;
 
-log 'info' '## Comparing "tfenv list" with default set';
-result="$(tfenv list)";
+log 'info' '## Comparing "tofuenv list" with default set';
+result="$(tofuenv list)";
 expected="$(cat << EOS
-* 0.14.6 (set by $(tfenv version-file))
+* 0.14.6 (set by $(tofuenv version-file))
   0.9.11
   0.9.2
   0.9.1

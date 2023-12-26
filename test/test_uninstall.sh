@@ -53,8 +53,8 @@ declare -a errors=();
 function test_uninstall() {
   local k="${1}";
   local v="${2}";
-  tfenv install "${v}" || return 1;
-  tfenv uninstall "${v}" || return 1;
+  tofuenv install "${v}" || return 1;
+  tofuenv uninstall "${v}" || return 1;
   log 'info' 'Confirming uninstall success; an error indicates success:';
   check_active_version "${v}" && return 1 || return 0;
 };
@@ -73,8 +73,8 @@ tests__keywords=(
 tests__versions=(
   '0.9.1'
   '0.11.15-oci'
-  "$(tfenv list-remote | head -n1)"
-  "$(tfenv list-remote | grep -e "^0.8" | head -n1)"
+  "$(tofuenv list-remote | head -n1)"
+  "$(tofuenv list-remote | grep -e "^0.8" | head -n1)"
   '0.14.6'
 );
 
@@ -92,12 +92,12 @@ done;
 echo "### Uninstall removes versions directory"
 cleanup || error_and_die "Cleanup failed?!"
 (
-  tfenv install 0.12.1 || exit 1
-  tfenv install 0.12.2 || exit 1
+  tofuenv install 0.12.1 || exit 1
+  tofuenv install 0.12.2 || exit 1
   [ -d "./versions" ] || exit 1
-  tfenv uninstall 0.12.1 || exit 1
+  tofuenv uninstall 0.12.1 || exit 1
   [ -d "./versions" ] || exit 1
-  tfenv uninstall 0.12.2 || exit 1
+  tofuenv uninstall 0.12.2 || exit 1
   [ -d "./versions" ] && exit 1 || exit 0
 ) || error_and_proceed "Removing last version deletes versions directory"
 
