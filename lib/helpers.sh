@@ -2,52 +2,52 @@
 
 set -uo pipefail;
 
-if [ -z "${TFENV_ROOT:-""}" ]; then
+if [ -z "${TOFUENV_ROOT:-""}" ]; then
   # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   readlink_f() {
     local target_file="${1}";
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "${target_file%/*}" || early_death "Failed to 'cd \$(${target_file%/*})' while trying to determine TFENV_ROOT";
-      file_name="${target_file##*/}" || early_death "Failed to '\"${target_file##*/}\"' while trying to determine TFENV_ROOT";
+      cd "${target_file%/*}" || early_death "Failed to 'cd \$(${target_file%/*})' while trying to determine TOFUENV_ROOT";
+      file_name="${target_file##*/}" || early_death "Failed to '\"${target_file##*/}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
 
     echo "$(pwd -P)/${file_name}";
   };
-  TFENV_SHIM=$(readlink_f "${0}")
-  TFENV_ROOT="${TFENV_SHIM%/*/*}";
-  [ -n "${TFENV_ROOT}" ] || early_death "Failed to determine TFENV_ROOT";
+  TOFUENV_SHIM=$(readlink_f "${0}")
+  TOFUENV_ROOT="${TOFUENV_SHIM%/*/*}";
+  [ -n "${TOFUENV_ROOT}" ] || early_death "Failed to determine TOFUENV_ROOT";
 else
-  TFENV_ROOT="${TFENV_ROOT%/}";
+  TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
-export TFENV_ROOT;
+export TOFUENV_ROOT;
 
-if [ -z "${TFENV_CONFIG_DIR:-""}" ]; then
-  TFENV_CONFIG_DIR="$TFENV_ROOT";
+if [ -z "${TOFUENV_CONFIG_DIR:-""}" ]; then
+  TOFUENV_CONFIG_DIR="$TOFUENV_ROOT";
 else
-  TFENV_CONFIG_DIR="${TFENV_CONFIG_DIR%/}";
+  TOFUENV_CONFIG_DIR="${TOFUENV_CONFIG_DIR%/}";
 fi
-export TFENV_CONFIG_DIR;
+export TOFUENV_CONFIG_DIR;
 
-if [ "${TFENV_DEBUG:-0}" -gt 0 ]; then
-  # Only reset DEBUG if TFENV_DEBUG is set, and DEBUG is unset or already a number
-  if [[ "${DEBUG:-0}" =~ ^[0-9]+$ ]] && [ "${DEBUG:-0}" -gt "${TFENV_DEBUG:-0}" ]; then
-    export DEBUG="${TFENV_DEBUG:-0}";
+if [ "${TOFUENV_DEBUG:-0}" -gt 0 ]; then
+  # Only reset DEBUG if TOFUENV_DEBUG is set, and DEBUG is unset or already a number
+  if [[ "${DEBUG:-0}" =~ ^[0-9]+$ ]] && [ "${DEBUG:-0}" -gt "${TOFUENV_DEBUG:-0}" ]; then
+    export DEBUG="${TOFUENV_DEBUG:-0}";
   fi;
-  if [[ "${TFENV_DEBUG}" -gt 2 ]]; then
+  if [[ "${TOFUENV_DEBUG}" -gt 2 ]]; then
     export PS4='+ [${BASH_SOURCE##*/}:${LINENO}] ';
     set -x;
   fi;
 fi;
 
 function load_bashlog () {
-  source "${TFENV_ROOT}/lib/bashlog.sh";
+  source "${TOFUENV_ROOT}/lib/bashlog.sh";
 };
 export -f load_bashlog;
 
-if [ "${TFENV_DEBUG:-0}" -gt 0 ] ; then
+if [ "${TOFUENV_DEBUG:-0}" -gt 0 ] ; then
   # our shim below cannot be used when debugging is enabled
   load_bashlog;
 else
@@ -72,8 +72,8 @@ function curlw () {
     TLS_OPT="";
   fi;
 
-  if [[ ! -z "${TFENV_NETRC_PATH:-""}" ]]; then
-    NETRC_OPT="--netrc-file ${TFENV_NETRC_PATH}";
+  if [[ ! -z "${TOFUENV_NETRC_PATH:-""}" ]]; then
+    NETRC_OPT="--netrc-file ${TOFUENV_NETRC_PATH}";
   else
     NETRC_OPT="";
   fi;
@@ -89,9 +89,9 @@ function check_active_version() {
       maybe_chdir="-chdir=${2}";
   fi;
 
-  local active_version="$(${TFENV_ROOT}/bin/terraform ${maybe_chdir} version | grep '^Terraform')";
+  local active_version="$(${TOFUENV_ROOT}/bin/terraform ${maybe_chdir} version | grep '^OpenTofu')";
 
-  if ! grep -E "^Terraform v${v}((-dev)|( \([a-f0-9]+\)))?( is already installed)?\$" <(echo "${active_version}"); then
+  if ! grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?( is already installed)?\$" <(echo "${active_version}"); then
     log 'debug' "Expected version ${v} but found ${active_version}";
     return 1;
   fi;
@@ -103,14 +103,14 @@ export -f check_active_version;
 
 function check_installed_version() {
   local v="${1}";
-  local bin="${TFENV_CONFIG_DIR}/versions/${v}/terraform";
-  [ -n "$(${bin} version | grep -E "^Terraform v${v}((-dev)|( \([a-f0-9]+\)))?$")" ];
+  local bin="${TOFUENV_CONFIG_DIR}/versions/${v}/terraform";
+  [ -n "$(${bin} version | grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?$")" ];
 };
 export -f check_installed_version;
 
 function check_default_version() {
   local v="${1}";
-  local def="$(cat "${TFENV_CONFIG_DIR}/version")";
+  local def="$(cat "${TOFUENV_CONFIG_DIR}/version")";
   [ "${def}" == "${v}" ];
 };
 export -f check_default_version;
@@ -151,9 +151,9 @@ function check_dependencies() {
 };
 export -f check_dependencies;
 
-source "$TFENV_ROOT/lib/tfenv-exec.sh";
-source "$TFENV_ROOT/lib/tfenv-min-required.sh";
-source "$TFENV_ROOT/lib/tfenv-version-file.sh";
-source "$TFENV_ROOT/lib/tfenv-version-name.sh";
+source "$TOFUENV_ROOT/lib/tofuenv-exec.sh";
+source "$TOFUENV_ROOT/lib/tofuenv-min-required.sh";
+source "$TOFUENV_ROOT/lib/tofuenv-version-file.sh";
+source "$TOFUENV_ROOT/lib/tofuenv-version-name.sh";
 
-export TFENV_HELPERS=1;
+export TOFUENV_HELPERS=1;

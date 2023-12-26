@@ -1,8 +1,6 @@
-[![CI Test](https://github.com/tfutils/tfenv/actions/workflows/test.yml/badge.svg)](https://github.com/tfutils/tfenv/actions/workflows/test.yml)
+# tofuenv
 
-# tfenv
-
-[Terraform](https://www.terraform.io/) version manager inspired by [rbenv](https://github.com/rbenv/rbenv)
+[OpenTofu](https://opentofu.org/) version manager inspired by [tfenv](https://github.com/tfutils/tfenv)
 
 ## Support
 

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ -n "${TOFUENV_DEBUG}" ] && set -x;
+
+export PATH="${TOFUENV_ROOT}/bin:${PATH}";

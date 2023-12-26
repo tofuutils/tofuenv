@@ -33,7 +33,7 @@ function log() {
 
   local level="${1}";
   local upper="$(echo "${level}" | awk '{print toupper($0)}')";
-  local debug_level="${TFENV_DEBUG:-0}";
+  local debug_level="${TOFUENV_DEBUG:-0}";
   local stdout_colours="${BASHLOG_COLOURS:-1}";
 
   local custom_eval_prefix="${BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX:-""}";
@@ -141,7 +141,7 @@ function log() {
     'debug')
       if [ "${debug_level}" -gt 0 ]; then
         # We are debugging to STDERR on purpose
-        # tfenv relies on STDOUT between libexecs to function
+        # tofuenv relies on STDOUT between libexecs to function
         echo -e "${std_line}" >&2;
       fi;
       ;;

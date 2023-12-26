@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -uo pipefail;
+
+echo 'Usage: tofuenv <command> [<options>]
+
+Commands:
+   install       Install a specific version of OpenTofu
+   use           Switch a version to use
+   uninstall     Uninstall a specific version of OpenTofu
+   list          List all installed versions
+   list-remote   List all installable versions
+   version-name  Print current version
+   init          Update environment to use 'tofuenv' correctly.
+   pin           Write the current active version to ./.opentofu-version
+';
+
+exit 0;

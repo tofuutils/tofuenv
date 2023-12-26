@@ -10,46 +10,46 @@ function early_death() {
   exit 1;
 };
 
-if [ -z "${TFENV_ROOT:-""}" ]; then
+if [ -z "${TOFUENV_ROOT:-""}" ]; then
   # http://stackoverflow.com/questions/1055671/how-can-i-get-the-behavior-of-gnus-readlink-f-on-a-mac
   readlink_f() {
     local target_file="${1}";
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TFENV_ROOT";
-      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TFENV_ROOT";
+      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
+      file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
 
     echo "$(pwd -P)/${file_name}";
   };
 
-  TFENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
-  [ -n "${TFENV_ROOT}" ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TFENV_ROOT";
+  TOFUENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
+  [ -n "${TOFUENV_ROOT}" ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
 else
-  TFENV_ROOT="${TFENV_ROOT%/}";
+  TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
-export TFENV_ROOT;
+export TOFUENV_ROOT;
 
-if [ -n "${TFENV_HELPERS:-""}" ]; then
-  log 'debug' 'TFENV_HELPERS is set, not sourcing helpers again';
+if [ -n "${TOFUENV_HELPERS:-""}" ]; then
+  log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TFENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TFENV_ROOT}/lib/helpers.sh";
-  if source "${TFENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TFENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
   fi;
 fi;
 
 # Ensure libexec and bin are in $PATH
 for dir in libexec bin; do
   case ":${PATH}:" in
-    *:${TFENV_ROOT}/${dir}:*) log 'debug' "\$PATH already contains '${TFENV_ROOT}/${dir}', not adding it again";;
+    *:${TOFUENV_ROOT}/${dir}:*) log 'debug' "\$PATH already contains '${TOFUENV_ROOT}/${dir}', not adding it again";;
     *)
-      log 'debug' "\$PATH does not contain '${TFENV_ROOT}/${dir}', prepending and exporting it now";
-      export PATH="${TFENV_ROOT}/${dir}:${PATH}";
+      log 'debug' "\$PATH does not contain '${TOFUENV_ROOT}/${dir}', prepending and exporting it now";
+      export PATH="${TOFUENV_ROOT}/${dir}:${PATH}";
       ;;
   esac;
 done;
@@ -58,13 +58,13 @@ done;
 # Begin Script Body #
 #####################
 
-[ "${#}" -gt 1 ] && log 'error' 'usage: tfenv install [<version>]';
+[ "${#}" -gt 1 ] && log 'error' 'usage: tofuenv install [<version>]';
 
 declare requested="${1:-""}";
 
-log debug "Resolving version with: tfenv-resolve-version ${requested}";
+log debug "Resolving version with: tofuenv-resolve-version ${requested}";
 declare resolved;
-resolved="$(tfenv-resolve-version ${requested})" || log 'error' "Failed to resolve ${requested} version";
+resolved="$(tofuenv-resolve-version ${requested})" || log 'error' "Failed to resolve ${requested} version";
 
 declare version="${resolved%%\:*}";
 declare regex="${resolved##*\:}";
@@ -73,12 +73,12 @@ declare regex="${resolved##*\:}";
 
 log 'debug' "Processing install for version ${version}, using regex ${regex}";
 
-remote_version="$(tfenv-list-remote | grep -e "${regex}" | head -n 1)";
+remote_version="$(tofuenv-list-remote | grep -e "${regex}" | head -n 1)";
 [ -n "${remote_version}" ] && version="${remote_version}" || log 'error' "No versions matching '${requested:-$version}' found in remote";
 
-dst_path="${TFENV_CONFIG_DIR}/versions/${version}";
+dst_path="${TOFUENV_CONFIG_DIR}/versions/${version}";
 if [ -f "${dst_path}/terraform" ]; then
-  echo "Terraform v${version} is already installed";
+  echo "OpenTofu v${version} is already installed";
   exit 0;
 fi;
 
@@ -117,35 +117,35 @@ case "$(uname -m)" in
               "${version}" =~ 0\.12\.(([0-9]|[1-2][0-9]))$ ||
               "${version}" =~ 0\.13\.[0-4]$
         ]]; then
-          TFENV_ARCH="${TFENV_ARCH:-amd64}";
+          TOFUENV_ARCH="${TOFUENV_ARCH:-amd64}";
         else
-          TFENV_ARCH="${TFENV_ARCH:-arm64}";
+          TOFUENV_ARCH="${TOFUENV_ARCH:-arm64}";
         fi;
       ;;
       "darwin")
         # No Apple Silicon builds before 1.0.2
         if [[ "${version}" =~ ^0\.[0-9]+\.[0-9]+ || "${version}" =~ ^1\.0\.[0-1]$
         ]]; then
-          TFENV_ARCH="${TFENV_ARCH:-amd64}";
+          TOFUENV_ARCH="${TOFUENV_ARCH:-amd64}";
         else
-          TFENV_ARCH="${TFENV_ARCH:-arm64}";
+          TOFUENV_ARCH="${TOFUENV_ARCH:-arm64}";
         fi;
       ;;
     esac;
     ;;
   *)
-    TFENV_ARCH="${TFENV_ARCH:-amd64}";
+    TOFUENV_ARCH="${TOFUENV_ARCH:-amd64}";
     ;;
 esac;
 
-os="${kernel}_${TFENV_ARCH}"
+os="${kernel}_${TOFUENV_ARCH}"
 
 keybase_bin="$(command -v keybase 2>/dev/null)";
 shasum_bin="$(command -v shasum 2>/dev/null)";
 sha256sum_bin="$(command -v sha256sum 2>/dev/null)";
 
-TFENV_REMOTE="${TFENV_REMOTE:-https://releases.hashicorp.com}";
-version_url="${TFENV_REMOTE}/terraform/${version}";
+TOFUENV_REMOTE="${TOFUENV_REMOTE:-https://releases.hashicorp.com}";
+version_url="${TOFUENV_REMOTE}/terraform/${version}";
 
 # Thanks for the inconsistency in 0.12-alpha, Hashicorp(!)
 if [[ "${version}" =~ 0.12.0-alpha[3-9] ]]; then
@@ -158,7 +158,7 @@ shasums_name="terraform_${version}_SHA256SUMS";
 shasums_signing_key_postfix=".72D7468F";
 shasums_sig="${shasums_name}${shasums_signing_key_postfix}.sig";
 
-log 'info' "Installing Terraform v${version}";
+log 'info' "Installing OpenTofu v${version}";
 
 # Create a local temporary directory for downloads
 tmpdir_arg="-t";
@@ -167,13 +167,13 @@ if mktemp --help 2>&1 | grep -- '--tmpdir' >/dev/null; then
   tmpdir_arg="--tmpdir";
 fi;
 
-download_tmp="$(mktemp -d ${tmpdir_arg} tfenv_download.XXXXXX)" || log 'error' "Unable to create temporary download directory (mktemp -d ${tmpdir_arg} tfenv_download.XXXXXX). Working Directory is: $(pwd)";
+download_tmp="$(mktemp -d ${tmpdir_arg} tofuenv_download.XXXXXX)" || log 'error' "Unable to create temporary download directory (mktemp -d ${tmpdir_arg} tofuenv_download.XXXXXX). Working Directory is: $(pwd)";
 
 # Clean it up in case of error
 trap "rm -rf ${download_tmp}" EXIT;
 
 declare curl_progress="";
-case "${TFENV_CURL_OUTPUT:-2}" in
+case "${TOFUENV_CURL_OUTPUT:-2}" in
   '2')
     log 'debug' 'Setting curl progress bar with "-#"';
     curl_progress="-#";
@@ -187,7 +187,7 @@ case "${TFENV_CURL_OUTPUT:-2}" in
     curl_progress="-s";
     ;;
   *)
-    log 'error' 'TFENV_CURL_OUTPUT specified, but not with a supported value ([0,1,2])';
+    log 'error' 'TOFUENV_CURL_OUTPUT specified, but not with a supported value ([0,1,2])';
     ;;
 esac;
 
@@ -212,12 +212,12 @@ download_signature() {
 check_dependencies;
 
 # Verify signature if verification mechanism (keybase, gpg, etc) is present
-if [[ -f "${TFENV_CONFIG_DIR}/use-gnupg" ]]; then
+if [[ -f "${TOFUENV_CONFIG_DIR}/use-gnupg" ]]; then
   # GnuPG uses the user's keyring, and any web-of-trust or local signatures or
   # anything else they have setup.  This is the crazy-powerful mode which is
   # overly confusing to newcomers.  We don't support it without the user creating
   # the file use-gnupg, optionally with directives in it.
-  gnupg_command="$(sed -E -n -e 's/^binary: *//p' <"${TFENV_CONFIG_DIR}/use-gnupg")";
+  gnupg_command="$(sed -E -n -e 's/^binary: *//p' <"${TOFUENV_CONFIG_DIR}/use-gnupg")";
   [[ -n "${gnupg_command}" ]] || gnupg_command=gpg;
 
   download_signature;
@@ -228,19 +228,19 @@ if [[ -f "${TFENV_CONFIG_DIR}/use-gnupg" ]]; then
     "${download_tmp}/${shasums_name}" \
     || log 'error' 'PGP signature rejected by GnuPG';
 
-elif [[ -f "${TFENV_CONFIG_DIR}/use-gpgv" ]]; then
+elif [[ -f "${TOFUENV_CONFIG_DIR}/use-gpgv" ]]; then
   # gpgv is a much simpler interface to verification, but does require that the
   # key have been downloaded and marked trusted.
-  # We don't force the caller to trust the tfenv repo's copy of their key, they
+  # We don't force the caller to trust the tofuenv repo's copy of their key, they
   # have to choose to make that trust decision.
-  gpgv_command="$(sed -E -n -e 's/^binary: *//p' <"${TFENV_CONFIG_DIR}/use-gpgv")";
-  trust_tfenv="$(sed -E -n -e 's/^trust.?tfenv: *//p' <"${TFENV_CONFIG_DIR}/use-gpgv")";
+  gpgv_command="$(sed -E -n -e 's/^binary: *//p' <"${TOFUENV_CONFIG_DIR}/use-gpgv")";
+  trust_tofuenv="$(sed -E -n -e 's/^trust.?tofuenv: *//p' <"${TOFUENV_CONFIG_DIR}/use-gpgv")";
   [[ -n "${gpgv_command}" ]] || gpgv_command=gpgv;
 
   download_signature;
-  if [[ "${trust_tfenv}" == 'yes' ]]; then
+  if [[ "${trust_tofuenv}" == 'yes' ]]; then
     ${gpgv_command} \
-      --keyring "${TFENV_ROOT}/share/hashicorp-keys.pgp" \
+      --keyring "${TOFUENV_ROOT}/share/hashicorp-keys.pgp" \
       "${download_tmp}/${shasums_sig}" \
       "${download_tmp}/${shasums_name}" \
       || log 'error' 'PGP signature rejected';
@@ -269,7 +269,7 @@ elif [[ -n "${keybase_bin}" && -x "${keybase_bin}" ]]; then
   fi;
 else
   # Warning about this avoids an unwarranted sense of confidence in the SHA check
-  log 'warn' "Not instructed to use Local PGP (${TFENV_CONFIG_DIR}/use-{gpgv,gnupg}) & No keybase install found, skipping OpenPGP signature verification";
+  log 'warn' "Not instructed to use Local PGP (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}) & No keybase install found, skipping OpenPGP signature verification";
 fi;
 
 if [[ -n "${shasum_bin}" && -x "${shasum_bin}" ]]; then
@@ -299,4 +299,4 @@ while IFS= read -r unzip_line; do
  log 'info' "${unzip_line}";
 done < <(printf '%s\n' "${unzip_output}");
 
-log 'info' "Installation of terraform v${version} successful. To make this your default version, run 'tfenv use ${version}'";
+log 'info' "Installation of terraform v${version} successful. To make this your default version, run 'tofuenv use ${version}'";
