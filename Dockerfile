@@ -19,7 +19,7 @@ RUN wget -O /tmp/tfenv.tar.gz "https://github.com/tfutils/tfenv/archive/refs/tag
     ;
 ENV TOFUENV_ROOT /usr/local/lib/tfenv
 
-ENV TFENV_CONFIG_DIR /var/tfenv
+ENV TOFUENV_CONFIG_DIR /var/tfenv
 VOLUME /var/tfenv
 
 # Default to latest; user-specifiable
