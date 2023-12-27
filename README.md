@@ -1,6 +1,6 @@
 # tofuenv
 
-[OpenTofu](https://opentofu.org/) version manager inspired by [tofuenv](https://github.com/tfutils/tofuenv)
+[OpenTofu](https://opentofu.org/) version manager inspired by [tfenv](https://github.com/tfutils/tfenv)
 
 ## Support
 
@@ -43,7 +43,7 @@ include ::tofuenv
 1. Check out tofuenv into any path (here is `${HOME}/.tofuenv`)
 
 ```console
-git clone --depth=1 https://github.com/tfutils/tofuenv.git ~/.tofuenv
+git clone --depth=1 https://github.com/opentofuutils/tofuenv.git ~/.tofuenv
 ```
 
 2. Add `~/.tofuenv/bin` to your `$PATH` any way you like
@@ -82,7 +82,7 @@ which tofuenv
 
 ### tofuenv install [version]
 
-Install a specific version of Terraform.
+Install a specific version of OpenTofu.
 
 If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) or [.terraform-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .terraform-version. The default is 'latest' if none are found.
 
@@ -503,6 +503,6 @@ rm -rf /some/path/to/tofuenv
 
 ## LICENSE
 
-- [tofuenv itself](https://github.com/tfutils/tofuenv/blob/master/LICENSE)
+- [tfenv itself](https://github.com/tfutils/tfenv/blob/master/LICENSE)
 - [rbenv](https://github.com/rbenv/rbenv/blob/master/LICENSE)
-  - tofuenv partially uses rbenv's source code
+  - tfenv partially uses rbenv's source code
