@@ -71,7 +71,7 @@ done;
 version_name="$(tofuenv-version-name 2>/dev/null || true)" \
   && log 'debug' "tofuenv-version-name reported: ${version_name}";
 
-echo "${version_name}" > .terraform-version;
-log 'info' "Pinned version by writing \"${version_name}\" to $(pwd)/.terraform-version";
+echo "${version_name}" > .opentofu-version;
+log 'info' "Pinned version by writing \"${version_name}\" to $(pwd)/.opentofu-version";
 
 exit 0;

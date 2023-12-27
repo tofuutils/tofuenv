@@ -84,7 +84,7 @@ which tofuenv
 
 Install a specific version of OpenTofu.
 
-If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) or [.terraform-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .terraform-version. The default is 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) or [.opentofu-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .opentofu-version. The default is 'latest' if none are found.
 
 If a parameter is passed, available options:
 
@@ -124,9 +124,9 @@ Use the file `${tofuenv_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg`
 see web-of-trust status; beware that a lack of trust path will not cause a
 validation failure.
 
-#### .terraform-version
+#### .opentofu-version
 
-If you use a [.terraform-version](#terraform-version-file) file, `tofuenv install` (no argument) will install the version written in it.
+If you use a [.opentofu-version](#terraform-version-file) file, `tofuenv install` (no argument) will install the version written in it.
 
 <a name="min-required"></a>
 #### min-required & latest-allowed
@@ -167,7 +167,7 @@ tofuenv_ARCH=arm64 tofuenv install 0.7.9
 
 String (Default: true)
 
-Should tofuenv automatically install terraform if the version specified by defaults or a .terraform-version file is not currently installed.
+Should tofuenv automatically install terraform if the version specified by defaults or a .opentofu-version file is not currently installed.
 
 ```console
 tofuenv_AUTO_INSTALL=false terraform plan
@@ -237,7 +237,7 @@ tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 
 String (Default: "")
 
-If not empty string, this variable overrides Terraform version, specified in [.terraform-version files](#terraform-version-file).
+If not empty string, this variable overrides Terraform version, specified in [.opentofu-version files](#terraform-version-file).
 `latest` and `latest:<regex>` syntax are also supported.
 [`tofuenv install`](#tofuenv-install-version) and [`tofuenv use`](#tofuenv-use-version) command also respects this variable.
 
@@ -385,7 +385,7 @@ Defaults to the PID of the calling process.
 
 Switch a version to use
 
-If no parameter is passed, the version to use is resolved automatically via [.terraform-version files](#terraform-version-file) or [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#terraform-version-file) or [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed version
 
@@ -459,14 +459,14 @@ $ tofuenv list-remote
 ...
 ```
 
-## .terraform-version file
+## .opentofu-version file
 
-If you put a `.terraform-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
+If you put a `.opentofu-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
 
-Note, that [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) can be used to override version, specified by `.terraform-version` file.
+Note, that [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) can be used to override version, specified by `.opentofu-version` file.
 
 ```console
-$ cat .terraform-version
+$ cat .opentofu-version
 0.6.16
 
 $ terraform version
@@ -475,12 +475,12 @@ Terraform v0.6.16
 Your version of Terraform is out of date! The latest version
 is 0.7.3. You can update by downloading from www.terraform.io
 
-$ echo 0.7.3 > .terraform-version
+$ echo 0.7.3 > .opentofu-version
 
 $ terraform version
 Terraform v0.7.3
 
-$ echo latest:^0.8 > .terraform-version
+$ echo latest:^0.8 > .opentofu-version
 
 $ terraform version
 Terraform v0.8.8

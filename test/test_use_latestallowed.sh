@@ -103,7 +103,7 @@ log 'info' '### Install latest-allowed with TOFUENV_AUTO_INSTALL';
 echo "terraform {
   required_version = \"~> 1.0.0\"
 }" >> latest_allowed.tf;
-echo 'latest-allowed' > .terraform-version;
+echo 'latest-allowed' > .opentofu-version;
 
 (
   TOFUENV_AUTO_INSTALL=true terraform version;
@@ -119,7 +119,7 @@ mkdir -p chdir-dir
 echo "terraform {
   required_version = \"~> 0.14.3\"
 }" >> chdir-dir/latest_allowed.tf;
-echo 'latest-allowed' > chdir-dir/.terraform-version
+echo 'latest-allowed' > chdir-dir/.opentofu-version
 
 (
   TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;

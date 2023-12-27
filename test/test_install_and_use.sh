@@ -151,12 +151,12 @@ for ((test_iter=0; test_iter<${tests_count}; ++test_iter )) ; do
   kv="${tests__kv[${test_iter}]}";
   v="${kv%,*}";
   k="${kv##*,}";
-  log 'info' "## ./.terraform-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} )";
-  log 'info' "Writing ${k} to ./.terraform-version";
-  echo "${k}" > ./.terraform-version;
+  log 'info' "## ./.opentofu-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} )";
+  log 'info' "Writing ${k} to ./.opentofu-version";
+  echo "${k}" > ./.opentofu-version;
   test_install_and_use "${v}" \
-    && log info "## ./.terraform-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) succeeded" \
-    || error_and_proceed "## ./.terraform-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) failed";
+    && log info "## ./.opentofu-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) succeeded" \
+    || error_and_proceed "## ./.opentofu-version Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) failed";
 done;
 
 for ((test_iter=0; test_iter<${tests_count}; ++test_iter )) ; do
@@ -167,50 +167,50 @@ for ((test_iter=0; test_iter<${tests_count}; ++test_iter )) ; do
   v="${kv%,*}";
   k="${kv##*,}";
   log 'info' "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} )";
-  log 'info' "Writing 0.0.0 to ./.terraform-version";
-  echo "0.0.0" > ./.terraform-version;
+  log 'info' "Writing 0.0.0 to ./.opentofu-version";
+  echo "0.0.0" > ./.opentofu-version;
   test_install_and_use_with_env "${v}" "${k}" \
     && log info "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) succeeded" \
     || error_and_proceed "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) failed";
 done;
 
 cleanup || log 'error' 'Cleanup failed?!';
-log 'info' '## ${HOME}/.terraform-version Test Preparation';
+log 'info' '## ${HOME}/.opentofu-version Test Preparation';
 
 # 0.12.22 reports itself as 0.12.21 and breaks testing
 declare v1="$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | grep -v '0.12.22' | head -n 2 | tail -n 1)";
 declare v2="$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | grep -v '0.12.22' | head -n 1)";
 
-if [ -f "${HOME}/.terraform-version" ]; then
-  log 'info' "Backing up ${HOME}/.terraform-version to ${HOME}/.terraform-version.bup";
-  mv "${HOME}/.terraform-version" "${HOME}/.terraform-version.bup";
+if [ -f "${HOME}/.opentofu-version" ]; then
+  log 'info' "Backing up ${HOME}/.opentofu-version to ${HOME}/.opentofu-version.bup";
+  mv "${HOME}/.opentofu-version" "${HOME}/.opentofu-version.bup";
 fi;
-log 'info' "Writing ${v1} to ${HOME}/.terraform-version";
-echo "${v1}" > "${HOME}/.terraform-version";
+log 'info' "Writing ${v1} to ${HOME}/.opentofu-version";
+echo "${v1}" > "${HOME}/.opentofu-version";
 
-log 'info' "## \${HOME}/.terraform-version Test 1/3: Install and Use ( ${v1} )";
+log 'info' "## \${HOME}/.opentofu-version Test 1/3: Install and Use ( ${v1} )";
 test_install_and_use "${v1}" \
-  && log info "## \${HOME}/.terraform-version Test 1/1: ( ${v1} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.terraform-version Test 1/1: ( ${v1} ) failed";
+  && log info "## \${HOME}/.opentofu-version Test 1/1: ( ${v1} ) succeeded" \
+  || error_and_proceed "## \${HOME}/.opentofu-version Test 1/1: ( ${v1} ) failed";
 
-log 'info' "## \${HOME}/.terraform-version Test 2/3: Override Install with Parameter ( ${v2} )";
+log 'info' "## \${HOME}/.opentofu-version Test 2/3: Override Install with Parameter ( ${v2} )";
 test_install_and_use_overridden "${v2}" "${v2}" \
-  && log info "## \${HOME}/.terraform-version Test 2/3: ( ${v2} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.terraform-version Test 2/3: ( ${v2} ) failed";
+  && log info "## \${HOME}/.opentofu-version Test 2/3: ( ${v2} ) succeeded" \
+  || error_and_proceed "## \${HOME}/.opentofu-version Test 2/3: ( ${v2} ) failed";
 
-log 'info' "## \${HOME}/.terraform-version Test 3/3: Override Use with Parameter ( ${v2} )";
+log 'info' "## \${HOME}/.opentofu-version Test 3/3: Override Use with Parameter ( ${v2} )";
 (
   tofuenv use "${v2}" || exit 1;
   check_default_version "${v2}" || exit 1;
-) && log info "## \${HOME}/.terraform-version Test 3/3: ( ${v2} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.terraform-version Test 3/3: ( ${v2} ) failed";
+) && log info "## \${HOME}/.opentofu-version Test 3/3: ( ${v2} ) succeeded" \
+  || error_and_proceed "## \${HOME}/.opentofu-version Test 3/3: ( ${v2} ) failed";
 
-log 'info' '## \${HOME}/.terraform-version Test Cleanup';
-log 'info' "Deleting ${HOME}/.terraform-version";
-rm "${HOME}/.terraform-version";
-if [ -f "${HOME}/.terraform-version.bup" ]; then
-  log 'info' "Restoring backup from ${HOME}/.terraform-version.bup to ${HOME}/.terraform-version";
-  mv "${HOME}/.terraform-version.bup" "${HOME}/.terraform-version";
+log 'info' '## \${HOME}/.opentofu-version Test Cleanup';
+log 'info' "Deleting ${HOME}/.opentofu-version";
+rm "${HOME}/.opentofu-version";
+if [ -f "${HOME}/.opentofu-version.bup" ]; then
+  log 'info' "Restoring backup from ${HOME}/.opentofu-version.bup to ${HOME}/.opentofu-version";
+  mv "${HOME}/.opentofu-version.bup" "${HOME}/.opentofu-version";
 fi;
 
 log 'info' '## Use Auto-Install Test 1/2: (No Input)';
