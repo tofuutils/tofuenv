@@ -35,7 +35,7 @@ function tofuenv-exec() {
     fi;
   fi;
 
-  TF_BIN_PATH="${TOFUENV_CONFIG_DIR}/versions/${TOFUENV_VERSION}/terraform";
+  TF_BIN_PATH="${TOFUENV_CONFIG_DIR}/versions/${TOFUENV_VERSION}/tofu";
   export PATH="${TF_BIN_PATH}:${PATH}";
   log 'debug' "TF_BIN_PATH added to PATH: ${TF_BIN_PATH}";
   log 'debug' "Executing: ${TF_BIN_PATH} $@";
