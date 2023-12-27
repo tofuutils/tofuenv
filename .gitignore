@@ -1,7 +1,7 @@
 versions/
 version
-.terraform-version
-bin/terraform-*
+.opentofu-version
+bin/tofu-*
 /use-gnupg
 /use-gpgv
 .*.swp

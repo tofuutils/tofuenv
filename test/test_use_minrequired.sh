@@ -111,7 +111,7 @@ minv='1.2.0';
 echo "terraform {
   required_version = \">=${minv}\"
 }" >> min_required.tf;
-echo 'min-required' > .terraform-version;
+echo 'min-required' > .opentofu-version;
 
 (
   TOFUENV_AUTO_INSTALL=true terraform version;
@@ -129,7 +129,7 @@ mkdir -p chdir-dir
 echo "terraform {
   required_version = \">=${minv}\"
 }" >> chdir-dir/min_required.tf;
-echo 'min-required' > chdir-dir/.terraform-version
+echo 'min-required' > chdir-dir/.opentofu-version
 
 (
   TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;

@@ -122,8 +122,8 @@ function cleanup() {
   rm -rf ./version;
   log 'debug' "Deleting ${pwd}/versions";
   rm -rf ./versions;
-  log 'debug' "Deleting ${pwd}/.terraform-version";
-  rm -rf ./.terraform-version;
+  log 'debug' "Deleting ${pwd}/.opentofu-version";
+  rm -rf ./.opentofu-version;
   log 'debug' "Deleting ${pwd}/latest_allowed.tf";
   rm -rf ./latest_allowed.tf;
   log 'debug' "Deleting ${pwd}/min_required.tf";
