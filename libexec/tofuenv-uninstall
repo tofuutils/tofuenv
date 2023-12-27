@@ -116,7 +116,7 @@ version="$(tofuenv-list | sed -E 's/^(\*| )? //g; s/ \(set by .+\)$//' | grep -e
 [ -n "${version}" ] || log 'error' "No versions matching '${regex}' found in local";
 
 dst_path="${TOFUENV_CONFIG_DIR}/versions/${version}";
-if [ -f "${dst_path}/opentofu" ]; then
+if [ -f "${dst_path}/tofu" ]; then
   log 'info' "Uninstall OpenTofu v${version}";
   rm -r "${dst_path}";
 
