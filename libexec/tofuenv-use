@@ -136,9 +136,9 @@ log 'debug' "target_path is ${TOFUENV_CONFIG_DIR}/versions/${installed_version}"
 
 [ -d "${target_path}" ] \
   || log 'error' "Version directory for ${installed_version} (${target_path}) is not present! Manual intervention required.";
-[ -f "${target_path}/opentofu" ] \
+[ -f "${target_path}/tofu" ] \
   || log 'error' "Version directory for ${installed_version} is present, but the opentofu binary is not! Manual intervention required.";
-[ -x "${target_path}/opentofu" ] \
+[ -x "${target_path}/tofu" ] \
   || log 'error' "Version directory for ${installed_version} is present, but the opentofu binary is not executable! Manual intervention required.";
 
 log 'info' "Switching default version to v${installed_version}";
