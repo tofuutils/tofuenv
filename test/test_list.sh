@@ -70,8 +70,8 @@ tofuenv use 1.6.0-rc1;
 log 'info' '## Comparing "tofuenv list" with default set';
 result="$(tofuenv list)";
 expected="$(cat << EOS
-* 1.6.0-rc1 (set by $(tofuenv version-file))
   1.6.0-beta5
+* 1.6.0-rc1 (set by $(tofuenv version-file))
 EOS
 )";
 

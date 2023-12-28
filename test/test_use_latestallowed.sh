@@ -71,13 +71,13 @@ cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '### Install latest-allowed tagged version (#.#.#-tag#)'
 
 echo "terraform {
-    required_version = \"<=0.13.0-rc1\"
+    required_version = \"<=1.6.0-rc1\"
 }" > latest_allowed.tf;
 
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 0.13.0-rc1;
+  check_active_version 1.6.0-rc1;
 ) || error_and_proceed 'Latest allowed tagged-version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';

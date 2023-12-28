@@ -103,11 +103,9 @@ tests__kv=(
   "$(tofuenv list-remote | grep 'alpha' | head -n 1),latest:alpha"
   "$(tofuenv list-remote | grep 'beta' | head -n 1),latest:beta"
   "$(tofuenv list-remote | grep 'rc' | head -n 1),latest:rc"
-  "$(tofuenv list-remote | grep '^0\.11\.' | head -n 1),latest:^0.11."
-  '0.11.15-oci,0.11.15-oci'
-  '1.3.10,latest:^1\.3'
-  '1.6.3,1.6.3'
-  '0.14.6,v0.14.6'
+  "$(tofuenv list-remote | grep '^1\.6\.' | head -n 1),latest:^1.6."
+  '1.6.0-alpha2,latest:^1\.6'
+  '1.6.0-rc1,1.6.0-alpha1'
 );
 
 log 'info' "Kernel under test: $(uname -s)";
