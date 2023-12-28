@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Summary: Show the currently-selected terraform version
+# Summary: Show the currently-selected tofu version
 
 set -uo pipefail;
 
@@ -58,7 +58,7 @@ done;
 
 # If on MacOS with Homebrew, use GNU grep
 # This allows keybase login detection to work on Mac,
-# and is required to be able to detect terraform version
+# and is required to be able to detect tofu version
 # from "required_version" setting in "*.tf" files
 check_dependencies;
 

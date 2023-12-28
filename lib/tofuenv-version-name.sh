@@ -63,7 +63,7 @@ function tofuenv-version-name() {
 
       log 'debug' "Resolved ${TOFUENV_VERSION} to locally installed version: ${local_version}";
     elif [[ "${auto_install}" != "true" ]]; then
-      log 'error' 'No versions of terraform installed and TOFUENV_AUTO_INSTALL is not true. Please install a version of terraform before it can be selected as latest';
+      log 'error' 'No versions of tofu installed and TOFUENV_AUTO_INSTALL is not true. Please install a version of tofu before it can be selected as latest';
     fi;
 
     if [[ "${auto_install}" == "true" ]]; then
@@ -83,7 +83,7 @@ function tofuenv-version-name() {
       if [[ -n "${local_version}" ]]; then
         TOFUENV_VERSION="${local_version}";
       else
-        log 'error' "No installed versions of terraform matched '${TOFUENV_VERSION}'";
+        log 'error' "No installed versions of tofu matched '${TOFUENV_VERSION}'";
       fi;
     fi;
   else

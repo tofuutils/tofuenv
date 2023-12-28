@@ -89,7 +89,7 @@ function check_active_version() {
       maybe_chdir="-chdir=${2}";
   fi;
 
-  local active_version="$(${TOFUENV_ROOT}/bin/terraform ${maybe_chdir} version | grep '^OpenTofu')";
+  local active_version="$(${TOFUENV_ROOT}/bin/tofu ${maybe_chdir} version | grep '^OpenTofu')";
 
   if ! grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?( is already installed)?\$" <(echo "${active_version}"); then
     log 'debug' "Expected version ${v} but found ${active_version}";
@@ -103,7 +103,7 @@ export -f check_active_version;
 
 function check_installed_version() {
   local v="${1}";
-  local bin="${TOFUENV_CONFIG_DIR}/versions/${v}/terraform";
+  local bin="${TOFUENV_CONFIG_DIR}/versions/${v}/tofu";
   [ -n "$(${bin} version | grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?$")" ];
 };
 export -f check_installed_version;

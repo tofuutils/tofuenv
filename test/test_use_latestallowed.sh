@@ -106,7 +106,7 @@ echo "terraform {
 echo 'latest-allowed' > .opentofu-version;
 
 (
-  TOFUENV_AUTO_INSTALL=true terraform version;
+  TOFUENV_AUTO_INSTALL=true tofu version;
   check_active_version 1.0.11;
 ) || error_and_proceed 'Latest allowed auto-installed version does not match';
 
@@ -122,7 +122,7 @@ echo "terraform {
 echo 'latest-allowed' > chdir-dir/.opentofu-version
 
 (
-  TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
+  TOFUENV_AUTO_INSTALL=true tofu -chdir=chdir-dir version;
   check_active_version 0.14.11 chdir-dir;
 ) || error_and_proceed 'Latest allowed version from -chdir does not match';
 

@@ -15,8 +15,8 @@ function tofuenv-min-required() {
     else
       local min_required_file="$(grep -Hn required_version ${path}/{*.tf,*.tf.json} 2>/dev/null | xargs)";
 
-      # Probably not an advisable way to choose a terraform version,
-      # but this is the way this functionality works in terraform:
+      # Probably not an advisable way to choose a tofu version,
+      # but this is the way this functionality works in tofu:
       # add .0 to versions without a minor and/or patch version (e.g. 12.0)
       while ! [[ "${found_min_required}" =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; do
         found_min_required="${found_min_required}.0";

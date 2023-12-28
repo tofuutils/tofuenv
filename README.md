@@ -91,8 +91,8 @@ If a parameter is passed, available options:
 - `x.y.z` [Semver 2.0.0](https://semver.org/) string specifying the exact version to install
 - `latest` is a syntax to install latest version
 - `latest:<regex>` is a syntax to install latest version matching regex (used by grep -e)
-- `latest-allowed` is a syntax to scan your Terraform files to detect which version is maximally allowed.
-- `min-required` is a syntax to scan your Terraform files to detect which version is minimally required.
+- `latest-allowed` is a syntax to scan your OpenTofu files to detect which version is maximally allowed.
+- `min-required` is a syntax to scan your OpenTofu files to detect which version is minimally required.
 
 See [required_version](https://developer.hashicorp.com/terraform/language/settings) docs. Also [see min-required & latest-allowed](#min-required) section below.
 
@@ -126,7 +126,7 @@ validation failure.
 
 #### .opentofu-version
 
-If you use a [.opentofu-version](#terraform-version-file) file, `tofuenv install` (no argument) will install the version written in it.
+If you use a [.opentofu-version](#opentofu-version-file) file, `tofuenv install` (no argument) will install the version written in it.
 
 <a name="min-required"></a>
 #### min-required & latest-allowed
@@ -167,21 +167,21 @@ tofuenv_ARCH=arm64 tofuenv install 0.7.9
 
 String (Default: true)
 
-Should tofuenv automatically install terraform if the version specified by defaults or a .opentofu-version file is not currently installed.
+Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
 
 ```console
-tofuenv_AUTO_INSTALL=false terraform plan
+tofuenv_AUTO_INSTALL=false tofu plan
 ```
 
 ```console
-terraform use <version that is not yet installed>
+tofu use <version that is not yet installed>
 ```
 
 ##### `tofuenv_CURL_OUTPUT`
 
 Integer (Default: 2)
 
-Set the mechanism used for displaying download progress when downloading terraform versions from the remote server.
+Set the mechanism used for displaying download progress when downloading tofu versions from the remote server.
 
 * 2: v1 Behaviour: Pass `-#` to curl
 * 1: Use curl default
@@ -213,7 +213,7 @@ tofuenv_REMOTE=https://example.jfrog.io/artifactory/hashicorp
 Integer (Default: 0)
 
 When using a custom remote, such as Artifactory, instead of the Hashicorp servers,
-the list of terraform versions returned by the curl of the remote directory may be inverted.
+the list of tofu versions returned by the curl of the remote directory may be inverted.
 In this case the `latest` functionality will not work as expected because it expects the
 versions to be listed in order of release date from newest to oldest. If your remote
 is instead providing a list that is oldes-first, set `tofuenv_REVERSE_REMOTE=1` and
@@ -227,7 +227,7 @@ tofuenv_REVERSE_REMOTE=1 tofuenv list-remote
 
 Path (Default: `$tofuenv_ROOT`)
 
-The path to a directory where the local terraform versions and configuration files exist.
+The path to a directory where the local tofu versions and configuration files exist.
 
 ```console
 tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
@@ -237,14 +237,14 @@ tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 
 String (Default: "")
 
-If not empty string, this variable overrides Terraform version, specified in [.opentofu-version files](#terraform-version-file).
+If not empty string, this variable overrides OpenTofu version, specified in [.opentofu-version files](#opentofu-version-file).
 `latest` and `latest:<regex>` syntax are also supported.
 [`tofuenv install`](#tofuenv-install-version) and [`tofuenv use`](#tofuenv-use-version) command also respects this variable.
 
 e.g.
 
 ```console
-TOFUENV_TOFU_VERSION=latest:^0.11. terraform --version
+TOFUENV_TOFU_VERSION=latest:^0.11. tofu --version
 ```
 
 ##### `tofuenv_NETRC_PATH`
@@ -385,13 +385,13 @@ Defaults to the PID of the calling process.
 
 Switch a version to use
 
-If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#terraform-version-file) or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#opentofu-version-file) or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (TOFUENV_TOFU_VERSION takes precedence), defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed version
 
 `latest:<regex>` is a syntax to use latest installed version matching regex (used by grep -e)
 
-`min-required` will switch to the version minimally required by your terraform sources (see above `tofuenv install`)
+`min-required` will switch to the version minimally required by your tofu sources (see above `tofuenv install`)
 
 ```console
 $ tofuenv use
@@ -405,7 +405,7 @@ Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest 
 
 ### tofuenv uninstall &lt;version>
 
-Uninstall a specific version of Terraform
+Uninstall a specific version of OpenTofu
 `latest` is a syntax to uninstall latest version
 `latest:<regex>` is a syntax to uninstall latest version matching regex (used by grep -e)
 
@@ -469,23 +469,23 @@ Note, that [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) ca
 $ cat .opentofu-version
 0.6.16
 
-$ terraform version
-Terraform v0.6.16
+$ tofu version
+OpenTofu v0.6.16
 
-Your version of Terraform is out of date! The latest version
+Your version of OpenTofu is out of date! The latest version
 is 0.7.3. You can update by downloading from www.terraform.io
 
 $ echo 0.7.3 > .opentofu-version
 
-$ terraform version
-Terraform v0.7.3
+$ tofu version
+OpenTofu v0.7.3
 
 $ echo latest:^0.8 > .opentofu-version
 
-$ terraform version
-Terraform v0.8.8
+$ tofu version
+OpenTofu v0.8.8
 
-$ TOFUENV_TOFU_VERSION=1.6.0 terraform --version
+$ TOFUENV_TOFU_VERSION=1.6.0 tofu --version
 tofu v1.6.0
 ```
 

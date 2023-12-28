@@ -81,7 +81,7 @@ else
 fi;
 export version_source;
 
-# Register for whether a default terraform version has yet been set
+# Register for whether a default tofu version has yet been set
 declare -i default_set=0;
 
 print_version () {

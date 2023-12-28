@@ -39,7 +39,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: "tofuenv-terraform:${{ github.sha }}"
+          tags: "tofuenv-tofu:${{ github.sha }}"
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
@@ -78,7 +78,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: 'tofuenv-terraform:latest'
+          tags: 'tofuenv-tofu:latest'
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
