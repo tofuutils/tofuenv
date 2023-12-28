@@ -55,7 +55,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '### Install min-required normal version (#.#.#)';
 
-minv='1.6.0';
+minv='1.6.0-rc1';
 
 echo "terraform {
   required_version = \">=${minv}\"
@@ -72,7 +72,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '### Install min-required tagged version (#.#.#-tag#)'
 
-minv='1.5.0-rc1'
+minv='1.6.0-rc1'
 
 echo "terraform {
     required_version = \">=${minv}\"
@@ -106,7 +106,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL';
 
-minv='1.2.0';
+minv='1.6.0-rc1';
 
 echo "terraform {
   required_version = \">=${minv}\"
@@ -123,7 +123,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL & -chdir';
 
-minv='1.1.0';
+minv='1.6.0-rc1';
 
 mkdir -p chdir-dir
 echo "terraform {

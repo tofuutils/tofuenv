@@ -120,8 +120,7 @@ if [[ "$(uname -s)" != Darwin* ]]; then
   );
 
   tests__kv+=(
-    '0.8.8,latest:^0.8'
-    '0.7.13,0.7.13'
+    '1.6.0-rc1,latest:^1.6'
   );
 else
   log 'warn' "We're Darwin! Skipping legacy tests.";

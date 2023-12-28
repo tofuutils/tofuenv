@@ -56,7 +56,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '### Install latest-allowed normal version (#.#.#)';
 
 echo "terraform {
-  required_version = \"~> 1.1.0\"
+  required_version = \"~> 1.6.0-rc1\"
 }" > latest_allowed.tf;
 
 (
