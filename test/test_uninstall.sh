@@ -63,19 +63,15 @@ log 'info' '### Test Suite: Uninstall Local Versions';
 cleanup || log 'error' 'Cleanup failed?!';
 
 tests__keywords=(
-  '0.9.1'
-  '0.11.15-oci'
+  '1.6.0-rc1'
   'latest'
-  'latest:^0.8'
-  'v0.14.6'
+  'latest:^1.6'
 );
 
 tests__versions=(
-  '0.9.1'
-  '0.11.15-oci'
+  '1.6.0-rc1'
   "$(tofuenv list-remote | head -n1)"
-  "$(tofuenv list-remote | grep -e "^0.8" | head -n1)"
-  '0.14.6'
+  "$(tofuenv list-remote | grep -e "^1.6" | head -n1)"
 );
 
 tests_count=${#tests__keywords[@]};
