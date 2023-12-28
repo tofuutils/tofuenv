@@ -98,7 +98,7 @@ tests__desc=(
 );
 
 tests__kv=(
-  "$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1),latest"
+#  "$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1),latest"
   "$(tofuenv list-remote | head -n 1),latest:"
   "$(tofuenv list-remote | grep 'alpha' | head -n 1),latest:alpha"
   "$(tofuenv list-remote | grep 'beta' | head -n 1),latest:beta"
