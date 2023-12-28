@@ -77,7 +77,7 @@ remote_version="$(tofuenv-list-remote | grep -e "${regex}" | head -n 1)";
 [ -n "${remote_version}" ] && version="${remote_version}" || log 'error' "No versions matching '${requested:-$version}' found in remote";
 
 dst_path="${TOFUENV_CONFIG_DIR}/versions/${version}";
-if [ -f "${dst_path}/terraform" ]; then
+if [ -f "${dst_path}/tofu" ]; then
   echo "OpenTofu v${version} is already installed";
   exit 0;
 fi;
@@ -108,28 +108,10 @@ case "$(uname -m)" in
   aarch64* | arm64*)
     case "${kernel}" in
       "linux")
-        # There is no arm64 support for versions:
-        # < 0.11.15
-        # >= 0.12.0, < 0.12.30
-        # >= 0.13.0, < 0.13.5
-        if [[ "${version}" =~ 0\.(([0-9]|10))\.\d* ||
-              "${version}" =~ 0\.11\.(([0-9]|1[0-4]))$ ||
-              "${version}" =~ 0\.12\.(([0-9]|[1-2][0-9]))$ ||
-              "${version}" =~ 0\.13\.[0-4]$
-        ]]; then
-          TOFUENV_ARCH="${TOFUENV_ARCH:-amd64}";
-        else
           TOFUENV_ARCH="${TOFUENV_ARCH:-arm64}";
-        fi;
       ;;
       "darwin")
-        # No Apple Silicon builds before 1.0.2
-        if [[ "${version}" =~ ^0\.[0-9]+\.[0-9]+ || "${version}" =~ ^1\.0\.[0-1]$
-        ]]; then
-          TOFUENV_ARCH="${TOFUENV_ARCH:-amd64}";
-        else
           TOFUENV_ARCH="${TOFUENV_ARCH:-arm64}";
-        fi;
       ;;
     esac;
     ;;
@@ -144,17 +126,12 @@ keybase_bin="$(command -v keybase 2>/dev/null)";
 shasum_bin="$(command -v shasum 2>/dev/null)";
 sha256sum_bin="$(command -v sha256sum 2>/dev/null)";
 
-TOFUENV_REMOTE="${TOFUENV_REMOTE:-https://releases.hashicorp.com}";
-version_url="${TOFUENV_REMOTE}/terraform/${version}";
+TOFUENV_REMOTE="${TOFUENV_REMOTE:-https://github.com/opentofu/opentofu/releases}";
+version_url="${TOFUENV_REMOTE}/download/v${version}";
 
-# Thanks for the inconsistency in 0.12-alpha, Hashicorp(!)
-if [[ "${version}" =~ 0.12.0-alpha[3-9] ]]; then
-  tarball_name="terraform_${version}_terraform_${version}_${os}.zip";
-else
-  tarball_name="terraform_${version}_${os}.zip";
-fi;
+tarball_name="tofu_${version}_${os}.zip";
 
-shasums_name="terraform_${version}_SHA256SUMS";
+shasums_name="tofu_${version}_SHA256SUMS";
 shasums_signing_key_postfix=".72D7468F";
 shasums_sig="${shasums_name}${shasums_signing_key_postfix}.sig";
 
@@ -207,7 +184,7 @@ download_signature() {
 
 # If on MacOS with Homebrew, use GNU grep
 # This allows keybase login detection to work on Mac,
-# and is required to be able to detect terraform version
+# and is required to be able to detect tofu version
 # from "required_version" setting in "*.tf" files
 check_dependencies;
 
@@ -299,4 +276,4 @@ while IFS= read -r unzip_line; do
  log 'info' "${unzip_line}";
 done < <(printf '%s\n' "${unzip_output}");
 
-log 'info' "Installation of terraform v${version} successful. To make this your default version, run 'tofuenv use ${version}'";
+log 'info' "Installation of tofu v${version} successful. To make this your default version, run 'tofuenv use ${version}'";
