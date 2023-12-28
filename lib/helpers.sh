@@ -78,7 +78,12 @@ function curlw () {
     NETRC_OPT="";
   fi;
 
-  curl ${TLS_OPT} ${NETRC_OPT} "$@";
+  if [[ ! -z "${TOFUENV_GITHUB_TOKEN:-""}" ]]; then
+    AUTHORIZATION_HEADER="Authorization: Bearer ${TOFUENV_GITHUB_TOKEN}";
+  else
+    AUTHORIZATION_HEADER="";
+  fi;
+  curl ${TLS_OPT} -H "${AUTHORIZATION_HEADER}" ${NETRC_OPT} "$@";
 };
 export -f curlw;
 
