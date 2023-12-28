@@ -64,7 +64,7 @@ done;
 declare version_requested version regex;
 declare arg="${1:-""}";
 
-if [ -z "${arg:-""}" -a -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+if [ -z "${arg:-""}" -a -z "${TOFUENV_TOFU_VERSION:-""}" ]; then
   version_file="$(tofuenv-version-file)";
   log 'debug' "Version File: ${version_file}";
   if [ "${version_file}" != "${TOFUENV_CONFIG_DIR}/version" ]; then
@@ -80,9 +80,9 @@ if [ -z "${arg:-""}" -a -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
     log 'info' 'No version requested on the command line or in the version file search path. Installing "latest"';
     version_requested='latest';
   fi;
-elif [ -n "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
-  version_requested="${TOFUENV_TERRAFORM_VERSION}";
-  log 'debug' "TOFUENV_TERRAFORM_VERSION is set: ${TOFUENV_TERRAFORM_VERSION}";
+elif [ -n "${TOFUENV_TOFU_VERSION:-""}" ]; then
+  version_requested="${TOFUENV_TOFU_VERSION}";
+  log 'debug' "TOFUENV_TOFU_VERSION is set: ${TOFUENV_TOFU_VERSION}";
 else
   version_requested="${arg}";
 fi;

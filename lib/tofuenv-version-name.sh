@@ -3,8 +3,8 @@
 set -uo pipefail;
 
 function tofuenv-version-name() {
-  if [[ -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]]; then
-    log 'debug' 'We are not hardcoded by a TOFUENV_TERRAFORM_VERSION environment variable';
+  if [[ -z "${TOFUENV_TOFU_VERSION:-""}" ]]; then
+    log 'debug' 'We are not hardcoded by a TOFUENV_TOFU_VERSION environment variable';
 
     TOFUENV_VERSION_FILE="$(tofuenv-version-file)" \
       && log 'debug' "TOFUENV_VERSION_FILE retrieved from tofuenv-version-file: ${TOFUENV_VERSION_FILE}" \
@@ -16,10 +16,10 @@ function tofuenv-version-name() {
     TOFUENV_VERSION_SOURCE="${TOFUENV_VERSION_FILE}";
 
   else
-    TOFUENV_VERSION="${TOFUENV_TERRAFORM_VERSION}" \
-      && log 'debug' "TOFUENV_VERSION specified in TOFUENV_TERRAFORM_VERSION environment variable: ${TOFUENV_VERSION}";
+    TOFUENV_VERSION="${TOFUENV_TOFU_VERSION}" \
+      && log 'debug' "TOFUENV_VERSION specified in TOFUENV_TOFU_VERSION environment variable: ${TOFUENV_VERSION}";
 
-    TOFUENV_VERSION_SOURCE='TOFUENV_TERRAFORM_VERSION';
+    TOFUENV_VERSION_SOURCE='TOFUENV_TOFU_VERSION';
   fi;
 
   local auto_install="${TOFUENV_AUTO_INSTALL:-true}";

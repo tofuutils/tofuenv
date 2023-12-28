@@ -62,10 +62,10 @@ test_install_and_use_with_env() {
   # Takes a static version and the optional keyword to install it with
   local k="${2-""}";
   local v="${1}";
-  TOFUENV_TERRAFORM_VERSION="${k}" tofuenv install || return 1;
+  TOFUENV_TOFU_VERSION="${k}" tofuenv install || return 1;
   check_installed_version "${v}" || return 1;
-  TOFUENV_TERRAFORM_VERSION="${k}" tofuenv use || return 1;
-  TOFUENV_TERRAFORM_VERSION="${k}" check_active_version "${v}" || return 1;
+  TOFUENV_TOFU_VERSION="${k}" tofuenv use || return 1;
+  TOFUENV_TOFU_VERSION="${k}" check_active_version "${v}" || return 1;
   return 0;
 };
 
@@ -166,12 +166,12 @@ for ((test_iter=0; test_iter<${tests_count}; ++test_iter )) ; do
   kv="${tests__kv[${test_iter}]}";
   v="${kv%,*}";
   k="${kv##*,}";
-  log 'info' "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} )";
+  log 'info' "## TOFUENV_TOFU_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} )";
   log 'info' "Writing 0.0.0 to ./.opentofu-version";
   echo "0.0.0" > ./.opentofu-version;
   test_install_and_use_with_env "${v}" "${k}" \
-    && log info "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) succeeded" \
-    || error_and_proceed "## TOFUENV_TERRAFORM_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) failed";
+    && log info "## TOFUENV_TOFU_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) succeeded" \
+    || error_and_proceed "## TOFUENV_TOFU_VERSION Test ${test_num}/${tests_count}: ${desc} ( ${k} / ${v} ) failed";
 done;
 
 cleanup || log 'error' 'Cleanup failed?!';

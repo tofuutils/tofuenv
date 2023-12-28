@@ -44,7 +44,7 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
         run: |
           expect=1.2.3;
-          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" "tofuenv-terraform:${{ github.sha }}" version)";
+          got="$(docker run -e "TOFUENV_TOFU_VERSION=${expect}" "tofuenv-terraform:${{ github.sha }}" version)";
           echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'
 
   # When we push to master, test everything in order to guarantee releases
@@ -83,5 +83,5 @@ jobs:
         if: contains(matrix.os, 'ubuntu')
         run: |
           expect=1.2.3;
-          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" tofuenv-terraform:latest version)";
+          got="$(docker run -e "TOFUENV_TOFU_VERSION=${expect}" tofuenv-terraform:latest version)";
           echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'

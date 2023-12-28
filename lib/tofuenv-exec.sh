@@ -23,10 +23,10 @@ function tofuenv-exec() {
 
   if [ ! -d "${TOFUENV_CONFIG_DIR}/versions/${TOFUENV_VERSION}" ]; then
   if [ "${TOFUENV_AUTO_INSTALL:-true}" == "true" ]; then
-    if [ -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+    if [ -z "${TOFUENV_TOFU_VERSION:-""}" ]; then
       TOFUENV_VERSION_SOURCE="$(tofuenv-version-file)";
     else
-      TOFUENV_VERSION_SOURCE='TOFUENV_TERRAFORM_VERSION';
+      TOFUENV_VERSION_SOURCE='TOFUENV_TOFU_VERSION';
     fi;
       log 'info' "version '${TOFUENV_VERSION}' is not installed (set by ${TOFUENV_VERSION_SOURCE}). Installing now as TOFUENV_AUTO_INSTALL==true";
       tofuenv-install;

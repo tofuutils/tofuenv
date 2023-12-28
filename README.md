@@ -84,7 +84,7 @@ which tofuenv
 
 Install a specific version of OpenTofu.
 
-If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) or [.opentofu-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .opentofu-version. The default is 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [tofuenv\_TERRAFORM\_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#terraform-version-file), in that order of precedence, i.e. tofuenv\_TERRAFORM\_VERSION, then .opentofu-version. The default is 'latest' if none are found.
 
 If a parameter is passed, available options:
 
@@ -233,7 +233,7 @@ The path to a directory where the local terraform versions and configuration fil
 tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 ```
 
-##### `tofuenv_TERRAFORM_VERSION`
+##### `TOFUENV_TOFU_VERSION`
 
 String (Default: "")
 
@@ -244,7 +244,7 @@ If not empty string, this variable overrides Terraform version, specified in [.o
 e.g.
 
 ```console
-tofuenv_TERRAFORM_VERSION=latest:^0.11. terraform --version
+TOFUENV_TOFU_VERSION=latest:^0.11. terraform --version
 ```
 
 ##### `tofuenv_NETRC_PATH`
@@ -385,7 +385,7 @@ Defaults to the PID of the calling process.
 
 Switch a version to use
 
-If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#terraform-version-file) or [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#terraform-version-file) or [tofuenv\_TERRAFORM\_VERSION environment variable](#TOFUENV_TOFU_VERSION) (tofuenv\_TERRAFORM\_VERSION takes precedence), defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed version
 
@@ -463,7 +463,7 @@ $ tofuenv list-remote
 
 If you put a `.opentofu-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
 
-Note, that [tofuenv\_TERRAFORM\_VERSION environment variable](#tofuenv_terraform_version) can be used to override version, specified by `.opentofu-version` file.
+Note, that [tofuenv\_TERRAFORM\_VERSION environment variable](#TOFUENV_TOFU_VERSION) can be used to override version, specified by `.opentofu-version` file.
 
 ```console
 $ cat .opentofu-version
@@ -485,7 +485,7 @@ $ echo latest:^0.8 > .opentofu-version
 $ terraform version
 Terraform v0.8.8
 
-$ tofuenv_TERRAFORM_VERSION=0.7.3 terraform --version
+$ TOFUENV_TOFU_VERSION=0.7.3 terraform --version
 Terraform v0.7.3
 ```
 
