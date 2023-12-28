@@ -39,13 +39,13 @@ jobs:
         with:
           context: .
           load: true
-          tags: "tofuenv-terraform:${{ github.sha }}"
+          tags: "tofuenv-tofu:${{ github.sha }}"
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
-          expect=1.2.3;
-          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" "tofuenv-terraform:${{ github.sha }}" version)";
-          echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'
+          expect=1.6.0-rc1;
+          got="$(docker run -e "TOFUENV_TOFU_VERSION=${expect}" "tofuenv-tofu:${{ github.sha }}" version)";
+          echo "${got}" | tee /dev/stderr | grep -e 'OpenTofu v1.6.0-rc1'
 
   # When we push to master, test everything in order to guarantee releases
   test-master-pushes:
@@ -78,10 +78,10 @@ jobs:
         with:
           context: .
           load: true
-          tags: 'tofuenv-terraform:latest'
+          tags: 'tofuenv-tofu:latest'
       - name: 'Check Dockerfile'
         if: contains(matrix.os, 'ubuntu')
         run: |
-          expect=1.2.3;
-          got="$(docker run -e "TOFUENV_TERRAFORM_VERSION=${expect}" tofuenv-terraform:latest version)";
-          echo "${got}" | tee /dev/stderr | grep -e 'Terraform v1.2.3'
+          expect=1.6.0-rc1;
+          got="$(docker run -e "TOFUENV_TOFU_VERSION=${expect}" tofuenv-tofu:latest version)";
+          echo "${got}" | tee /dev/stderr | grep -e 'OpenTofu v1.6.0-rc1'

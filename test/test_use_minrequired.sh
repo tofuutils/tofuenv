@@ -114,7 +114,7 @@ echo "terraform {
 echo 'min-required' > .opentofu-version;
 
 (
-  TOFUENV_AUTO_INSTALL=true terraform version;
+  TOFUENV_AUTO_INSTALL=true tofu version;
   check_active_version "${minv}";
 ) || error_and_proceed 'Min required auto-installed version does not match';
 
@@ -132,7 +132,7 @@ echo "terraform {
 echo 'min-required' > chdir-dir/.opentofu-version
 
 (
-  TOFUENV_AUTO_INSTALL=true terraform -chdir=chdir-dir version;
+  TOFUENV_AUTO_INSTALL=true tofu -chdir=chdir-dir version;
   check_active_version "${minv}" chdir-dir;
 ) || error_and_proceed 'Min required version from -chdir does not match';
 

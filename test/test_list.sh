@@ -53,7 +53,7 @@ declare -a errors=();
 log 'info' '### List local versions';
 cleanup || log 'error' "Cleanup failed?!";
 
-for v in 0.7.2 0.7.13 0.9.1 0.9.2 v0.9.11 0.14.6; do
+for v in 1.6.0-rc1 1.6.0-beta5; do
   log 'info' "## Installing version ${v} to construct list";
   tofuenv install "${v}" \
     && log 'debug' "Install of version ${v} succeeded" \
@@ -65,17 +65,13 @@ tofuenv list \
   && log 'debug' "List succeeded with no default set" \
   || error_and_proceed "List failed with no default set";
 
-tofuenv use 0.14.6;
+tofuenv use 1.6.0-rc1;
 
 log 'info' '## Comparing "tofuenv list" with default set';
 result="$(tofuenv list)";
 expected="$(cat << EOS
-* 0.14.6 (set by $(tofuenv version-file))
-  0.9.11
-  0.9.2
-  0.9.1
-  0.7.13
-  0.7.2
+* 1.6.0-rc1 (set by $(tofuenv version-file))
+  1.6.0-beta5
 EOS
 )";
 

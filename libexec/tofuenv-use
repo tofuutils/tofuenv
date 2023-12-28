@@ -72,7 +72,7 @@ declare version_source_suffix="";
 declare requested="${requested_arg}";
 declare loaded_version_file="$(tofuenv-version-file)";
 
-if [ -z "${requested_arg}" -a -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+if [ -z "${requested_arg}" -a -z "${TOFUENV_TOFU_VERSION:-""}" ]; then
   version_source_suffix=" (set by ${loaded_version_file})";
 
   if [ -f "${loaded_version_file}" ]; then
@@ -83,8 +83,8 @@ if [ -z "${requested_arg}" -a -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
   fi;
 
 elif [ -z "${requested_arg}" ]; then
-  version_source_suffix=' (set by TOFUENV_TERRAFORM_VERSION)';
-  requested="${TOFUENV_TERRAFORM_VERSION}";
+  version_source_suffix=' (set by TOFUENV_TOFU_VERSION)';
+  requested="${TOFUENV_TOFU_VERSION}";
 fi;
 
 log debug "Resolving version with: tofuenv-resolve-version ${requested_arg}";
@@ -151,4 +151,4 @@ if [ "${version_file}" != "${loaded_version_file}" ]; then
   log 'warn' "Default version file overridden by ${loaded_version_file}, changing the default version has no effect";
 fi;
 
-log 'info' "Default version (when not overridden by .opentofu-version or TOFUENV_TERRAFORM_VERSION) is now: ${installed_version}";
+log 'info' "Default version (when not overridden by .opentofu-version or TOFUENV_TOFU_VERSION) is now: ${installed_version}";

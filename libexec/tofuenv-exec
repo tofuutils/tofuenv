@@ -7,11 +7,11 @@
 # Runs an executable by first preparing PATH so that the selected OpenTofu
 # version's `bin' directory is at the front.
 #
-# For example, if the currently selected OpenTofu version is 0.7.0:
+# For example, if the currently selected OpenTofu version is 1.6.0:
 #   tofuenv exec plan
 #
 # is equivalent to:
-#   PATH="$TOFUENV_ROOT/versions/0.7.0/bin:$PATH" terraform plan
+#   PATH="$TOFUENV_ROOT/versions/1.6.0/bin:$PATH" tofu plan
 
 set -uo pipefail;
 

@@ -72,16 +72,16 @@ version_name="$(tofuenv-version-name 2>/dev/null || true)" \
   && log 'debug' "tofuenv-version-name reported: ${version_name}";
 export version_name;
 
-if [ -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]; then
+if [ -z "${TOFUENV_TOFU_VERSION:-""}" ]; then
   version_source="$(tofuenv-version-file)" \
     && log 'debug' "tofuenv-version-file reported: ${version_source}" \
     || log 'error' "tofuenv-version-file failed";
 else
-  version_source='TOFUENV_TERRAFORM_VERSION';
+  version_source='TOFUENV_TOFU_VERSION';
 fi;
 export version_source;
 
-# Register for whether a default terraform version has yet been set
+# Register for whether a default tofu version has yet been set
 declare -i default_set=0;
 
 print_version () {

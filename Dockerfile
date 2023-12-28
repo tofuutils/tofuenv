@@ -23,5 +23,5 @@ ENV TOFUENV_CONFIG_DIR /var/tofuenv
 VOLUME /var/tofuenv
 
 # Default to latest; user-specifiable
-ENV TOFUENV_TERRAFORM_VERSION latest
-ENTRYPOINT ["/usr/local/bin/terraform"]
+ENV TOFUENV_TOFU_VERSION latest
+ENTRYPOINT ["/usr/local/bin/tofu"]

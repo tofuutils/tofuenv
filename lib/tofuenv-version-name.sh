@@ -3,8 +3,8 @@
 set -uo pipefail;
 
 function tofuenv-version-name() {
-  if [[ -z "${TOFUENV_TERRAFORM_VERSION:-""}" ]]; then
-    log 'debug' 'We are not hardcoded by a TOFUENV_TERRAFORM_VERSION environment variable';
+  if [[ -z "${TOFUENV_TOFU_VERSION:-""}" ]]; then
+    log 'debug' 'We are not hardcoded by a TOFUENV_TOFU_VERSION environment variable';
 
     TOFUENV_VERSION_FILE="$(tofuenv-version-file)" \
       && log 'debug' "TOFUENV_VERSION_FILE retrieved from tofuenv-version-file: ${TOFUENV_VERSION_FILE}" \
@@ -16,10 +16,10 @@ function tofuenv-version-name() {
     TOFUENV_VERSION_SOURCE="${TOFUENV_VERSION_FILE}";
 
   else
-    TOFUENV_VERSION="${TOFUENV_TERRAFORM_VERSION}" \
-      && log 'debug' "TOFUENV_VERSION specified in TOFUENV_TERRAFORM_VERSION environment variable: ${TOFUENV_VERSION}";
+    TOFUENV_VERSION="${TOFUENV_TOFU_VERSION}" \
+      && log 'debug' "TOFUENV_VERSION specified in TOFUENV_TOFU_VERSION environment variable: ${TOFUENV_VERSION}";
 
-    TOFUENV_VERSION_SOURCE='TOFUENV_TERRAFORM_VERSION';
+    TOFUENV_VERSION_SOURCE='TOFUENV_TOFU_VERSION';
   fi;
 
   local auto_install="${TOFUENV_AUTO_INSTALL:-true}";
@@ -63,7 +63,7 @@ function tofuenv-version-name() {
 
       log 'debug' "Resolved ${TOFUENV_VERSION} to locally installed version: ${local_version}";
     elif [[ "${auto_install}" != "true" ]]; then
-      log 'error' 'No versions of terraform installed and TOFUENV_AUTO_INSTALL is not true. Please install a version of terraform before it can be selected as latest';
+      log 'error' 'No versions of tofu installed and TOFUENV_AUTO_INSTALL is not true. Please install a version of tofu before it can be selected as latest';
     fi;
 
     if [[ "${auto_install}" == "true" ]]; then
@@ -83,7 +83,7 @@ function tofuenv-version-name() {
       if [[ -n "${local_version}" ]]; then
         TOFUENV_VERSION="${local_version}";
       else
-        log 'error' "No installed versions of terraform matched '${TOFUENV_VERSION}'";
+        log 'error' "No installed versions of tofu matched '${TOFUENV_VERSION}'";
       fi;
     fi;
   else
