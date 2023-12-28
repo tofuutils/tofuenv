@@ -503,7 +503,7 @@ rm -rf /some/path/to/tofuenv
 
 ## LICENSE
 
-- [tofuenv itself](https://github.com/opentofuutils/tofuenv/blob/master/LICENSE)
+- [tofuenv itself](https://github.com/opentofuutils/tofuenv/blob/main/LICENSE)
 - [tfenv](https://github.com/tfutils/tfenv/blob/master/LICENSE)
   - tofuenv uses tfenv's source code
 - [rbenv](https://github.com/rbenv/rbenv/blob/master/LICENSE)
