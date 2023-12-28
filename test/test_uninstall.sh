@@ -88,12 +88,12 @@ done;
 echo "### Uninstall removes versions directory"
 cleanup || error_and_die "Cleanup failed?!"
 (
-  tofuenv install 0.12.1 || exit 1
-  tofuenv install 0.12.2 || exit 1
+  tofuenv install 1.6.0-beta5 || exit 1
+  tofuenv install 1.6.0-beta4 || exit 1
   [ -d "./versions" ] || exit 1
-  tofuenv uninstall 0.12.1 || exit 1
+  tofuenv uninstall 1.6.0-beta5 || exit 1
   [ -d "./versions" ] || exit 1
-  tofuenv uninstall 0.12.2 || exit 1
+  tofuenv uninstall 1.6.0-beta4 || exit 1
   [ -d "./versions" ] && exit 1 || exit 0
 ) || error_and_proceed "Removing last version deletes versions directory"
 
