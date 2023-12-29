@@ -4,7 +4,7 @@
 
 ## Support
 
-Currently tofuenv supports the following OSes
+Currently tofuenv supports the following operating systems:
 
 - macOS
   - 64bit
@@ -28,14 +28,6 @@ Install via Arch User Repository (AUR)
    
 ```console
 yay --sync tofuenv
-```
-
-Install via puppet
-
-Using puppet module [sergk-tofuenv](https://github.com/SergK/puppet-tofuenv)
-
-```puppet
-include ::tofuenv
 ```
 
 ### Manual
@@ -84,7 +76,7 @@ which tofuenv
 
 Install a specific version of OpenTofu.
 
-If no parameter is passed, the version to use is resolved automatically via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then .opentofu-version. The default is 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then .opentofu-version. The default is `latest` if none are found.
 
 If a parameter is passed, available options:
 
@@ -110,17 +102,17 @@ If [keybase](https://keybase.io/) is available in the path it will also verify t
 
 You can opt-in to using GnuPG tools for PGP signature verification if keybase is not available:
 
-Where `tofuenv_INSTALL_DIR` is for example, `~/.tofuenv` or `/usr/local/Cellar/tofuenv/<version>`
+Where `TOFUENV_INSTALL_DIR` is for example, `~/.tofuenv` or `/usr/local/Cellar/tofuenv/<version>`
 
 ```console
-echo 'trust-tofuenv: yes' > ${tofuenv_INSTALL_DIR}/use-gpgv
+echo 'trust-tofuenv: yes' > ${TOFUENV_INSTALL_DIR}/use-gpgv
 tofuenv install
 ```
 
 The `trust-tofuenv` directive means that verification uses a copy of the
 Hashicorp OpenPGP key found in the tofuenv repository.  Skipping that directive
 means that the Hashicorp key must be in the existing default trusted keys.
-Use the file `${tofuenv_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
+Use the file `${TOFUENV_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
 see web-of-trust status; beware that a lack of trust path will not cause a
 validation failure.
 
@@ -151,33 +143,33 @@ terraform {
 
 #### tofuenv
 
-##### `tofuenv_ARCH`
+##### `TOFUENV_ARCH`
 
 String (Default: `amd64`)
 
-Specify architecture. Architecture other than the default amd64 can be specified with the `tofuenv_ARCH` environment variable
+Specify architecture. Architecture other than the default amd64 can be specified with the `TOFUENV_ARCH` environment variable
 
 Note: Default changes to `arm64` for versions that have arm64 builds available when `$(uname -m)` matches `aarch64* | arm64*`
 
 ```console
-tofuenv_ARCH=arm64 tofuenv install 0.7.9
+TOFUENV_ARCH=arm64 tofuenv install 0.7.9
 ```
 
-##### `tofuenv_AUTO_INSTALL`
+##### `TOFUENV_AUTO_INSTALL`
 
 String (Default: true)
 
 Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
 
 ```console
-tofuenv_AUTO_INSTALL=false tofu plan
+TOFUENV_AUTO_INSTALL=false tofu plan
 ```
 
 ```console
 tofu use <version that is not yet installed>
 ```
 
-##### `tofuenv_CURL_OUTPUT`
+##### `TOFUENV_CURL_OUTPUT`
 
 Integer (Default: 2)
 
@@ -187,7 +179,7 @@ Set the mechanism used for displaying download progress when downloading tofu ve
 * 1: Use curl default
 * 0: Pass `-s` to curl
 
-##### `tofuenv_DEBUG`
+##### `TOFUENV_DEBUG`
 
 Integer (Default: 0)
 
@@ -198,17 +190,17 @@ Set the debug level for tofuenv.
 * 2: Extended debug output, with source file names and interactive debug shells on error
 * 3: Debug level 2 + Bash execution tracing
 
-##### `tofuenv_REMOTE`
+##### `TOFUENV_REMOTE`
 
 String (Default: https://releases.hashicorp.com)
 
 To install from a remote other than the default
 
 ```console
-tofuenv_REMOTE=https://example.jfrog.io/artifactory/hashicorp
+TOFUENV_REMOTE=https://example.jfrog.io/artifactory/hashicorp
 ```
 
-##### `tofuenv_REVERSE_REMOTE`
+##### `TOFUENV_REVERSE_REMOTE`
 
 Integer (Default: 0)
 
@@ -216,21 +208,21 @@ When using a custom remote, such as Artifactory, instead of the Hashicorp server
 the list of tofu versions returned by the curl of the remote directory may be inverted.
 In this case the `latest` functionality will not work as expected because it expects the
 versions to be listed in order of release date from newest to oldest. If your remote
-is instead providing a list that is oldes-first, set `tofuenv_REVERSE_REMOTE=1` and
+is instead providing a list that is oldes-first, set `TOFUENV_REVERSE_REMOTE=1` and
 functionality will be restored.
 
 ```console
-tofuenv_REVERSE_REMOTE=1 tofuenv list-remote
+TOFUENV_REVERSE_REMOTE=1 tofuenv list-remote
 ```
 
-##### `tofuenv_CONFIG_DIR`
+##### `TOFUENV_CONFIG_DIR`
 
-Path (Default: `$tofuenv_ROOT`)
+Path (Default: `$TOFUENV_ROOT`)
 
 The path to a directory where the local tofu versions and configuration files exist.
 
 ```console
-tofuenv_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
+TOFUENV_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 ```
 
 ##### `TOFUENV_TOFU_VERSION`
@@ -247,16 +239,16 @@ e.g.
 TOFUENV_TOFU_VERSION=latest:^0.11. tofu --version
 ```
 
-##### `tofuenv_NETRC_PATH`
+##### `TOFUENV_NETRC_PATH`
 
 String (Default: "")
 
-If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in conjunction with tofuenv_REMOTE).
+If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in conjunction with TOFUENV_REMOTE).
 
 e.g.
 
 ```console
-tofuenv_NETRC_PATH="$PWD/.netrc.tofuenv"
+TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 ```
 
 #### Bashlog Logging Library
@@ -401,7 +393,7 @@ $ tofuenv use latest
 $ tofuenv use latest:^0.8
 ```
 
-Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and tofuenv_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
+Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
 
 ### tofuenv uninstall &lt;version>
 
