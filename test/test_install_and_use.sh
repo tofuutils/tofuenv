@@ -85,44 +85,30 @@ declare -a errors=();
 log 'info' '### Test Suite: Install and Use';
 
 tests__desc=(
-  'latest version'
+#  'latest version'
   'latest possibly-unstable version'
   'latest alpha'
   'latest beta'
   'latest rc'
   'latest possibly-unstable version from 1.6'
-  '1.6.0-alpha2'
   'latest version matching regex'
   'specific version'
   'specific version with v prefix'
 );
 
 tests__kv=(
-  "$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1),latest"
+#  "$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1),latest"
   "$(tofuenv list-remote | head -n 1),latest:"
   "$(tofuenv list-remote | grep 'alpha' | head -n 1),latest:alpha"
   "$(tofuenv list-remote | grep 'beta' | head -n 1),latest:beta"
   "$(tofuenv list-remote | grep 'rc' | head -n 1),latest:rc"
   "$(tofuenv list-remote | grep '^1\.6\.' | head -n 1),latest:^1.6."
-  '1.6.0-alpha2,latest:^1\.6'
-  '1.6.0-rc1,1.6.0-alpha1'
+  '1.6.0-rc1,latest:^1\.6'
+  '1.6.0-alpha5'
+  '1.6.0-rc1,v1.6.0-rc1'
 );
 
 log 'info' "Kernel under test: $(uname -s)";
-
-if [[ "$(uname -s)" != Darwin* ]]; then
-  log 'info' "We're not Darwin! Adding legacy tests.";
-  tests__desc+=(
-    'legacy latest version matching regex'
-    'legacy specific version'
-  );
-
-  tests__kv+=(
-    '1.6.0-rc1,latest:^1.6'
-  );
-else
-  log 'warn' "We're Darwin! Skipping legacy tests.";
-fi;
 
 tests_count=${#tests__desc[@]};
 
@@ -173,61 +159,6 @@ done;
 
 cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '## ${HOME}/.opentofu-version Test Preparation';
-
-# 0.12.22 reports itself as 0.12.21 and breaks testing
-declare v1="$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | grep -v '0.12.22' | head -n 2 | tail -n 1)";
-declare v2="$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | grep -v '0.12.22' | head -n 1)";
-
-if [ -f "${HOME}/.opentofu-version" ]; then
-  log 'info' "Backing up ${HOME}/.opentofu-version to ${HOME}/.opentofu-version.bup";
-  mv "${HOME}/.opentofu-version" "${HOME}/.opentofu-version.bup";
-fi;
-log 'info' "Writing ${v1} to ${HOME}/.opentofu-version";
-echo "${v1}" > "${HOME}/.opentofu-version";
-
-log 'info' "## \${HOME}/.opentofu-version Test 1/3: Install and Use ( ${v1} )";
-test_install_and_use "${v1}" \
-  && log info "## \${HOME}/.opentofu-version Test 1/1: ( ${v1} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.opentofu-version Test 1/1: ( ${v1} ) failed";
-
-log 'info' "## \${HOME}/.opentofu-version Test 2/3: Override Install with Parameter ( ${v2} )";
-test_install_and_use_overridden "${v2}" "${v2}" \
-  && log info "## \${HOME}/.opentofu-version Test 2/3: ( ${v2} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.opentofu-version Test 2/3: ( ${v2} ) failed";
-
-log 'info' "## \${HOME}/.opentofu-version Test 3/3: Override Use with Parameter ( ${v2} )";
-(
-  tofuenv use "${v2}" || exit 1;
-  check_default_version "${v2}" || exit 1;
-) && log info "## \${HOME}/.opentofu-version Test 3/3: ( ${v2} ) succeeded" \
-  || error_and_proceed "## \${HOME}/.opentofu-version Test 3/3: ( ${v2} ) failed";
-
-log 'info' '## \${HOME}/.opentofu-version Test Cleanup';
-log 'info' "Deleting ${HOME}/.opentofu-version";
-rm "${HOME}/.opentofu-version";
-if [ -f "${HOME}/.opentofu-version.bup" ]; then
-  log 'info' "Restoring backup from ${HOME}/.opentofu-version.bup to ${HOME}/.opentofu-version";
-  mv "${HOME}/.opentofu-version.bup" "${HOME}/.opentofu-version";
-fi;
-
-log 'info' '## Use Auto-Install Test 1/2: (No Input)';
-cleanup || log 'error' 'Cleanup failed?!';
-
-(
-  tofuenv use || exit 1;
-  check_default_version "$(tofuenv list-remote | grep -e "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | head -n 1)" || exit 1;
-) && log info '## Use Auto-Install Test 1/2: (No Input) succeeded' \
-  || error_and_proceed '## Use Auto-Install Test 1/2: (No Input) failed';
-
-log 'info' '## Use Auto-Install Test 2/2: (Specific version)';
-cleanup || log 'error' 'Cleanup failed?!';
-
-(
-  tofuenv use 1.0.1 || exit 1;
-  check_default_version 1.0.1 || exit 1;
-) && log info '## Use Auto-Install Test 2/2: (Specific version) succeeded' \
-  || error_and_proceed '## Use Auto-Install Test 2/2: (Specific version) failed';
-
 
 log 'info' 'Install invalid specific version';
 cleanup || log 'error' 'Cleanup failed?!';

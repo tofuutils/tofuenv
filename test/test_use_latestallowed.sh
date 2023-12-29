@@ -62,7 +62,7 @@ echo "terraform {
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 1.1.9;
+  check_active_version 1.6.0-rc1;
 ) || error_and_proceed 'Latest allowed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -86,13 +86,13 @@ cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '### Install latest-allowed incomplete version (#.#.<missing>)'
 
 echo "terraform {
-  required_version = \"~> 0.12\"
+  required_version = \"~> 1.6\"
 }" >> latest_allowed.tf;
 
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 0.15.5;
+  check_active_version 1.6.0-rc1;
 ) || error_and_proceed 'Latest allowed incomplete-version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -101,13 +101,13 @@ cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '### Install latest-allowed with TOFUENV_AUTO_INSTALL';
 
 echo "terraform {
-  required_version = \"~> 1.0.0\"
+  required_version = \"~> 1.6.0-rc1\"
 }" >> latest_allowed.tf;
 echo 'latest-allowed' > .opentofu-version;
 
 (
   TOFUENV_AUTO_INSTALL=true tofu version;
-  check_active_version 1.0.11;
+  check_active_version 1.6.0-rc1;
 ) || error_and_proceed 'Latest allowed auto-installed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -117,13 +117,13 @@ log 'info' '### Install latest-allowed with TOFUENV_AUTO_INSTALL & -chdir';
 
 mkdir -p chdir-dir
 echo "terraform {
-  required_version = \"~> 0.14.3\"
+  required_version = \"~> 1.6.0-rc1\"
 }" >> chdir-dir/latest_allowed.tf;
 echo 'latest-allowed' > chdir-dir/.opentofu-version
 
 (
   TOFUENV_AUTO_INSTALL=true tofu -chdir=chdir-dir version;
-  check_active_version 0.14.11 chdir-dir;
+  check_active_version 1.6.0-rc1 chdir-dir;
 ) || error_and_proceed 'Latest allowed version from -chdir does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';

@@ -66,7 +66,7 @@ jobs:
       - name: 'Install Dependencies'
         run: './test/install_deps.sh'
       - name: 'Run all tests'
-        run: './test/run.sh'
+        run: 'TOFUENV_GITHUB_TOKEN=${{ secrets.TOFUENV_GITHUB_TOKEN }} ./test/run.sh'
         shell: 'bash'
 
       - uses: 'docker/setup-buildx-action@v3'

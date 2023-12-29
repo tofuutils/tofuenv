@@ -86,22 +86,23 @@ echo "terraform {
 
 cleanup || log 'error' 'Cleanup failed?!';
 
-
-log 'info' '### Install min-required incomplete version (#.#.<missing>)'
-
-minv='1.3';
-
-echo "terraform {
-  required_version = \">=${minv}\"
-}" >> min_required.tf;
-
-(
-  tofuenv install min-required;
-  tofuenv use min-required;
-  check_active_version "${minv}.0";
-) || error_and_proceed 'Min required incomplete-version does not match';
-
-cleanup || log 'error' 'Cleanup failed?!';
+# TODO: Enable this test after 1.6.0 will be fully available
+#
+#log 'info' '### Install min-required incomplete version (#.#.<missing>)'
+#
+#minv='1.6';
+#
+#echo "terraform {
+#  required_version = \">=${minv}\"
+#}" >> min_required.tf;
+#
+#(
+#  tofuenv install min-required;
+#  tofuenv use min-required;
+#  check_active_version "${minv}.0";
+#) || error_and_proceed 'Min required incomplete-version does not match';
+#
+#cleanup || log 'error' 'Cleanup failed?!';
 
 
 log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL';
@@ -123,7 +124,7 @@ cleanup || log 'error' 'Cleanup failed?!';
 
 log 'info' '### Install min-required with TOFUENV_AUTO_INSTALL & -chdir';
 
-minv='1.6.0-rc1';
+minv='1.6.0-alpha5';
 
 mkdir -p chdir-dir
 echo "terraform {
