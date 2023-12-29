@@ -132,8 +132,7 @@ version_url="${TOFUENV_REMOTE}/download/v${version}";
 tarball_name="tofu_${version}_${os}.zip";
 
 shasums_name="tofu_${version}_SHA256SUMS";
-shasums_signing_key_postfix=".72D7468F";
-shasums_sig="${shasums_name}${shasums_signing_key_postfix}.sig";
+shasums_sig="${shasums_name}.sig";
 
 log 'info' "Installing OpenTofu v${version}";
 
