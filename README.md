@@ -100,7 +100,7 @@ $ tofuenv install min-required
 
 If `shasum` is present in the path, tofuenv will verify the download against OpenTofu published sha256 hash.
 
-For now keybase and GnuPG tools for PGP signature verification is not supported by OpenTofu. Verification mechanisms will be added after support is added by OpenTofu.
+For now keybase and GnuPG tools for PGP signature verification are not supported by OpenTofu. Verification mechanisms will be added after support is added by OpenTofu.
 
 #### .opentofu-version
 
@@ -133,7 +133,7 @@ terraform {
 
 String (Default: "")
 
-Specify GitHub token. Because of OpenTofu binares placed in the GitHub we may encounter with rate limit problem.
+Specify GitHub token. Because of OpenTofu binares placed in the GitHub you may encounter with rate limit problem.
 Using a personal access token dramatically increases rate limit.
 [GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
 
