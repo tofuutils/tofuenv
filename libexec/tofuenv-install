@@ -132,8 +132,7 @@ version_url="${TOFUENV_REMOTE}/download/v${version}";
 tarball_name="tofu_${version}_${os}.zip";
 
 shasums_name="tofu_${version}_SHA256SUMS";
-shasums_signing_key_postfix=".72D7468F";
-shasums_sig="${shasums_name}${shasums_signing_key_postfix}.sig";
+shasums_sig="${shasums_name}.sig";
 
 log 'info' "Installing OpenTofu v${version}";
 
@@ -188,6 +187,9 @@ download_signature() {
 # from "required_version" setting in "*.tf" files
 check_dependencies;
 
+#
+# TODO: Not supported by now from OpenTofu side
+#
 # Verify signature if verification mechanism (keybase, gpg, etc) is present
 if [[ -f "${TOFUENV_CONFIG_DIR}/use-gnupg" ]]; then
   # GnuPG uses the user's keyring, and any web-of-trust or local signatures or
@@ -244,9 +246,10 @@ elif [[ -n "${keybase_bin}" && -x "${keybase_bin}" ]]; then
       && log 'debug' 'SHA256SUMS signature matched' \
       || log 'error' 'SHA256SUMS signature does not match!';
   fi;
-else
+# TODO: disable warning for now
+#else
   # Warning about this avoids an unwarranted sense of confidence in the SHA check
-  log 'warn' "Not instructed to use Local PGP (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}) & No keybase install found, skipping OpenPGP signature verification";
+  # log 'warn' "Not instructed to use Local PGP (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}) & No keybase install found, skipping OpenPGP signature verification";
 fi;
 
 if [[ -n "${shasum_bin}" && -x "${shasum_bin}" ]]; then
