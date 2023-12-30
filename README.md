@@ -380,10 +380,9 @@ Switch a version to use
 If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#opentofu-version-file) or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (TOFUENV_TOFU_VERSION takes precedence), defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed version
-
 `latest:<regex>` is a syntax to use latest installed version matching regex (used by grep -e)
-
 `min-required` will switch to the version minimally required by your tofu sources (see above `tofuenv install`)
+`latest-allowed` will switch to the version maximally allowed by your tofu sources (see above `tofuenv install`).
 
 ```console
 $ tofuenv use
@@ -391,9 +390,10 @@ $ tofuenv use min-required
 $ tofuenv use 0.7.0
 $ tofuenv use latest
 $ tofuenv use latest:^0.8
+$ tofuenv use latest-allowed
 ```
 
-Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
+Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the latest matching version in the remote repository will be installed and used.
 
 ### tofuenv uninstall &lt;version>
 

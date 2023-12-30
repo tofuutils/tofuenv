@@ -91,11 +91,11 @@ log debug "Resolving version with: tofuenv-resolve-version ${requested_arg}";
 declare resolved="$(tofuenv-resolve-version ${requested_arg})";
 [ -z "${resolved}" ] && log 'error' "Failure to resolve version from ${requested_arg}";
 
-log debug "Resolved to: ${resolved}";
-
 declare version="${resolved%%\:*}";
 declare regex="${resolved##*\:}";
 declare installed_version='';
+
+log 'debug' "Resolved to ${resolved} version, ${regex} regex";
 
 log 'debug' "Searching ${TOFUENV_CONFIG_DIR}/versions/ for latest version matching ${regex}";
 
@@ -112,7 +112,7 @@ if [ -n "${installed_version}" ]; then
   log 'debug' "Found version: ${installed_version}";
 else
   if [ "${auto_install}" == 'true' ]; then
-    log 'info' "No installed versions of opentofu matched '${resolved}'. Trying to install a matching version since TOFUENV_AUTO_INSTALL=true";
+    log 'info' "No installed versions of opentofu matched '${regex}'. Trying to install a matching version since TOFUENV_AUTO_INSTALL=true";
 
     declare install_version='';
     [ "${version}" == 'latest' ] && install_version="${version}:${regex}" || install_version="${version}";
