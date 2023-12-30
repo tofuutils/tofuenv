@@ -71,7 +71,11 @@ done;
 version_name="$(tofuenv-version-name 2>/dev/null || true)" \
   && log 'debug' "tofuenv-version-name reported: ${version_name}";
 
-echo "${version_name}" > .opentofu-version;
-log 'info' "Pinned version by writing \"${version_name}\" to $(pwd)/.opentofu-version";
+if [ -n "${version_name}" ]; then
+  echo "${version_name}" > .opentofu-version;
+  log 'info' "Pinned version by writing \"${version_name}\" to $(pwd)/.opentofu-version";
+else
+  log 'error' "No version is currently used. Please first set one with: tofuenv use"
+fi;
 
 exit 0;
