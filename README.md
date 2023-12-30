@@ -209,6 +209,19 @@ functionality will be restored.
 TOFUENV_REVERSE_REMOTE=1 tofuenv list-remote
 ```
 
+##### `TOFUENV_SKIP_LIST_REMOTE`
+
+Integer (Default: 0)
+
+Skip list remote versions in installation step. Can be useful for a custom remote, such as Artifactory.
+
+Disabled: 0
+Enable: any other value
+
+```console
+TOFUENV_SKIP_LIST_REMOTE=1 tofuenv install 1.6.0-rc1
+```
+
 ##### `TOFUENV_CONFIG_DIR`
 
 Path (Default: `$TOFUENV_ROOT`)
