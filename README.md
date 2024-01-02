@@ -389,10 +389,9 @@ If no parameter is passed, the version to use is resolved automatically via [.op
 
 `latest` is a syntax to use the latest installed stable version
 NOTE: `latest` syntax will be available after first stable OpenTofu release
-
 `latest:<regex>` is a syntax to use latest installed version matching regex (used by grep -e)
-
 `min-required` will switch to the version minimally required by your tofu sources (see above `tofuenv install`)
+`latest-allowed` will switch to the version maximally allowed by your tofu sources (see above `tofuenv install`).
 
 ```console
 $ tofuenv use
@@ -400,9 +399,10 @@ $ tofuenv use min-required
 $ tofuenv use 0.7.0
 $ tofuenv use latest
 $ tofuenv use latest:^0.8
+$ tofuenv use latest-allowed
 ```
 
-Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the the latest matching version in the remote repository will be installed and used.
+Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the latest matching version in the remote repository will be installed and used.
 
 ### tofuenv uninstall &lt;version>
 
