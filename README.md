@@ -81,40 +81,26 @@ If no parameter is passed, the version to use is resolved automatically via [TOF
 If a parameter is passed, available options:
 
 - `x.y.z` [Semver 2.0.0](https://semver.org/) string specifying the exact version to install
-- `latest` is a syntax to install latest version
 - `latest:<regex>` is a syntax to install latest version matching regex (used by grep -e)
 - `latest-allowed` is a syntax to scan your OpenTofu files to detect which version is maximally allowed.
 - `min-required` is a syntax to scan your OpenTofu files to detect which version is minimally required.
 
+Options will be available after first stable release:
+
+- `latest` is a syntax to install latest stable version
+
 See [required_version](https://developer.hashicorp.com/terraform/language/settings) docs. Also [see min-required & latest-allowed](#min-required) section below.
 
 ```console
-$ tofuenv install
-$ tofuenv install 0.7.0
-$ tofuenv install latest
-$ tofuenv install latest:^0.8
+$ tofuenv install 1.6.0-rc1 
+$ tofuenv install latest:^1.6
 $ tofuenv install latest-allowed
 $ tofuenv install min-required
 ```
 
-If `shasum` is present in the path, tofuenv will verify the download against Hashicorp's published sha256 hash.
-If [keybase](https://keybase.io/) is available in the path it will also verify the signature for those published hashes using Hashicorp's published public key.
+If `shasum` is present in the path, tofuenv will verify the download against OpenTofu published sha256 hash.
 
-You can opt-in to using GnuPG tools for PGP signature verification if keybase is not available:
-
-Where `TOFUENV_INSTALL_DIR` is for example, `~/.tofuenv` or `/usr/local/Cellar/tofuenv/<version>`
-
-```console
-echo 'trust-tofuenv: yes' > ${TOFUENV_INSTALL_DIR}/use-gpgv
-tofuenv install
-```
-
-The `trust-tofuenv` directive means that verification uses a copy of the
-Hashicorp OpenPGP key found in the tofuenv repository.  Skipping that directive
-means that the Hashicorp key must be in the existing default trusted keys.
-Use the file `${TOFUENV_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
-see web-of-trust status; beware that a lack of trust path will not cause a
-validation failure.
+For now keybase and GnuPG tools for PGP signature verification are not supported by OpenTofu. Verification mechanisms will be added after support is added by OpenTofu.
 
 #### .opentofu-version
 
@@ -141,7 +127,15 @@ terraform {
 
 ### Environment Variables
 
-#### tofuenv
+#### TOFUENV
+
+##### `TOFUENV_GITHUB_TOKEN`
+
+String (Default: "")
+
+Specify GitHub token. Because of OpenTofu binares placed in the GitHub you may encounter with rate limit problem.
+Using a personal access token dramatically increases rate limit.
+[GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
 
 ##### `TOFUENV_ARCH`
 
@@ -192,19 +186,19 @@ Set the debug level for tofuenv.
 
 ##### `TOFUENV_REMOTE`
 
-String (Default: https://releases.hashicorp.com)
+String (Default: https://github.com/opentofu/opentofu/releases)
 
 To install from a remote other than the default
 
 ```console
-TOFUENV_REMOTE=https://example.jfrog.io/artifactory/hashicorp
+TOFUENV_REMOTE=https://example.jfrog.io/artifactory/opentofu
 ```
 
 ##### `TOFUENV_REVERSE_REMOTE`
 
 Integer (Default: 0)
 
-When using a custom remote, such as Artifactory, instead of the Hashicorp servers,
+When using a custom remote, such as Artifactory, instead of the OpenTofu servers,
 the list of tofu versions returned by the curl of the remote directory may be inverted.
 In this case the `latest` functionality will not work as expected because it expects the
 versions to be listed in order of release date from newest to oldest. If your remote
@@ -213,6 +207,19 @@ functionality will be restored.
 
 ```console
 TOFUENV_REVERSE_REMOTE=1 tofuenv list-remote
+```
+
+##### `TOFUENV_SKIP_LIST_REMOTE`
+
+Integer (Default: 0)
+
+Skip list remote versions in installation step. Can be useful for a custom remote, such as Artifactory.
+
+Disabled: 0
+Enable: any other value
+
+```console
+TOFUENV_SKIP_LIST_REMOTE=1 tofuenv install 1.6.0-rc1
 ```
 
 ##### `TOFUENV_CONFIG_DIR`
@@ -250,6 +257,7 @@ e.g.
 ```console
 TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 ```
+
 
 #### Bashlog Logging Library
 
@@ -379,7 +387,8 @@ Switch a version to use
 
 If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#opentofu-version-file) or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (TOFUENV_TOFU_VERSION takes precedence), defaulting to 'latest' if none are found.
 
-`latest` is a syntax to use the latest installed version
+`latest` is a syntax to use the latest installed stable version
+NOTE: `latest` syntax will be available after first stable OpenTofu release
 `latest:<regex>` is a syntax to use latest installed version matching regex (used by grep -e)
 `min-required` will switch to the version minimally required by your tofu sources (see above `tofuenv install`)
 `latest-allowed` will switch to the version maximally allowed by your tofu sources (see above `tofuenv install`).
@@ -413,15 +422,8 @@ List installed versions
 
 ```console
 $ tofuenv list
-* 0.10.7 (set by /opt/tofuenv/version)
-  0.9.0-beta2
-  0.8.8
-  0.8.4
-  0.7.0
-  0.7.0-rc4
-  0.6.16
-  0.6.2
-  0.6.1
+  1.6.0-alpha5
+* 1.6.0-rc1 (set by /opt/.tofuenv/version)
 ```
 
 ### tofuenv list-remote
@@ -430,24 +432,17 @@ List installable versions
 
 ```console
 $ tofuenv list-remote
-0.9.0-beta2
-0.9.0-beta1
-0.8.8
-0.8.7
-0.8.6
-0.8.5
-0.8.4
-0.8.3
-0.8.2
-0.8.1
-0.8.0
-0.8.0-rc3
-0.8.0-rc2
-0.8.0-rc1
-0.8.0-beta2
-0.8.0-beta1
-0.7.13
-0.7.12
+1.6.0-rc1
+1.6.0-beta5
+1.6.0-beta4
+1.6.0-beta3
+1.6.0-beta2
+1.6.0-beta1
+1.6.0-alpha5
+1.6.0-alpha4
+1.6.0-alpha3
+1.6.0-alpha2
+1.6.0-alpha1
 ...
 ```
 
@@ -459,26 +454,27 @@ Note, that [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) ca
 
 ```console
 $ cat .opentofu-version
-0.6.16
+1.6.0-beta5
 
 $ tofu version
-OpenTofu v0.6.16
+OpenTofu v1.6.0-beta5
+on darwin_amd64
 
-Your version of OpenTofu is out of date! The latest version
-is 0.7.3. You can update by downloading from www.terraform.io
-
-$ echo 0.7.3 > .opentofu-version
+$ echo 1.6.0-alpha5 > .opentofu-version
 
 $ tofu version
-OpenTofu v0.7.3
+OpenTofu v1.6.0-alpha5
+on darwin_amd64
 
-$ echo latest:^0.8 > .opentofu-version
+$ echo latest:^1.6 > .opentofu-version
 
 $ tofu version
-OpenTofu v0.8.8
+OpenTofu v1.6.0-rc1
+on darwin_amd64
 
-$ TOFUENV_TOFU_VERSION=1.6.0 tofu --version
-tofu v1.6.0
+$ TOFUENV_TOFU_VERSION=1.6.0-alpha1 tofu --version
+tofu v1.6.0-alpha1
+on darwin_amd64
 ```
 
 ## Upgrading
