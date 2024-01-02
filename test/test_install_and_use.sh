@@ -180,7 +180,10 @@ for ((test_iter=0; test_iter<${neg_tests_count}; ++test_iter )) ; do
   test_num=$((test_iter + 1));
   desc=${neg_tests__desc[${test_iter}]}
   k="${neg_tests__kv[${test_iter}]}";
-  expected_error_message="No versions matching '${k}' found in remote";
+  v="${k%%\:*} ";
+  regex="${k##*\:}";
+  if [[ "${v}" =~ ${regex} ]]; then v=''; fi
+  expected_error_message="No ${v}versions matching '${regex}' found in remote";
   log 'info' "##  Invalid Version Test ${test_num}/${neg_tests_count}: ${desc} ( ${k} )";
   [ -z "$(tofuenv install "${k}" 2>&1 | grep "${expected_error_message}")" ] \
     && error_and_proceed "Installing invalid version ${k}";
