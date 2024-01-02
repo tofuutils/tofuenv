@@ -35,7 +35,7 @@ yay --sync tofuenv
 1. Check out tofuenv into any path (here is `${HOME}/.tofuenv`)
 
 ```console
-git clone --depth=1 https://github.com/opentofuutils/tofuenv.git ~/.tofuenv
+git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
 ```
 
 2. Add `~/.tofuenv/bin` to your `$PATH` any way you like
@@ -491,7 +491,7 @@ rm -rf /some/path/to/tofuenv
 
 ## LICENSE
 
-- [tofuenv itself](https://github.com/opentofuutils/tofuenv/blob/main/LICENSE)
+- [tofuenv itself](https://github.com/tofuutils/tofuenv/blob/main/LICENSE)
 - [tfenv](https://github.com/tfutils/tfenv/blob/master/LICENSE)
   - tofuenv uses tfenv's source code
 - [rbenv](https://github.com/rbenv/rbenv/blob/master/LICENSE)
