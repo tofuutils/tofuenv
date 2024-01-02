@@ -110,8 +110,7 @@ fi;
 
 if [ -n "${installed_version}" ]; then
   log 'debug' "Found version: ${installed_version}";
-else
-  if [ "${auto_install}" == 'true' ]; then
+elif [ "${auto_install}" == 'true' ]; then
     log 'info' "No installed versions of opentofu matched '${regex}'. Trying to install a matching version since TOFUENV_AUTO_INSTALL=true";
 
     declare install_version='';
@@ -128,7 +127,8 @@ else
 
     [ -n "${installed_version}" ] \
       || log 'error' "Despite successfully installing a version matching '${resolved}', a matching version could not be found in '${TOFUENV_CONFIG_DIR}/versions/' - This should be pretty much impossible";
-  fi;
+else
+  log 'error' "No installed versions of opentofu matched '${regex}'. TOFUENV_AUTO_INSTALL is set to false, so exiting."
 fi;
 
 target_path="${TOFUENV_CONFIG_DIR}/versions/${installed_version}";

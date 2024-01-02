@@ -156,11 +156,7 @@ String (Default: true)
 Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
 
 ```console
-TOFUENV_AUTO_INSTALL=false tofu plan
-```
-
-```console
-tofu use <version that is not yet installed>
+TOFUENV_AUTO_INSTALL=true tofu use <version that is not yet installed>
 ```
 
 ##### `TOFUENV_CURL_OUTPUT`
