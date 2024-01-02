@@ -155,8 +155,15 @@ String (Default: true)
 
 Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
 
+Example: if auto installation is enabled, the version will be installed.
 ```console
 TOFUENV_AUTO_INSTALL=true tofu use <version that is not yet installed>
+```
+
+Example: use 1.6.0-beta3 version that is not installed, and auto installation is disabled.
+```console
+$ TOFUENV_AUTO_INSTALL=false tofuenv use 1.6.0-beta3
+No installed versions of opentofu matched '^1.6.0-beta3$'. TOFUENV_AUTO_INSTALL is set to false, so exiting.
 ```
 
 ##### `TOFUENV_CURL_OUTPUT`
