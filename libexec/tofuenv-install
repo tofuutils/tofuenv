@@ -35,11 +35,11 @@ export TOFUENV_ROOT;
 if [ -n "${TOFUENV_HELPERS:-""}" ]; then
   log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
-  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/tofuenv-helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/tofuenv-helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/tofuenv-helpers.sh";
   fi;
 fi;
 
@@ -234,11 +234,8 @@ elif [[ -f "${TOFUENV_CONFIG_DIR}/use-gpgv" ]]; then
 
   download_signature;
   if [[ "${trust_tofuenv}" == 'yes' ]]; then
-    ${gpgv_command} \
-      --keyring "${TOFUENV_ROOT}/share/hashicorp-keys.pgp" \
-      "${download_tmp}/${shasums_sig}" \
-      "${download_tmp}/${shasums_name}" \
-      || log 'error' 'PGP signature rejected';
+    log 'error' 'Opentofu does not currently support PGP signatures.';
+
   else
     ${gpgv_command} \
       "${download_tmp}/${shasums_sig}" \

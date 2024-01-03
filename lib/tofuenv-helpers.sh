@@ -43,7 +43,7 @@ if [ "${TOFUENV_DEBUG:-0}" -gt 0 ]; then
 fi;
 
 function load_bashlog () {
-  source "${TOFUENV_ROOT}/lib/bashlog.sh";
+  source "${TOFUENV_ROOT}/lib/tofuenv-bashlog.sh";
 };
 export -f load_bashlog;
 

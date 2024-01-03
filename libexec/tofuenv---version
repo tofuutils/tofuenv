@@ -45,11 +45,11 @@ export TOFUENV_ROOT;
 if [ -n "${TOFUENV_HELPERS:-""}" ]; then
   log 'debug' 'TOFUENV_HELPERS is set, not sourcing helpers again';
 else
-  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
-  if source "${TOFUENV_ROOT}/lib/helpers.sh"; then
+  [ "${TOFUENV_DEBUG:-0}" -gt 0 ] && echo "[DEBUG] Sourcing helpers from ${TOFUENV_ROOT}/lib/tofuenv-helpers.sh";
+  if source "${TOFUENV_ROOT}/lib/tofuenv-helpers.sh"; then
     log 'debug' 'Helpers sourced successfully';
   else
-    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/helpers.sh";
+    early_death "Failed to source helpers from ${TOFUENV_ROOT}/lib/tofuenv-helpers.sh";
   fi;
 fi;
 
