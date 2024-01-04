@@ -22,4 +22,6 @@ jobs:
       - name: Codespell
         uses: codespell-project/actions-codespell@v2
         with:
-          skip: share/opentofu.asc,share/opentofu.gpg
+          skip: .git,*.png,*.woff,*.woff2,*.eot,*.ttf,*.jpg,*.ico,*.svg,*.gpg,.*asc
+          check_filenames: true
+          check_hidden: true
