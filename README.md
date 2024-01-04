@@ -21,6 +21,7 @@ Currently tofuenv supports the following operating systems:
 Install via Homebrew
 
 ```console
+brew tap tofuutils/tap
 brew install tofuenv
 ```
 
