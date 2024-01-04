@@ -10,7 +10,7 @@ Commands:
    uninstall     Uninstall a specific version of OpenTofu
    list          List all installed versions
    list-remote   List all installable versions
-   version-name  Print current version
+   version-name  Print current version of OpenTofu
    init          Update environment to use 'tofuenv' correctly.
    pin           Write the current active version to ./.opentofu-version
 ';
