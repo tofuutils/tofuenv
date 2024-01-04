@@ -7,11 +7,11 @@
 Currently tofuenv supports the following operating systems:
 
 - macOS
-  - 64bit
-  - Arm (Apple Silicon)
+    - 64bit
+    - Arm (Apple Silicon)
 - Linux
-  - 64bit
-  - Arm
+    - 64bit
+    - Arm
 - Windows (64bit) - only tested in git-bash - currently presumed failing due to symlink issues in git-bash
 
 ## Installation
@@ -34,7 +34,7 @@ makepkg -si
 ```
 
 Install via Arch User Repository (AUR) via yay
-   
+
 ```console
 yay --sync tofuenv
 ```
@@ -50,27 +50,33 @@ git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
 2. Add `~/.tofuenv/bin` to your `$PATH` any way you like
 
 bash:
+
 ```console
 echo 'export PATH="$HOME/.tofuenv/bin:$PATH"' >> ~/.bash_profile
 ```
+
 zsh:
+
 ```console
 $ echo 'export PATH="$HOME/.tofuenv/bin:$PATH"' >> ~/.zprofile
 ```
 
 For WSL users:
+
 ```bash
 echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 ```
 
-  OR you can make symlinks for `tofuenv/bin/*` scripts into a path that is already added to your `$PATH` (e.g. `/usr/local/bin`) `OSX/Linux Only!`
+OR you can make symlinks for `tofuenv/bin/*` scripts into a path that is already added to your `$PATH` (
+e.g. `/usr/local/bin`) `OSX/Linux Only!`
 
 ```console
 ln -s ~/.tofuenv/bin/* /usr/local/bin
 ```
 
-  On Ubuntu/Debian touching `/usr/local/bin` might require sudo access, but you can create `${HOME}/bin` or `${HOME}/.local/bin` and on next login it will get added to the session `$PATH`
-  or by running `. ${HOME}/.profile` it will get added to the current shell session's `$PATH`.
+On Ubuntu/Debian touching `/usr/local/bin` might require sudo access, but you can create `${HOME}/bin`
+or `${HOME}/.local/bin` and on next login it will get added to the session `$PATH`
+or by running `. ${HOME}/.profile` it will get added to the current shell session's `$PATH`.
 
 ```console
 mkdir -p ~/.local/bin/
@@ -85,7 +91,10 @@ which tofuenv
 
 Install a specific version of OpenTofu.
 
-If no parameter is passed, the version to use is resolved automatically via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then .opentofu-version. The default is `latest` if none are found.
+If no parameter is passed, the version to use is resolved automatically
+via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION)
+or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then
+.opentofu-version. The default is `latest` if none are found.
 
 If a parameter is passed, available options:
 
@@ -98,7 +107,8 @@ Options will be available after first stable release:
 
 - `latest` is a syntax to install latest stable version
 
-See [required_version](https://developer.hashicorp.com/terraform/language/settings) docs. Also [see min-required & latest-allowed](#min-required) section below.
+See [required_version](https://developer.hashicorp.com/terraform/language/settings) docs.
+Also [see min-required & latest-allowed](#min-required) section below.
 
 ```console
 $ tofuenv install 1.6.0-rc1 
@@ -109,67 +119,50 @@ $ tofuenv install min-required
 
 If `shasum` is present in the path, tofuenv will verify the download against OpenTofu published sha256 hash.
 
-For now keybase and GnuPG tools for PGP signature verification are not supported by OpenTofu. Verification mechanisms will be added after support is added by OpenTofu.
+For now keybase and GnuPG tools for PGP signature verification are not supported by OpenTofu. Verification mechanisms
+will be added after support is added by OpenTofu.
 
 #### .opentofu-version
 
-If you use a [.opentofu-version](#opentofu-version-file) file, `tofuenv install` (no argument) will install the version written in it.
+If you use a [.opentofu-version](#opentofu-version-file) file, `tofuenv install` (no argument) will install the version
+written in it.
 
 <a name="min-required"></a>
+
 #### min-required & latest-allowed
 
-Please note that we don't do semantic version range parsing but use first ever found version as the candidate for minimally required one. It is up to the user to keep the definition reasonable. I.e.
+Please note that we don't do semantic version range parsing but use first ever found version as the candidate for
+minimally required one. It is up to the user to keep the definition reasonable. I.e.
 
 ```terraform
 // this will detect 0.12.3
 terraform {
-  required_version  = "<0.12.3, >= 0.10.0"
+  required_version = "<0.12.3, >= 0.10.0"
 }
 ```
 
 ```terraform
 // this will detect 0.10.8 (the latest 0.10.x release)
 terraform {
-  required_version  = "~> 0.10.0, <0.12.3"
+  required_version = "~> 0.10.0, <0.12.3"
 }
 ```
 
 ### Environment Variables
 
-#### TOFUENV
-
-##### `TOFUENV_GITHUB_TOKEN`
-
-String (Default: "")
-
-Specify GitHub token. Because of OpenTofu binares placed in the GitHub you may encounter with rate limit problem.
-Using a personal access token dramatically increases rate limit.
-[GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
-
-##### `TOFUENV_ARCH`
-
-String (Default: `amd64`)
-
-Specify architecture. Architecture other than the default amd64 can be specified with the `TOFUENV_ARCH` environment variable
-
-Note: Default changes to `arm64` for versions that have arm64 builds available when `$(uname -m)` matches `aarch64* | arm64*`
-
-```console
-TOFUENV_ARCH=arm64 tofuenv install 0.7.9
-```
+| Variable             | Type   | Default | Example | Comment                                                                       |
+|----------------------|--------|---------|---------|-------------------------------------------------------------------------------|
+| TOFUENV_GITHUB_TOKEN | String | ""      |         | Specify GitHub token. Because of OpenTofu binares placed in the GitHub you may encounter with rate limit problem.Using a personal access token dramatically increases rate limit. [GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)                                        |
+| TOFUENV_ARCH         | String | amd64   |   TOFUENV_ARCH=arm64 tofuenv install 0.7.9      |  Specify architecture. Architecture other than the default amd64 can be specified with the `TOFUENV_ARCH` environment  variable. Note: Default changes to `arm64` for versions that have arm64 builds available when `$(uname -m)` matches `aarch64* | arm64*`|
+| TOFUENV_AUTO_INSTALL  | String       | true    |  TOFUENV_AUTO_INSTALL=true tofu use <version that is not yet installed>       | Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed. Example: if auto installation is enabled, the version will be installed.|
+| TOFUENV_CURL_OUTPUT                     | Integer       | 2       |         |  Set the mechanism used for displaying download progress when downloading tofu versions from the remote server.                                                                                                                                                                                                                                                                                                                                               |
+|  TOFUENV_DEBUG                                       | Integer              | 0       |         |   Set the debug level for tofuenv.                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|   TOFUENV_REMOTE                                                   |   String                   | https://github.com/opentofu/opentofu/releases        |TOFUENV_REMOTE=https://example.jfrog.io/artifactory/opentofu         |       To install from a remote other than the default                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 ##### `TOFUENV_AUTO_INSTALL`
 
-String (Default: true)
-
-Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
-
-Example: if auto installation is enabled, the version will be installed.
-```console
-TOFUENV_AUTO_INSTALL=true tofu use <version that is not yet installed>
-```
-
 Example: use 1.6.0-beta3 version that is not installed, and auto installation is disabled.
+
 ```console
 $ TOFUENV_AUTO_INSTALL=false tofuenv use 1.6.0-beta3
 No installed versions of opentofu matched '^1.6.0-beta3$'. TOFUENV_AUTO_INSTALL is set to false, so exiting.
@@ -177,34 +170,17 @@ No installed versions of opentofu matched '^1.6.0-beta3$'. TOFUENV_AUTO_INSTALL 
 
 ##### `TOFUENV_CURL_OUTPUT`
 
-Integer (Default: 2)
-
-Set the mechanism used for displaying download progress when downloading tofu versions from the remote server.
-
 * 2: v1 Behaviour: Pass `-#` to curl
 * 1: Use curl default
 * 0: Pass `-s` to curl
 
 ##### `TOFUENV_DEBUG`
 
-Integer (Default: 0)
-
-Set the debug level for tofuenv.
-
 * 0: No debug output
 * 1: Simple debug output
 * 2: Extended debug output, with source file names and interactive debug shells on error
 * 3: Debug level 2 + Bash execution tracing
 
-##### `TOFUENV_REMOTE`
-
-String (Default: https://github.com/opentofu/opentofu/releases)
-
-To install from a remote other than the default
-
-```console
-TOFUENV_REMOTE=https://example.jfrog.io/artifactory/opentofu
-```
 
 ##### `TOFUENV_REVERSE_REMOTE`
 
@@ -248,9 +224,11 @@ TOFUENV_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 
 String (Default: "")
 
-If not empty string, this variable overrides OpenTofu version, specified in [.opentofu-version files](#opentofu-version-file).
+If not empty string, this variable overrides OpenTofu version, specified
+in [.opentofu-version files](#opentofu-version-file).
 `latest` and `latest:<regex>` syntax are also supported.
-[`tofuenv install`](#tofuenv-install-version) and [`tofuenv use`](#tofuenv-use-version) command also respects this variable.
+[`tofuenv install`](#tofuenv-install-version) and [`tofuenv use`](#tofuenv-use-version) command also respects this
+variable.
 
 e.g.
 
@@ -262,14 +240,14 @@ TOFUENV_TOFU_VERSION=latest:^0.11. tofu --version
 
 String (Default: "")
 
-If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in conjunction with TOFUENV_REMOTE).
+If not empty string, this variable specifies the credentials file used to access the remote location (useful if used in
+conjunction with TOFUENV_REMOTE).
 
 e.g.
 
 ```console
 TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 ```
-
 
 #### Bashlog Logging Library
 
@@ -278,7 +256,6 @@ TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 Integer (Default: 1)
 
 To disable colouring of console output, set to 0.
-
 
 ##### `BASHLOG_DATE_FORMAT`
 
@@ -326,13 +303,15 @@ String (Default: "")
 
 *BE CAREFUL - MISUSE WILL DESTROY EVERYTHING YOU EVER LOVED*
 
-This variable allows you to pass a string containing a command that will be executed using `eval` in order to produce a prefix to each console output line, and each FILE type log entry.
+This variable allows you to pass a string containing a command that will be executed using `eval` in order to produce a
+prefix to each console output line, and each FILE type log entry.
 
 e.g.
 
 ```console
 BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX='echo "${$$} "'
 ```
+
 will prefix every log line with the calling process' PID.
 
 ##### `BASHLOG_JSON`
@@ -391,13 +370,14 @@ The syslog tag to specify when using SYSLOG type logging.
 
 Defaults to the PID of the calling process.
 
-
-
 ### tofuenv use [version]
 
 Switch a version to use
 
-If no parameter is passed, the version to use is resolved automatically via [.opentofu-version files](#opentofu-version-file) or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (TOFUENV_TOFU_VERSION takes precedence), defaulting to 'latest' if none are found.
+If no parameter is passed, the version to use is resolved automatically
+via [.opentofu-version files](#opentofu-version-file)
+or [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) (TOFUENV_TOFU_VERSION takes precedence),
+defaulting to 'latest' if none are found.
 
 `latest` is a syntax to use the latest installed stable version
 NOTE: `latest` syntax will be available after first stable OpenTofu release
@@ -414,7 +394,9 @@ $ tofuenv use latest:^0.8
 $ tofuenv use latest-allowed
 ```
 
-Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the latest matching version in the remote repository will be installed and used.
+Note: `tofuenv use latest` or `tofuenv use latest:<regex>` will find the latest matching version that is already
+installed. If no matching versions are installed, and TOFUENV_AUTO_INSTALL is set to `true` (which is the default) the
+latest matching version in the remote repository will be installed and used.
 
 ### tofuenv uninstall &lt;version>
 
@@ -460,9 +442,12 @@ $ tofuenv list-remote
 
 ## .opentofu-version file
 
-If you put a `.opentofu-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
+If you put a `.opentofu-version` file on your project root, or in your home directory, tofuenv detects it and uses the
+version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed
+will be selected.
 
-Note, that [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) can be used to override version, specified by `.opentofu-version` file.
+Note, that [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) can be used to override version, specified
+by `.opentofu-version` file.
 
 ```console
 $ cat .opentofu-version
@@ -505,6 +490,6 @@ rm -rf /some/path/to/tofuenv
 
 - [tofuenv itself](https://github.com/tofuutils/tofuenv/blob/main/LICENSE)
 - [tfenv](https://github.com/tfutils/tfenv/blob/master/LICENSE)
-  - tofuenv uses tfenv's source code
+    - tofuenv uses tfenv's source code
 - [rbenv](https://github.com/rbenv/rbenv/blob/master/LICENSE)
-  - tfenv partially uses rbenv's source code
+    - tfenv partially uses rbenv's source code
