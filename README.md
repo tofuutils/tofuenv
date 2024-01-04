@@ -26,6 +26,14 @@ brew install tofuenv
 ```
 
 Install via Arch User Repository (AUR)
+
+```console
+git clone https://aur.archlinux.org/tofuenv.git
+cd tofuenv
+makepkg -si
+```
+
+Install via Arch User Repository (AUR) via yay
    
 ```console
 yay --sync tofuenv
