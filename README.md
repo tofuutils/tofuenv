@@ -84,6 +84,7 @@ which tofuenv
 ```console
 winget install --id Git.Git -e --source winget
 ```
+
 2. Launch git-bash environment, execute (keep the quotes):
 ```console
 "C:\Program Files\Git\bin\sh.exe"
