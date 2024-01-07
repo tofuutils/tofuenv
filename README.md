@@ -39,7 +39,7 @@ Install via Arch User Repository (AUR) via yay
 yay --sync tofuenv
 ```
 
-### Manual
+### Manual (Linux and MacOS)
 
 1. Check out tofuenv into any path (here is `${HOME}/.tofuenv`)
 
@@ -77,6 +77,38 @@ mkdir -p ~/.local/bin/
 . ~/.profile
 ln -s ~/.tofuenv/bin/* ~/.local/bin
 which tofuenv
+```
+
+### Manual (Windows)
+1. Install Git-Bash
+```console
+winget install --id Git.Git -e --source winget
+```
+2. Launch git-bash environment, execute (keep the quotes):
+```console
+"C:\Program Files\Git\bin\sh.exe"
+```
+
+2. Check out tofuenv into any path (here is ${HOME}/.tofuenv)
+```console
+git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
+```
+
+2. Add ~/.tofuenv/bin to your $PATH
+```console
+echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
+```
+
+4. Relaunch git-bash environment for the changes to be applied (you can do it via ```exit``` command).
+
+5. Verify installation by executing:
+```console
+which tofuenv
+```
+
+6. Install jq package into git-bash default installation folder:
+```console
+curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
 ```
 
 ## Usage
