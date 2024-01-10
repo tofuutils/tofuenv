@@ -56,13 +56,13 @@ cleanup || log 'error' 'Cleanup failed?!';
 log 'info' '### Install latest-allowed normal version (#.#.#)';
 
 echo "terraform {
-  required_version = \"~> 1.6.0-rc1\"
+  required_version = \"~> 1.6.0\"
 }" > latest_allowed.tf;
 
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 1.6.0-rc1;
+  check_active_version 1.6.0;
 ) || error_and_proceed 'Latest allowed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -92,7 +92,7 @@ echo "terraform {
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 1.6.0-rc1;
+  check_active_version 1.6.0;
 ) || error_and_proceed 'Latest allowed incomplete-version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -107,7 +107,7 @@ echo 'latest-allowed' > .opentofu-version;
 
 (
   TOFUENV_AUTO_INSTALL=true tofu version;
-  check_active_version 1.6.0-rc1;
+  check_active_version 1.6.0;
 ) || error_and_proceed 'Latest allowed auto-installed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
@@ -123,7 +123,7 @@ echo 'latest-allowed' > chdir-dir/.opentofu-version
 
 (
   TOFUENV_AUTO_INSTALL=true tofu -chdir=chdir-dir version;
-  check_active_version 1.6.0-rc1 chdir-dir;
+  check_active_version 1.6.0 chdir-dir;
 ) || error_and_proceed 'Latest allowed version from -chdir does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
