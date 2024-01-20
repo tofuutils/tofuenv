@@ -139,7 +139,13 @@ curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download
 
 Install a specific version of OpenTofu.
 
-If no parameter is passed, the version to use is resolved automatically via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then .opentofu-version. The default is `latest` if none are found.
+If no parameter is passed, the version to use is resolved automatically via the following:
+
+- [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION)
+- [.opentofu-version files](#opentofu-version-file)
+- [TOFUENV_CONFIG_DIR](#TOFUENV_CONFIG_DIR)`/version`
+- [TOFUENV_TOFU_DEFAULT_VERSION](#TOFUENV_TOFU_DEFAULT_VERSION)
+- The default of `latest`.
 
 If a parameter is passed, available options:
 
@@ -212,6 +218,12 @@ terraform {
 ### Environment Variables
 
 #### TOFUENV
+
+##### `TOFUENV_TOFU_DEFAULT_VERSION`
+
+String (Default: "latest")
+
+Specify which version of tofu to install if no other version information can be found.
 
 ##### `TOFUENV_GITHUB_TOKEN`
 

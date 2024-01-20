@@ -56,7 +56,7 @@ function test_uninstall() {
   tofuenv install "${v}" || return 1;
   tofuenv uninstall "${v}" || return 1;
   log 'info' 'Confirming uninstall success; an error indicates success:';
-  check_active_version "${v}" && return 1 || return 0;
+  env TOFUENV_AUTO_INSTALL=false "${TOFUENV_ROOT}/bin/tofu" version && return 1 || return 0;
 };
 
 log 'info' '### Test Suite: Uninstall Local Versions';
@@ -88,13 +88,13 @@ done;
 echo "### Uninstall removes versions directory"
 cleanup || error_and_die "Cleanup failed?!"
 (
-  tofuenv install 1.6.0-beta5 || exit 1
-  tofuenv install 1.6.0-beta4 || exit 1
-  [ -d "./versions" ] || exit 1
-  tofuenv uninstall 1.6.0-beta5 || exit 1
-  [ -d "./versions" ] || exit 1
-  tofuenv uninstall 1.6.0-beta4 || exit 1
-  [ -d "./versions" ] && exit 1 || exit 0
+  tofuenv install 1.6.0-beta5 || error_and_die "Failed to install 1.6.0-beta5"
+  tofuenv install 1.6.0-beta4 || error_and_die "Failed to install 1.6.0-beta"
+  [ -d "./versions" ] || error_and_die "Versions directory does not exist"
+  tofuenv uninstall 1.6.0-beta5 || error_and_die "Failed to uninstall 1.6.0-beta5"
+  [ -d "./versions" ] || error_and_die "Versions directory does not exist - 2"
+  tofuenv uninstall 1.6.0-beta4 || error_and_die "Failed to uninstall 1.6.0-beta4"
+  [ -d "./versions" ] && error_and_die "Versions directory exists but shouldn't" || exit 0
 ) || error_and_proceed "Removing last version deletes versions directory"
 
 if [ "${#errors[@]}" -gt 0 ]; then

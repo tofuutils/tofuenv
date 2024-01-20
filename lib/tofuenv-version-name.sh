@@ -10,10 +10,14 @@ function tofuenv-version-name() {
       && log 'debug' "TOFUENV_VERSION_FILE retrieved from tofuenv-version-file: ${TOFUENV_VERSION_FILE}" \
       || log 'error' 'Failed to retrieve TOFUENV_VERSION_FILE from tofuenv-version-file';
 
-    TOFUENV_VERSION="$(cat "${TOFUENV_VERSION_FILE}" || true)" \
-      && log 'debug' "TOFUENV_VERSION specified in TOFUENV_VERSION_FILE: ${TOFUENV_VERSION}";
-
-    TOFUENV_VERSION_SOURCE="${TOFUENV_VERSION_FILE}";
+    if [[ -f "${TOFUENV_VERSION_FILE}" ]]; then
+        TOFUENV_VERSION="$(cat "${TOFUENV_VERSION_FILE}" || true)" \
+            && log 'debug' "TOFUENV_VERSION specified in TOFUENV_VERSION_FILE: ${TOFUENV_VERSION}";
+        TOFUENV_VERSION_SOURCE="${TOFUENV_VERSION_FILE}";
+    else
+        TOFUENV_VERSION="${TOFUENV_TOFU_DEFAULT_VERSION:-"latest"}";
+        TOFUENV_VERSION_SOURCE='TOFUENV_TOFU_DEFAULT_VERSION';
+    fi;
 
   else
     TOFUENV_VERSION="${TOFUENV_TOFU_VERSION}" \

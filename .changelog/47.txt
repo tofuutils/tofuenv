@@ -1,0 +1,3 @@
+```release-note:enhancement
+feature: support `TOFUENV_TOFU_DEFAULT_VERSION` env variable to provide a default version for all operations ([#34](https://github.com/tofuutils/tofuenv/issues/34))
+```
