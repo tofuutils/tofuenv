@@ -215,7 +215,6 @@ if [[ -f "${TOFUENV_CONFIG_DIR}/use-gnupg" ]]; then
   download_signature;
   # Deliberately unquoted command, in case caller has something fancier in "use-gnupg".
   # Also, don't use batch mode.  If someone specifies GnuPG, let them deal with any prompting.
-  echo yes
   ${gnupg_command} \
     --verify "${download_tmp}/${shasums_sig}" \
     "${download_tmp}/${shasums_name}" \
