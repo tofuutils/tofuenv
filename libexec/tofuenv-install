@@ -263,7 +263,7 @@ elif [[ -f "${TOFUENV_CONFIG_DIR}/use-gpgv" ]]; then
 #  fi;
 else
   # Warning about this avoids an unwarranted sense of confidence in the SHA check
-  log 'warn' "Not instructed to use Local PGP (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}), skipping OpenPGP signature verification";
+  log 'warn' "Not instructed to use Local GPG (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}), skipping GnuPG signature verification";
 fi;
 
 if [[ -n "${shasum_bin}" && -x "${shasum_bin}" ]]; then
