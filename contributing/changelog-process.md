@@ -56,7 +56,7 @@ Fix 'thing' being optional
 
 ##### Resource and provider enhancements
 
-A new enhancement entry should use the `release-note:enhancement` header and have a prefix indicating the resource or datasource it corresponds to, a colon, then followed by a brief summary. Use a `provider` prefix for provider level enchancements.
+A new enhancement entry should use the `release-note:enhancement` header and have a prefix indicating the resource or datasource it corresponds to, a colon, then followed by a brief summary. Use a `provider` prefix for provider level enhancements.
 
 ``````markdown
 ```release-note:enhancement
@@ -104,4 +104,4 @@ Example resource now does X slightly differently
 
 - Resource and provider documentation updates
 - Testing updates
-- Code refactoring (context dependant)
+- Code refactoring (context dependent)
