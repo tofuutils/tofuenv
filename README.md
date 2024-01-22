@@ -118,6 +118,20 @@ which tofuenv
 curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
 ```
 
+## Install dependencies
+
+Install jq (required) and GnuPG (optional, in case you want to enable GPG verification during OpenTofu installation)
+### MacOS 
+```console
+brew install jq gnupg grep
+```
+
+### Linux
+```console
+sudo apt-get update -y
+sudo apt-get install -y jq gnupg
+```
+
 ## Usage
 
 ### tofuenv install [version]
