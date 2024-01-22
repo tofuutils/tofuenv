@@ -113,11 +113,6 @@ echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 which tofuenv
 ```
 
-6. Install jq package into git-bash default installation folder:
-```console
-curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
-```
-
 ## Install dependencies
 
 Install jq (required) and GnuPG (optional, in case you want to enable GPG verification during OpenTofu installation)
@@ -130,6 +125,12 @@ brew install jq gnupg grep
 ```console
 sudo apt-get update -y
 sudo apt-get install -y jq gnupg
+```
+
+### Windows (git-bash)
+Install jq package into git-bash default installation folder:
+```console
+curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
 ```
 
 ## Usage
