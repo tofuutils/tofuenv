@@ -2,17 +2,21 @@
 
 set -uo pipefail;
 
-echo 'Usage: tofuenv <command> [<options>]
+echo 'Usage: tofuenv [<global options>] <command> [<options>]
 
 Commands:
    install       Install a specific version of OpenTofu
-   use           Switch a version to use
+   use           Switch an OpenTofu version to use
    uninstall     Uninstall a specific version of OpenTofu
-   list          List all installed versions
-   list-remote   List all installable versions
-   version-name  Print current version of OpenTofu
-   init          Update environment to use 'tofuenv' correctly.
-   pin           Write the current active version to ./.opentofu-version
+   list          List all installed versions of OpenTofu
+   list-remote   List all OpenTofu versions available for installation
+   version-name  Print currently used version of OpenTofu
+   init          Update PATH with 'tofuenv' executable path (for current session only)
+   pin           Write the current active OpenTofu version to ./.opentofu-version
+
+Global options:
+   --version     Print current version of tofuenv
+   --help        Show this help output
 ';
 
 exit 0;
