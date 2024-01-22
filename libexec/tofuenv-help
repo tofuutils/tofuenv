@@ -13,6 +13,7 @@ Commands:
    version-name  Print currently used version of OpenTofu
    init          Update PATH with 'tofuenv' executable path (for current session only)
    pin           Write the current active OpenTofu version to ./.opentofu-version
+   help          Show this help output
 
 Global options:
    --version     Print current version of tofuenv
