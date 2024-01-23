@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.TOFUENV_GITHUB_TOKEN }}
       - run: cd tools && go install github.com/hashicorp/go-changelog/cmd/changelog-build
       - run: ./scripts/generate-changelog.sh
       - run: |
