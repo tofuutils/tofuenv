@@ -497,9 +497,26 @@ $ tofuenv list-remote
 ...
 ```
 
-## .opentofu-version file
+### tofuenv version-name
+Prints the version of OpenTofu, used in the current directory.
+The version is resolved automatically via [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) or [.opentofu-version files](#opentofu-version-file), in that order of precedence, i.e. TOFUENV_TOFU_VERSION, then .opentofu-version.
+```console
+$ tofuenv version-name
+1.6.0
+```
 
-If you put a `.opentofu-version` file on your project root, or in your home directory, tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
+### tofuenv pin
+Writes the current active OpenTofu version to ./.opentofu-version file (creates if no file exists).
+```console
+$ tofuenv pin
+Pinned version by writing "1.6.0" to /Users/anastasiiakozlova/coding/opensource/tofuenv/.opentofu-version
+$ cat .opentofu-version
+1.6.0
+```
+
+#### .opentofu-version file
+
+If you put a `.opentofu-version` file on your project root, or in your home directory (automatically using `tofuenv pin` command or manually), tofuenv detects it and uses the version written in it. If the version is `latest` or `latest:<regex>`, the latest matching version currently installed will be selected.
 
 Note, that [TOFUENV_TOFU_VERSION environment variable](#TOFUENV_TOFU_VERSION) can be used to override version, specified by `.opentofu-version` file.
 
