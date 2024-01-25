@@ -103,7 +103,7 @@ tests__kv=(
   "$(tofuenv list-remote | grep 'beta' | head -n 1),latest:beta"
   "$(tofuenv list-remote | grep 'rc' | head -n 1),latest:rc"
   "$(tofuenv list-remote | grep '^1\.6\.' | head -n 1),latest:^1.6."
-  '1.6.0,latest:^1\.6'
+  '1.6.1,latest:^1\.6'
   '1.6.0-alpha5'
   '1.6.0-rc1,v1.6.0-rc1'
 );
