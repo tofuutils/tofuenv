@@ -1,0 +1,3 @@
+```release-note:bug
+fix: update latest opentofu version in tests
+```
