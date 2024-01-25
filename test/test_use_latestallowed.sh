@@ -62,7 +62,7 @@ echo "terraform {
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 1.6.0;
+  check_active_version 1.6.1;
 ) || error_and_proceed 'Latest allowed version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
