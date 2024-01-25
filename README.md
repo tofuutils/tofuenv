@@ -113,7 +113,22 @@ echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 which tofuenv
 ```
 
-6. Install jq package into git-bash default installation folder:
+## Install dependencies
+
+Install jq (required) and GnuPG (optional, in case you want to enable GPG verification during OpenTofu installation)
+### MacOS 
+```console
+brew install jq gnupg grep
+```
+
+### Linux
+```console
+sudo apt-get update -y
+sudo apt-get install -y jq gnupg
+```
+
+### Windows (git-bash)
+Install jq package into git-bash default installation folder:
 ```console
 curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
 ```
@@ -148,7 +163,28 @@ $ tofuenv install min-required
 
 If `shasum` is present in the path, tofuenv will verify the download against OpenTofu published sha256 hash.
 
-For now keybase and GnuPG tools for PGP signature verification are not supported by OpenTofu. Verification mechanisms will be added after support is added by OpenTofu.
+You can opt-in to using GnuPG tools for GPG signature verification:
+
+
+```console
+echo 'trust-tofuenv: yes' > ${TOFUENV_INSTALL_DIR}/use-gpgv
+tofuenv install
+```
+Where `TOFUENV_INSTALL_DIR` is for example, `~/tofuenv` or `/opt/homebrew/Cellar/tofuenv/<version>`
+
+The `trust-tofuenv` directive means that verification uses a copy of the
+OpenTofu GPG key found in the tofuenv repository. Skipping that directive
+means that the OpenTofu key must be in the existing default trusted keys.
+Use the file `${TOFUENV_INSTALL_DIR}/use-gnupg` to instead invoke the full `gpg` tool and
+see web-of-trust status; beware that a lack of trust path will not cause a
+validation failure.
+Default `gpg/gpgv` command can be overridden by adding `binary` directive to `use-gpgv`/`use-gnupg` file, ex.:
+```console
+echo 'binary: gpgv --keyring ./path/to/gpg/opentofu.gpg' > ${TOFUENV_INSTALL_DIR}/use-gpgv
+tofuenv install
+```
+
+For now keybase tool GPG signature verification is not supported by OpenTofu. This verification mechanism will be added after support is added by OpenTofu.
 
 #### .opentofu-version
 

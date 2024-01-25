@@ -139,7 +139,7 @@ version_url="${TOFUENV_REMOTE}/download/v${version}";
 tarball_name="tofu_${version}_${os}.zip";
 
 shasums_name="tofu_${version}_SHA256SUMS";
-shasums_sig="${shasums_name}.sig";
+shasums_sig="${shasums_name}.gpgsig";
 
 log 'info' "Installing OpenTofu v${version}";
 
@@ -203,9 +203,6 @@ download_signature() {
 # from "required_version" setting in "*.tf" files
 check_dependencies;
 
-#
-# TODO: Not supported by now from OpenTofu side
-#
 # Verify signature if verification mechanism (keybase, gpg, etc) is present
 if [[ -f "${TOFUENV_CONFIG_DIR}/use-gnupg" ]]; then
   # GnuPG uses the user's keyring, and any web-of-trust or local signatures or
@@ -234,7 +231,11 @@ elif [[ -f "${TOFUENV_CONFIG_DIR}/use-gpgv" ]]; then
 
   download_signature;
   if [[ "${trust_tofuenv}" == 'yes' ]]; then
-    log 'error' 'Opentofu does not currently support PGP signatures.';
+    ${gpgv_command} \
+      --keyring "${TOFUENV_ROOT}/share/opentofu.gpg" \
+      "${download_tmp}/${shasums_sig}" \
+      "${download_tmp}/${shasums_name}" \
+      || log 'error' 'PGP signature rejected';
 
   else
     ${gpgv_command} \
@@ -242,27 +243,27 @@ elif [[ -f "${TOFUENV_CONFIG_DIR}/use-gpgv" ]]; then
       "${download_tmp}/${shasums_name}" \
       || log 'error' 'PGP signature rejected';
   fi;
-elif [[ -n "${keybase_bin}" && -x "${keybase_bin}" ]]; then
-  grep -Eq '^Logged in:[[:space:]]*yes' <("${keybase_bin}" status);
-  keybase_logged_in="${?}";
-  grep -Fq hashicorp <("${keybase_bin}" list-following);
-  keybase_following_hc="${?}";
-
-  if [[ "${keybase_logged_in}" -ne 0 || "${keybase_following_hc}" -ne 0 ]]; then
-    log 'warn' 'Unable to verify OpenPGP signature unless logged into keybase and following hashicorp';
-  else
-    download_signature;
-    "${keybase_bin}" pgp verify \
-      -S hashicorp \
-      -d "${download_tmp}/${shasums_sig}" \
-      -i "${download_tmp}/${shasums_name}" \
-      && log 'debug' 'SHA256SUMS signature matched' \
-      || log 'error' 'SHA256SUMS signature does not match!';
-  fi;
-# TODO: disable warning for now
-#else
+# TODO: uncomment when keybase GPG support is added
+#elif [[ -n "${keybase_bin}" && -x "${keybase_bin}" ]]; then
+#  grep -Eq '^Logged in:[[:space:]]*yes' <("${keybase_bin}" status);
+#  keybase_logged_in="${?}";
+#  grep -Fq hashicorp <("${keybase_bin}" list-following);
+#  keybase_following_hc="${?}";
+#
+#  if [[ "${keybase_logged_in}" -ne 0 || "${keybase_following_hc}" -ne 0 ]]; then
+#    log 'warn' 'Unable to verify OpenPGP signature unless logged into keybase and following hashicorp';
+#  else
+#    download_signature;
+#    "${keybase_bin}" pgp verify \
+#      -S hashicorp \
+#      -d "${download_tmp}/${shasums_sig}" \
+#      -i "${download_tmp}/${shasums_name}" \
+#      && log 'debug' 'SHA256SUMS signature matched' \
+#      || log 'error' 'SHA256SUMS signature does not match!';
+#  fi;
+else
   # Warning about this avoids an unwarranted sense of confidence in the SHA check
-  # log 'warn' "Not instructed to use Local PGP (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}) & No keybase install found, skipping OpenPGP signature verification";
+  log 'warn' "Not instructed to use Local GPG (${TOFUENV_CONFIG_DIR}/use-{gpgv,gnupg}), skipping GnuPG signature verification";
 fi;
 
 if [[ -n "${shasum_bin}" && -x "${shasum_bin}" ]]; then
