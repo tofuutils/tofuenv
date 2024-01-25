@@ -1,4 +1,6 @@
-## 1.1.0 (Unreleased)
+## 1.0.5 (Unreleased)
+
+## 1.0.4 (January 25th, 2024)
 
 ENHANCEMENTS:
 
