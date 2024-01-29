@@ -4,7 +4,7 @@
 
 ## Important notice
 
-Many people have asked about Terraform support, and we are finally ready to announce that a successor for tfenv and tofuenv is in the works. [tenv](https://github.com/tofuutils/tenv) will be able to handle both Terraform and OpenTofu binaries. Also, because it is no longer bash, no dependencies are necessary, as we converted the codebase to Golang.
+Many people have asked about Terraform support, and we are finally ready to announce a successor for tfenv and tofuenv: [tenv](https://github.com/tofuutils/tenv) written in Golang. tenv is able to handle Terraform binaries as well as OpenTofu binaries. 
 
 Please contribute to [tenv](https://github.com/tofuutils/tenv) and award us stars. The release date will be announced soon.
 
