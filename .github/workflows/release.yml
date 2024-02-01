@@ -12,7 +12,7 @@ permissions:
 jobs:
   goreleaser:
     name: 'Release the latest tag'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,22 +28,34 @@ jobs:
           args: release --clean -f ${{ vars.GORELEASER_CONFIG_PATH }}
         env:
           GITHUB_TOKEN: ${{ secrets.TOFUENV_GITHUB_TOKEN }}
+  checksums:
+    name: 'Generate release checksums'
+    needs: goreleaser
+    runs-on: ubuntu-22.04
+    steps:
       - name: Download artifacts
-        uses: robinraju/release-downloader@v1.9
-        with:
-          tag: ${{ github.ref_name }}
-          tarBall: true
-          zipBall: true
+        run: |
+          curl -L --output tofuenv-$(echo $TAG | sed s/v//).tar.gz \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "Authorization: Bearer $GITHUB_TOKEN" \
+                    -H "X-GitHub-Api-Version: 2022-11-28" \
+                     https://github.com/$GITHUB_REPOSITORY/archive/refs/tags/$TAG.tar.gz
+          curl -L --output tofuenv-$(echo $TAG | sed s/v//).zip \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "Authorization: Bearer $GITHUB_TOKEN" \
+                    -H "X-GitHub-Api-Version: 2022-11-28" \
+                    https://github.com/$GITHUB_REPOSITORY/archive/refs/tags/$TAG.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOFUENV_GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
       - name: Check contents
         run: ls -la
       - name: Generate checksum
-        uses: jmgilman/actions-generate-checksum@v1
-        with:
-          patterns: |
-            *.zip
-            *.tar.gz
-          method: sha256
-          output: checksums_${{ github.ref_name }}.txt
+        run: |
+          shasum -a 256 *.tar.gz > checksums_$version.txt
+          shasum -a 256 *.zip >> checksums_$version.txt
+        env:
+          version: ${{ github.ref_name }}
       - name: Upload checksum to release
         uses: svenstaro/upload-release-action@v2
         with:
