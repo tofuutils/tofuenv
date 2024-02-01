@@ -52,7 +52,7 @@ jobs:
         run: ls -la
       - name: Generate checksum
         run: |
-          shasum -a 256 *.tar.gz >> checksums_$version.txt
+          shasum -a 256 *.tar.gz > checksums_$version.txt
           shasum -a 256 *.zip >> checksums_$version.txt
         env:
           version: ${{ github.ref_name }}
