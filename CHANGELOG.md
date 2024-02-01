@@ -1,5 +1,9 @@
 ## 1.0.5 (Unreleased)
 
+BUG FIXES:
+
+* fix: update checksums generation ([#46](https://github.com/tofuutils/tofuenv/issues/46))
+
 ## 1.0.4 (January 25th, 2024)
 
 ENHANCEMENTS:
