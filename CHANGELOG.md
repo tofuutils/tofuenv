@@ -1,4 +1,6 @@
-## 1.0.5 (Unreleased)
+## 1.0.6 (Unreleased)
+
+## 1.0.5 (February 2nd, 2024)
 
 BUG FIXES:
 
