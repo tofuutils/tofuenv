@@ -1,3 +1,6 @@
+<!-- BADGES -->
+[![Github release](https://img.shields.io/github/v/release/tofuutils/tofuenv?style=for-the-badge)](https://github.com/tofuutils/tofuenv/releases) [![Contributors](https://img.shields.io/github/contributors/tofuutils/tofuenv?style=for-the-badge)](https://github.com/tofuutils/tofuenv/graphs/contributors) ![maintenance status](https://img.shields.io/maintenance/yes/2024.svg?style=for-the-badge) 
+
 # tofuenv
 
 [OpenTofu](https://opentofu.org/) version manager inspired by [tfenv](https://github.com/tfutils/tfenv)
