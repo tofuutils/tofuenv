@@ -2,7 +2,7 @@
 
 set -uo pipefail;
 
-echo 'Usage: tofuenv [<global options>] <command> [<options>]
+echo "Usage: tofuenv [<global options>] <command> [<options>]
 
 Commands:
    install       Install a specific version of OpenTofu
@@ -18,6 +18,6 @@ Commands:
 Global options:
    --version     Print current version of tofuenv
    --help        Show this help output
-';
+";
 
 exit 0;

@@ -18,7 +18,7 @@ if [ -z "${TOFUENV_ROOT:-""}" ]; then
     local file_name;
 
     while [ "${target_file}" != "" ]; do
-      cd "$(dirname ${target_file})" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
+      cd "$(dirname "${target_file}")" || early_death "Failed to 'cd \$(dirname ${target_file})' while trying to determine TOFUENV_ROOT";
       file_name="$(basename "${target_file}")" || early_death "Failed to 'basename \"${target_file}\"' while trying to determine TOFUENV_ROOT";
       target_file="$(readlink "${file_name}")";
     done;
@@ -27,7 +27,7 @@ if [ -z "${TOFUENV_ROOT:-""}" ]; then
   };
 
   TOFUENV_ROOT="$(cd "$(dirname "$(readlink_f "${0}")")/.." && pwd)";
-  [ -n ${TOFUENV_ROOT} ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
+  [ -n "${TOFUENV_ROOT}" ] || early_death "Failed to 'cd \"\$(dirname \"\$(readlink_f \"${0}\")\")/..\" && pwd' while trying to determine TOFUENV_ROOT";
 else
   TOFUENV_ROOT="${TOFUENV_ROOT%/}";
 fi;
