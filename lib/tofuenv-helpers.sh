@@ -72,13 +72,13 @@ function curlw () {
     TLS_OPT="";
   fi;
 
-  if [[ ! -z "${TOFUENV_NETRC_PATH:-""}" ]]; then
+  if [[ -n "${TOFUENV_NETRC_PATH:-""}" ]]; then
     NETRC_OPT="--netrc-file ${TOFUENV_NETRC_PATH}";
   else
     NETRC_OPT="";
   fi;
 
-  if [[ ! -z "${TOFUENV_GITHUB_TOKEN:-""}" ]]; then
+  if [[ -n "${TOFUENV_GITHUB_TOKEN:-""}" ]]; then
     AUTHORIZATION_HEADER="Authorization: Bearer ${TOFUENV_GITHUB_TOKEN}";
   else
     AUTHORIZATION_HEADER="";
@@ -94,7 +94,7 @@ function check_active_version() {
       maybe_chdir="-chdir=${2}";
   fi;
 
-  local active_version="$(${TOFUENV_ROOT}/bin/tofu ${maybe_chdir} version | grep '^OpenTofu')";
+  local active_version="$("${TOFUENV_ROOT}/bin/tofu" ${maybe_chdir} version | grep '^OpenTofu')";
 
   if ! grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?( is already installed)?\$" <(echo "${active_version}"); then
     log 'debug' "Expected version ${v} but found ${active_version}";
@@ -109,7 +109,7 @@ export -f check_active_version;
 function check_installed_version() {
   local v="${1}";
   local bin="${TOFUENV_CONFIG_DIR}/versions/${v}/tofu";
-  [ -n "$(${bin} version | grep -E "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?$")" ];
+  "${bin}" version | grep -qE "^OpenTofu v${v}((-dev)|( \([a-f0-9]+\)))?$"
 };
 export -f check_installed_version;
 
@@ -122,18 +122,18 @@ export -f check_default_version;
 
 function cleanup() {
   log 'info' 'Performing cleanup';
-  local pwd="$(pwd)";
-  log 'debug' "Deleting ${pwd}/version";
+
+  log 'debug' "Deleting ${PWD}/version";
   rm -rf ./version;
-  log 'debug' "Deleting ${pwd}/versions";
+  log 'debug' "Deleting ${PWD}/versions";
   rm -rf ./versions;
-  log 'debug' "Deleting ${pwd}/.opentofu-version";
+  log 'debug' "Deleting ${PWD}/.opentofu-version";
   rm -rf ./.opentofu-version;
-  log 'debug' "Deleting ${pwd}/latest_allowed.tf";
+  log 'debug' "Deleting ${PWD}/latest_allowed.tf";
   rm -rf ./latest_allowed.tf;
-  log 'debug' "Deleting ${pwd}/min_required.tf";
+  log 'debug' "Deleting ${PWD}/min_required.tf";
   rm -rf ./min_required.tf;
-  log 'debug' "Deleting ${pwd}/chdir-dir";
+  log 'debug' "Deleting ${PWD}/chdir-dir";
   rm -rf ./chdir-dir;
 };
 export -f cleanup;
@@ -145,8 +145,8 @@ function error_and_proceed() {
 export -f error_and_proceed;
 
 function check_dependencies() {
-  if [[ $(uname) == 'Darwin' ]] && [ $(which brew) ]; then
-    if ! [ $(which ggrep) ]; then
+  if [[ $(uname) == 'Darwin' ]] && [ "$(which brew)" ]; then
+    if ! [ "$(which ggrep)" ]; then
       log 'error' 'A metaphysical dichotomy has caused this unit to overload and shut down. GNU Grep is a requirement and your Mac does not have it. Consider "brew install grep"';
     fi;
 

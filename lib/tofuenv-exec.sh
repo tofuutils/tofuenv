@@ -3,7 +3,7 @@
 set -uo pipefail;
 
 function tofuenv-exec() {
-  for _arg in ${@:1}; do
+  for _arg in "${@:1}"; do
     if [[ "${_arg}" == -chdir=* ]]; then
       log 'debug' "Found -chdir arg. Setting TOFUENV_DIR to: ${_arg#-chdir=}";
       export TOFUENV_DIR="${PWD}/${_arg#-chdir=}";
@@ -38,7 +38,7 @@ function tofuenv-exec() {
   TF_BIN_PATH="${TOFUENV_CONFIG_DIR}/versions/${TOFUENV_VERSION}/tofu";
   export PATH="${TF_BIN_PATH}:${PATH}";
   log 'debug' "TF_BIN_PATH added to PATH: ${TF_BIN_PATH}";
-  log 'debug' "Executing: ${TF_BIN_PATH} $@";
+  log 'debug' "Executing: ${TF_BIN_PATH} $*";
 
   exec "${TF_BIN_PATH}" "$@" \
   || log 'error' "Failed to execute: ${TF_BIN_PATH} $*";
