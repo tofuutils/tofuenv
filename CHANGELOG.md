@@ -2,6 +2,13 @@
 
 ENHANCEMENTS:
 
+* documentation: Updated badges style. ([#62](https://github.com/tofuutils/tofuenv/issues/62))
+* documentation: add openssf badge. The [Open Source Security Foundation (OpenSSF)](https://openssf.org/) Best Practices badge is a way for Free/Libre and Open Source Software (FLOSS) projects to show that they follow best practices. ([#61](https://github.com/tofuutils/tofuenv/issues/61))
+
+## 1.0.6 (Unreleased)
+
+ENHANCEMENTS:
+
 * documentation: add openssf badge. The [Open Source Security Foundation (OpenSSF)](https://openssf.org/) Best Practices badge is a way for Free/Libre and Open Source Software (FLOSS) projects to show that they follow best practices. ([#61](https://github.com/tofuutils/tofuenv/issues/61))
 
 ## 1.0.6 (Unreleased)
