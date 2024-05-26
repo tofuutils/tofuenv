@@ -92,7 +92,7 @@ echo "terraform {
 (
   tofuenv install latest-allowed;
   tofuenv use latest-allowed;
-  check_active_version 1.7.0;
+  check_active_version "$(tofuenv list-remote | head -n 1)";
 ) || error_and_proceed 'Latest allowed incomplete-version does not match';
 
 cleanup || log 'error' 'Cleanup failed?!';
