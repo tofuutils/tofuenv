@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: 'Build docker image and push it'
-        uses: 'docker/build-push-action@v5'
+        uses: 'docker/build-push-action@v6'
         if: contains(matrix.os, 'ubuntu')
         with:
           context: .
@@ -100,7 +100,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: 'Build docker image and push it'
-        uses: 'docker/build-push-action@v5'
+        uses: 'docker/build-push-action@v6'
         if: contains(matrix.os, 'ubuntu')
         with:
           context: .
