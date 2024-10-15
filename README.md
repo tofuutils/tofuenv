@@ -660,6 +660,34 @@ git --git-dir=~/.tofuenv/.git pull
 rm -rf /some/path/to/tofuenv
 ```
 
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+Check out our [contributing guide](CONTRIBUTING.md) to get started.
+
+Don't forget to give the project a star! Thanks again!
+
+## Community
+Have questions or suggestions? Reach out to us via:
+
+* [GitHub Issues](https://github.com/tofuutils/tofuenv/issues)
+* User/Developer Group: Join github community to get update of Harbor's news, features, releases, or to provide suggestion and feedback.
+* Slack: Join tofuutils's community for discussion and ask questions: OpenTofu, channel: #tofuutils
+
+## Authors
+ This project was made possible by the help of these awesome contributors:
+<a href="https://github.com/tofuutils/tofuenv/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tofuutils/tofuenv" />
+</a>
+<a href="https://star-history.com/#tofuutils/tofuenv&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=tofuutils/tofuenv&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=tofuutils/tofuenv&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=tofuutils/pre-commit-opentofu&type=Date" />
+  </picture>
+</a>
+
 ## LICENSE
 
 - [tofuenv itself](https://github.com/tofuutils/tofuenv/blob/main/LICENSE)
