@@ -1,56 +1,89 @@
 <!-- BADGES -->
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8816/badge)](https://www.bestpractices.dev/projects/8816)
-[![Github release](https://img.shields.io/github/v/release/tofuutils/tofuenv)](https://github.com/tofuutils/tofuenv/releases) [![Contributors](https://img.shields.io/github/contributors/tofuutils/tofuenv)](https://github.com/tofuutils/tofuenv/graphs/contributors) ![maintenance status](https://img.shields.io/maintenance/yes/2024.svg)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/8816/badge)](https://www.bestpractices.dev/projects/8816) [![Github release](https://img.shields.io/github/v/release/tofuutils/tofuenv)](https://github.com/tofuutils/tofuenv/releases) [![Contributors](https://img.shields.io/github/contributors/tofuutils/tofuenv)](https://github.com/tofuutils/tofuenv/graphs/contributors) ![maintenance status](https://img.shields.io/maintenance/yes/2024.svg)
 
-# tofuenv
+<h1 align="center">tofuenv</h1>
 
-[OpenTofu](https://opentofu.org/) version manager inspired by [tfenv](https://github.com/tfutils/tfenv)
+<h3 align="center"> <a href="https://opentofu.org/">OpenTofu</a> version manager inspired by <a href="https://github.com/tfutils/tfenv">tfenv</a> </h3>
 
-## Important notice
+### Table of Content
+<div align="center">
+  <a href="#important-notice">Important Notice</a> •
+  <a href="#supported-os">Supported OS</a> •
+  <a href="#installation">Installation</a> •
+  <a href="#install-dependencies">Install dependencies</a> •
+  <a href="#usage">Usage</a> •
+  <a href="#environment-variables">Environment Variables</a> •
+  <a href="#upgrading">Upgrading</a> •
+  <a href="#uninstalling">Uninstalling</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#community">Community</a> •
+  <a href="#authors">Authors</a> •
+  <a href="#license">License</a>
+</div>
 
-Many people have asked about Terraform support, and we are finally ready to announce a successor for tfenv and tofuenv: [tenv](https://github.com/tofuutils/tenv) written in Golang. tenv is able to handle Terraform binaries as well as OpenTofu binaries. 
+### Important Notice
+Many people have asked about Terraform support, and we are finally ready to announce a successor for **tfenv** and **tofuenv**: <a href="https://github.com/tofuutils/tenv">tenv </a> 🚀 written in Golang. tenv is able to handle Terraform binaries as well as OpenTofu binaries. 🎉
 
-Please contribute to [tenv](https://github.com/tofuutils/tenv) and award us stars.
+Please contribute to <a href="https://github.com/tofuutils/tenv">tenv </a> and award us stars⭐.
 
-## Support
+## Supported OS
 
-Currently tofuenv supports the following operating systems:
+Currently, **tofuenv** supports the following operating systems:
 
-- macOS
-  - 64bit
-  - Arm (Apple Silicon)
-- Linux
-  - 64bit
-  - Arm
-- Windows (64bit) - only tested in git-bash - currently presumed failing due to symlink issues in git-bash
+<details>
+  <summary><b>macOS</b></summary>
+  <ul>
+    <li>64bit</li>
+    <li>Arm (Apple Silicon)</li>
+  </ul>
+</details>
+<details>
+  <summary><b>Linux</b></summary>
+  <ul>
+    <li>64bit</li>
+    <li>Arm</li>
+  </ul>
+</details>
+<details>
+  <summary><b>Windows</b> (Only tested in git-bash - currently presumed failing due to symlink issues in git-bash)</summary> 
+  <ul>
+    <li>64bit</li>
+  </ul>
+</details>
+
 
 ## Installation
 
 ### Automatic
 
-Install via Homebrew
+<details><summary><b>Install via Homebrew</b></summary>
 
-```console
-brew tap tofuutils/tap
-brew install tofuenv
-```
+  ```console
+    brew tap tofuutils/tap
+    brew install tofuenv
+  ```  
+</details>
 
-Install via Arch User Repository (AUR)
+<details><summary><b>Install via Arch User Repository (AUR)</b></summary>
 
 ```console
 git clone https://aur.archlinux.org/tofuenv.git
 cd tofuenv
 makepkg -si
 ```
+</details>
 
-Install via Arch User Repository (AUR) via yay
+
+<details><summary><b>Install via Arch User Repository (AUR) via yay</b></summary>
    
 ```console
 yay --sync tofuenv
 ```
+</details>
 
-### Manual (Linux and MacOS)
-
+### Manual
+<details><summary><b>Linux and MacOS</b></summary>
+  
 1. Check out tofuenv into any path (here is `${HOME}/.tofuenv`)
 
 ```console
@@ -89,7 +122,10 @@ ln -s ~/.tofuenv/bin/* ~/.local/bin
 which tofuenv
 ```
 
-### Manual (Windows)
+</details>
+
+<details><summary><b>Windows</b></summary>
+  
 1. Install Git-Bash
 ```console
 winget install --id Git.Git -e --source winget
@@ -100,42 +136,51 @@ winget install --id Git.Git -e --source winget
 "C:\Program Files\Git\bin\sh.exe"
 ```
 
-2. Check out tofuenv into any path (here is ${HOME}/.tofuenv)
+3. Check out tofuenv into any path (here is ${HOME}/.tofuenv)
 ```console
 git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
 ```
 
-2. Add ~/.tofuenv/bin to your $PATH
+4. Add ~/.tofuenv/bin to your $PATH
 ```console
 echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 ```
 
-4. Relaunch git-bash environment for the changes to be applied (you can do it via ```exit``` command).
+5. Relaunch git-bash environment for the changes to be applied (you can do it via ```exit``` command).
 
-5. Verify installation by executing:
+6. Verify installation by executing:
 ```console
 which tofuenv
 ```
 
+</details>
+
 ## Install dependencies
 
-Install jq (required) and GnuPG (optional, in case you want to enable GPG verification during OpenTofu installation)
-### MacOS 
+Install **jq** (required) and **GnuPG** (optional, in case you want to enable GPG verification during OpenTofu installation)
+
+<details><summary><b>MacOs</b></summary>
+  
 ```console
 brew install jq gnupg grep
 ```
+</details>
 
-### Linux
+<details><summary><b>Linux</b></summary>
+  
 ```console
 sudo apt-get update -y
 sudo apt-get install -y jq gnupg
 ```
+</details>
 
-### Windows (git-bash)
+<details><summary><b>Windows</b> (git-bash)</summary>
 Install jq package into git-bash default installation folder:
+  
 ```console
 curl -L -o /usr/bin/jq.exe https://github.com/jqlang/jq/releases/latest/download/jq-win64.exe
 ```
+</details>
 
 ## Usage
 
@@ -213,20 +258,21 @@ terraform {
 }
 ```
 
-### Environment Variables
+## Environment Variables
 
-#### TOFUENV
+### TOFUENV
 
-##### `TOFUENV_GITHUB_TOKEN`
-
+<details id="TOFUENV_GITHUB_TOKEN"><summary><b>TOFUENV_GITHUB_TOKEN</b></summary><br>
+  
 String (Default: "")
 
 Specify GitHub token. Because of OpenTofu binares placed in the GitHub you may encounter with rate limit problem.
 Using a personal access token dramatically increases rate limit.
 [GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
+</details>
 
-##### `TOFUENV_ARCH`
-
+<details id="TOFUENV_ARCH"><summary><b>TOFUENV_ARCH</b></summary><br>
+  
 String (Default: `amd64`)
 
 Specify architecture. Architecture other than the default amd64 can be specified with the `TOFUENV_ARCH` environment variable
@@ -236,9 +282,10 @@ Note: Default changes to `arm64` for versions that have arm64 builds available w
 ```console
 TOFUENV_ARCH=arm64 tofuenv install 0.7.9
 ```
+</details>
 
-##### `TOFUENV_AUTO_INSTALL`
-
+<details id="TOFUENV_AUTO_INSTALL"><summary><b>TOFUENV_AUTO_INSTALL</b></summary><br>
+  
 String (Default: true)
 
 Should tofuenv automatically install tofu if the version specified by defaults or a .opentofu-version file is not currently installed.
@@ -253,8 +300,9 @@ Example: use 1.6.0-beta3 version that is not installed, and auto installation is
 $ TOFUENV_AUTO_INSTALL=false tofuenv use 1.6.0-beta3
 No installed versions of opentofu matched '^1.6.0-beta3$'. TOFUENV_AUTO_INSTALL is set to false, so exiting.
 ```
+</details>
 
-##### `TOFUENV_CURL_OUTPUT`
+<details id="TOFUENV_CURL_OUTPUT"><summary><b>TOFUENV_CURL_OUTPUT</b></summary><br>
 
 Integer (Default: 2)
 
@@ -263,8 +311,9 @@ Set the mechanism used for displaying download progress when downloading tofu ve
 * 2: v1 Behaviour: Pass `-#` to curl
 * 1: Use curl default
 * 0: Pass `-s` to curl
+</details>
 
-##### `TOFUENV_DEBUG`
+<details id="TOFUENV_DEBUG"><summary><b>TOFUENV_DEBUG</b></summary><br>
 
 Integer (Default: 0)
 
@@ -274,8 +323,9 @@ Set the debug level for tofuenv.
 * 1: Simple debug output
 * 2: Extended debug output, with source file names and interactive debug shells on error
 * 3: Debug level 2 + Bash execution tracing
+</details>
 
-##### `TOFUENV_REMOTE`
+<details id="TOFUENV_REMOTE"><summary><b>TOFUENV_REMOTE</b></summary><br>
 
 String (Default: https://github.com/opentofu/opentofu/releases)
 
@@ -284,8 +334,9 @@ To install from a remote other than the default
 ```console
 TOFUENV_REMOTE=https://example.jfrog.io/artifactory/opentofu
 ```
+</details>
 
-##### `TOFUENV_REVERSE_REMOTE`
+<details id="TOFUENV_REVERSE_REMOTE"><summary><b>TOFUENV_REVERSE_REMOTE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -299,8 +350,9 @@ functionality will be restored.
 ```console
 TOFUENV_REVERSE_REMOTE=1 tofuenv list-remote
 ```
+</details>
 
-##### `TOFUENV_SKIP_LIST_REMOTE`
+<details id="TOFUENV_SKIP_LIST_REMOTE"><summary><b>TOFUENV_SKIP_LIST_REMOTE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -312,8 +364,9 @@ Enable: any other value
 ```console
 TOFUENV_SKIP_LIST_REMOTE=1 tofuenv install 1.6.0-rc1
 ```
+</details>
 
-##### `TOFUENV_CONFIG_DIR`
+<details id="TOFUENV_CONFIG_DIR"><summary><b>TOFUENV_CONFIG_DIR</b></summary><br>
 
 Path (Default: `$TOFUENV_ROOT`)
 
@@ -322,8 +375,9 @@ The path to a directory where the local tofu versions and configuration files ex
 ```console
 TOFUENV_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 ```
+</details>
 
-##### `TOFUENV_TOFU_VERSION`
+<details id="TOFUENV_TOFU_VERSION"><summary><b>TOFUENV_TOFU_VERSION</b></summary><br>
 
 String (Default: "")
 
@@ -336,8 +390,9 @@ e.g.
 ```console
 TOFUENV_TOFU_VERSION=latest:^0.11. tofu --version
 ```
+</details>
 
-##### `TOFUENV_NETRC_PATH`
+<details id="TOFUENV_NETRC_PATH"><summary><b>TOFUENV_NETRC_PATH</b></summary><br>
 
 String (Default: "")
 
@@ -348,18 +403,20 @@ e.g.
 ```console
 TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 ```
+</details>
 
+---
 
-#### Bashlog Logging Library
+### Bashlog Logging Library
 
-##### `BASHLOG_COLOURS`
+<details id="BASHLOG_COLOURS"><summary><b>BASHLOG_COLOURS</b></summary><br>
 
 Integer (Default: 1)
 
 To disable colouring of console output, set to 0.
+</details>
 
-
-##### `BASHLOG_DATE_FORMAT`
+<details id="BASHLOG_DATE_FORMAT"><summary><b>BASHLOG_DATE_FORMAT</b></summary><br>
 
 String (Default: +%F %T)
 
@@ -367,16 +424,18 @@ The display format for the date as passed to the `date` binary to generate a dat
 
 * `FILE` type log file lines.
 * Each console output line when `BASHLOG_EXTRA=1`
+</details>
 
-##### `BASHLOG_EXTRA`
+<details id="BASHLOG_EXTRA"><summary><b>BASHLOG_EXTRA</b></summary><br>
 
 Integer (Default: 0)
 
 By default, console output from tofuenv does not print a date stamp or log severity.
 
 To enable this functionality, making normal output equivalent to FILE log output, set to 1.
+</details>
 
-##### `BASHLOG_FILE`
+<details id="BASHLOG_FILE"><summary><b>BASHLOG_FILE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -392,14 +451,16 @@ BASHLOG_FILE=1 tofuenv use latest
 ```
 
 will log to `/tmp/tofuenv-use.log`
+</details>
 
-##### `BASHLOG_FILE_PATH`
+<details id="BASHLOG_FILE_PATH"><summary><b>BASHLOG_FILE_PATH</b></summary><br>
 
 String (Default: /tmp/$(basename ${0}).log)
 
 To specify a single file as the target for all FILE type logging regardless of the executing script.
+</details>
 
-##### `BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX`
+<details id="BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX"><summary><b>BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX</b></summary><br>
 
 String (Default: "")
 
@@ -413,8 +474,9 @@ e.g.
 BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX='echo "${$$} "'
 ```
 will prefix every log line with the calling process' PID.
+</details>
 
-##### `BASHLOG_JSON`
+<details id="BASHLOG_JSON"><summary><b>BASHLOG_JSON</b></summary><br>
 
 Integer (Default: 0)
 
@@ -434,14 +496,16 @@ will log in JSON format to `/tmp/tofuenv-use.log.json`
 JSON log content:
 
 `{"timestamp":"<date +%s>","level":"<log-level>","message":"<log-content>"}`
+</details>
 
-##### `BASHLOG_JSON_PATH`
+<details  id="BASHLOG_JSON_PATH"><summary><b>BASHLOG_JSON_PATH</b></summary><br>
 
 String (Default: /tmp/$(basename ${0}).log.json)
 
 To specify a single file as the target for all JSON type logging regardless of the executing script.
+</details>
 
-##### `BASHLOG_SYSLOG`
+<details id="BASHLOG_SYSLOG"><summary><b>BASHLOG_SYSLOG</b></summary><br>
 
 Integer (Default: 0)
 
@@ -455,22 +519,25 @@ local facility="${BASHLOG_SYSLOG_FACILITY:-local0}";
 local pid="${$}";
 logger --id="${pid}" -t "${tag}" -p "${facility}.${severity}" "${syslog_line}"
 ```
+</details>
 
-##### `BASHLOG_SYSLOG_FACILITY`
+<details id="BASHLOG_SYSLOG_FACILITY"><summary><b>BASHLOG_SYSLOG_FACILITY</b></summary><br>
 
 String (Default: local0)
 
 The syslog facility to specify when using SYSLOG type logging.
+</details>
 
-##### `BASHLOG_SYSLOG_TAG`
+<details id="BASHLOG_SYSLOG_TAG"><summary><b>BASHLOG_SYSLOG_TAG</b></summary><br>
 
 String (Default: $(basename $0))
 
 The syslog tag to specify when using SYSLOG type logging.
 
 Defaults to the PID of the calling process.
+</details>
 
-
+---
 
 ### tofuenv use [version]
 
@@ -596,6 +663,34 @@ git --git-dir=~/.tofuenv/.git pull
 ```console
 rm -rf /some/path/to/tofuenv
 ```
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+Check out our [contributing guide](CONTRIBUTING.md) to get started.
+
+Don't forget to give the project a star! Thanks again!
+
+## Community
+Have questions or suggestions? Reach out to us via:
+
+* [GitHub Issues](https://github.com/tofuutils/tofuenv/issues)
+* User/Developer Group: Join github community to get update of Harbor's news, features, releases, or to provide suggestion and feedback.
+* Slack: Join tofuutils's community for discussion and ask questions: OpenTofu, channel: #tofuutils
+
+## Authors
+ This project was made possible by the help of these awesome contributors:
+<a href="https://github.com/tofuutils/tofuenv/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tofuutils/tofuenv" />
+</a>
+<a href="https://star-history.com/#tofuutils/tofuenv&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=tofuutils/tofuenv&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=tofuutils/tofuenv&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=tofuutils/pre-commit-opentofu&type=Date" />
+  </picture>
+</a>
 
 ## LICENSE
 
