@@ -3,7 +3,7 @@
 
 <h1 align="center">tofuenv</h1>
 
-<h3 align="center"> <a herf="https://opentofu.org/">OpenTofu</a> version manager inspired by <a herf="https://github.com/tfutils/tfenv">tfenv</a> </h3>
+<h3 align="center"> <a href="https://opentofu.org/">OpenTofu</a> version manager inspired by <a href="https://github.com/tfutils/tfenv">tfenv</a> </h3>
 
 ### Table of Content
 <div align="center">
@@ -22,9 +22,9 @@
 </div>
 
 ### Important Notice
-Many people have asked about Terraform support, and we are finally ready to announce a successor for **tfenv** and **tofuenv**: <a herf="https://github.com/tofuutils/tenv">tenv </a> 🚀 written in Golang. tenv is able to handle Terraform binaries as well as OpenTofu binaries. 🎉
+Many people have asked about Terraform support, and we are finally ready to announce a successor for **tfenv** and **tofuenv**: <a href="https://github.com/tofuutils/tenv">tenv </a> 🚀 written in Golang. tenv is able to handle Terraform binaries as well as OpenTofu binaries. 🎉
 
-Please contribute to <a herf="https://github.com/tofuutils/tenv">tenv </a> and award us stars⭐.
+Please contribute to <a href="https://github.com/tofuutils/tenv">tenv </a> and award us stars⭐.
 
 ## Supported OS
 
