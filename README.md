@@ -262,7 +262,7 @@ terraform {
 
 ### TOFUENV
 
-<details><summary><b>TOFUENV_GITHUB_TOKEN</b></summary><br>
+<details id="TOFUENV_GITHUB_TOKEN"><summary><b>TOFUENV_GITHUB_TOKEN</b></summary><br>
   
 String (Default: "")
 
@@ -271,7 +271,7 @@ Using a personal access token dramatically increases rate limit.
 [GitHub Rate limits for the REST API](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api)
 </details>
 
-<details><summary><b>TOFUENV_ARCH</b></summary><br>
+<details id="TOFUENV_ARCH"><summary><b>TOFUENV_ARCH</b></summary><br>
   
 String (Default: `amd64`)
 
@@ -284,7 +284,7 @@ TOFUENV_ARCH=arm64 tofuenv install 0.7.9
 ```
 </details>
 
-<details><summary><b>TOFUENV_AUTO_INSTALL</b></summary><br>
+<details id="TOFUENV_AUTO_INSTALL"><summary><b>TOFUENV_AUTO_INSTALL</b></summary><br>
   
 String (Default: true)
 
@@ -302,7 +302,7 @@ No installed versions of opentofu matched '^1.6.0-beta3$'. TOFUENV_AUTO_INSTALL 
 ```
 </details>
 
-<details><summary><b>TOFUENV_CURL_OUTPUT</b></summary><br>
+<details id="TOFUENV_CURL_OUTPUT"><summary><b>TOFUENV_CURL_OUTPUT</b></summary><br>
 
 Integer (Default: 2)
 
@@ -313,7 +313,7 @@ Set the mechanism used for displaying download progress when downloading tofu ve
 * 0: Pass `-s` to curl
 </details>
 
-<details><summary><b>TOFUENV_DEBUG</b></summary><br>
+<details id="TOFUENV_DEBUG"><summary><b>TOFUENV_DEBUG</b></summary><br>
 
 Integer (Default: 0)
 
@@ -325,7 +325,7 @@ Set the debug level for tofuenv.
 * 3: Debug level 2 + Bash execution tracing
 </details>
 
-<details><summary><b>TOFUENV_REMOTE</b></summary><br>
+<details id="TOFUENV_REMOTE"><summary><b>TOFUENV_REMOTE</b></summary><br>
 
 String (Default: https://github.com/opentofu/opentofu/releases)
 
@@ -336,7 +336,7 @@ TOFUENV_REMOTE=https://example.jfrog.io/artifactory/opentofu
 ```
 </details>
 
-<details><summary><b>TOFUENV_REVERSE_REMOTE</b></summary><br>
+<details id="TOFUENV_REVERSE_REMOTE"><summary><b>TOFUENV_REVERSE_REMOTE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -352,7 +352,7 @@ TOFUENV_REVERSE_REMOTE=1 tofuenv list-remote
 ```
 </details>
 
-<details><summary><b>TOFUENV_SKIP_LIST_REMOTE</b></summary><br>
+<details id="TOFUENV_SKIP_LIST_REMOTE"><summary><b>TOFUENV_SKIP_LIST_REMOTE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -366,7 +366,7 @@ TOFUENV_SKIP_LIST_REMOTE=1 tofuenv install 1.6.0-rc1
 ```
 </details>
 
-<details><summary><b>TOFUENV_CONFIG_DIR</b></summary><br>
+<details id="TOFUENV_CONFIG_DIR"><summary><b>TOFUENV_CONFIG_DIR</b></summary><br>
 
 Path (Default: `$TOFUENV_ROOT`)
 
@@ -377,7 +377,7 @@ TOFUENV_CONFIG_DIR="$XDG_CONFIG_HOME/tofuenv"
 ```
 </details>
 
-<details><summary><b>TOFUENV_TOFU_VERSION</b></summary><br>
+<details id="TOFUENV_TOFU_VERSION"><summary><b>TOFUENV_TOFU_VERSION</b></summary><br>
 
 String (Default: "")
 
@@ -392,7 +392,7 @@ TOFUENV_TOFU_VERSION=latest:^0.11. tofu --version
 ```
 </details>
 
-<details><summary><b>TOFUENV_NETRC_PATH</b></summary><br>
+<details id="TOFUENV_NETRC_PATH"><summary><b>TOFUENV_NETRC_PATH</b></summary><br>
 
 String (Default: "")
 
@@ -409,14 +409,14 @@ TOFUENV_NETRC_PATH="$PWD/.netrc.tofuenv"
 
 ### Bashlog Logging Library
 
-<details><summary><b>BASHLOG_COLOURS</b></summary><br>
+<details id="BASHLOG_COLOURS"><summary><b>BASHLOG_COLOURS</b></summary><br>
 
 Integer (Default: 1)
 
 To disable colouring of console output, set to 0.
 </details>
 
-<details><summary><b>BASHLOG_DATE_FORMAT</b></summary><br>
+<details id="BASHLOG_DATE_FORMAT"><summary><b>BASHLOG_DATE_FORMAT</b></summary><br>
 
 String (Default: +%F %T)
 
@@ -426,7 +426,7 @@ The display format for the date as passed to the `date` binary to generate a dat
 * Each console output line when `BASHLOG_EXTRA=1`
 </details>
 
-<details><summary><b>BASHLOG_EXTRA</b></summary><br>
+<details id="BASHLOG_EXTRA"><summary><b>BASHLOG_EXTRA</b></summary><br>
 
 Integer (Default: 0)
 
@@ -435,7 +435,7 @@ By default, console output from tofuenv does not print a date stamp or log sever
 To enable this functionality, making normal output equivalent to FILE log output, set to 1.
 </details>
 
-<details><summary><b>BASHLOG_FILE</b></summary><br>
+<details id="BASHLOG_FILE"><summary><b>BASHLOG_FILE</b></summary><br>
 
 Integer (Default: 0)
 
@@ -453,14 +453,14 @@ BASHLOG_FILE=1 tofuenv use latest
 will log to `/tmp/tofuenv-use.log`
 </details>
 
-<details><summary><b>BASHLOG_FILE_PATH</b></summary><br>
+<details id="BASHLOG_FILE_PATH"><summary><b>BASHLOG_FILE_PATH</b></summary><br>
 
 String (Default: /tmp/$(basename ${0}).log)
 
 To specify a single file as the target for all FILE type logging regardless of the executing script.
 </details>
 
-<details><summary><b>BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX</b></summary><br>
+<details id="BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX"><summary><b>BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX</b></summary><br>
 
 String (Default: "")
 
@@ -476,7 +476,7 @@ BASHLOG_I_PROMISE_TO_BE_CAREFUL_CUSTOM_EVAL_PREFIX='echo "${$$} "'
 will prefix every log line with the calling process' PID.
 </details>
 
-<details><summary><b>BASHLOG_JSON</b></summary><br>
+<details id="BASHLOG_JSON"><summary><b>BASHLOG_JSON</b></summary><br>
 
 Integer (Default: 0)
 
@@ -498,14 +498,14 @@ JSON log content:
 `{"timestamp":"<date +%s>","level":"<log-level>","message":"<log-content>"}`
 </details>
 
-<details><summary><b>BASHLOG_JSON_PATH</b></summary><br>
+<details  id="BASHLOG_JSON_PATH"><summary><b>BASHLOG_JSON_PATH</b></summary><br>
 
 String (Default: /tmp/$(basename ${0}).log.json)
 
 To specify a single file as the target for all JSON type logging regardless of the executing script.
 </details>
 
-<details><summary><b>BASHLOG_SYSLOG</b></summary><br>
+<details id="BASHLOG_SYSLOG"><summary><b>BASHLOG_SYSLOG</b></summary><br>
 
 Integer (Default: 0)
 
@@ -521,14 +521,14 @@ logger --id="${pid}" -t "${tag}" -p "${facility}.${severity}" "${syslog_line}"
 ```
 </details>
 
-<details><summary><b>BASHLOG_SYSLOG_FACILITY</b></summary><br>
+<details id="BASHLOG_SYSLOG_FACILITY"><summary><b>BASHLOG_SYSLOG_FACILITY</b></summary><br>
 
 String (Default: local0)
 
 The syslog facility to specify when using SYSLOG type logging.
 </details>
 
-<details><summary><b>BASHLOG_SYSLOG_TAG</b></summary><br>
+<details id="BASHLOG_SYSLOG_TAG"><summary><b>BASHLOG_SYSLOG_TAG</b></summary><br>
 
 String (Default: $(basename $0))
 
