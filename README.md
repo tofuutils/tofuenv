@@ -136,19 +136,19 @@ winget install --id Git.Git -e --source winget
 "C:\Program Files\Git\bin\sh.exe"
 ```
 
-2. Check out tofuenv into any path (here is ${HOME}/.tofuenv)
+3. Check out tofuenv into any path (here is ${HOME}/.tofuenv)
 ```console
 git clone --depth=1 https://github.com/tofuutils/tofuenv.git ~/.tofuenv
 ```
 
-2. Add ~/.tofuenv/bin to your $PATH
+4. Add ~/.tofuenv/bin to your $PATH
 ```console
 echo 'export PATH=$PATH:$HOME/.tofuenv/bin' >> ~/.bashrc
 ```
 
-4. Relaunch git-bash environment for the changes to be applied (you can do it via ```exit``` command).
+5. Relaunch git-bash environment for the changes to be applied (you can do it via ```exit``` command).
 
-5. Verify installation by executing:
+6. Verify installation by executing:
 ```console
 which tofuenv
 ```
