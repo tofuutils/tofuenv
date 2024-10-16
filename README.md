@@ -10,10 +10,14 @@
   <a href="#important-notice">Important Notice</a> •
   <a href="#supported-os">Supported OS</a> •
   <a href="#installation">Installation</a> •
-  <a href="#installation">Install dependencies</a> •
+  <a href="#install-dependencies">Install dependencies</a> •
   <a href="#usage">Usage</a> •
+  <a href="#environment-variables">Environment Variables</a> •
   <a href="#upgrading">Upgrading</a> •
   <a href="#uninstalling">Uninstalling</a> •
+  <a href="#contributing">Contributing</a> •
+  <a href="#community">Community</a> •
+  <a href="#authors">Authors</a> •
   <a href="#license">License</a>
 </div>
 
