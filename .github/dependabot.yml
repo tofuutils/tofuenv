@@ -10,3 +10,11 @@ updates:
       day: "monday"
     commit-message:
       prefix: "ci:"
+
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: daily
+      time: "09:00"
+    commit-message:
+      prefix: "go:"
