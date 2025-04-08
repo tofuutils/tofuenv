@@ -12,7 +12,7 @@ updates:
       prefix: "ci:"
 
   - package-ecosystem: gomod
-    directory: /
+    directory: "tools/"
     schedule:
       interval: daily
       time: "09:00"
